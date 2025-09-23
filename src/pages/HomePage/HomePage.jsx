@@ -26,8 +26,9 @@ const HomePage = () => {
         <ul>
           {posts.map(post => (
             <li key={post.id}>
-              <p>{post.id}</p>
-              <strong>{post.title}</strong>
+              <p>
+                <strong>{post.title}</strong>
+              </p>
               <p>{post.body}</p>
               <Link to={`/${post.id}`}>Open {post.id}</Link>
             </li>
