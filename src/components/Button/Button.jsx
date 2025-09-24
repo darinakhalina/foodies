@@ -15,16 +15,10 @@ const Button = ({
     <button
       disabled={isDisabled || isLoading}
       type={type}
-      className={clsx(
-        css.button,
-        css[variant],
-        css[size],
-        className,
-        {
-          [css['is-loading']]: isLoading,
-          [css['is-disabled']]: isDisabled,
-        }
-      )}
+      className={clsx(css.button, css[variant], css[size], className, {
+        [css['is-loading']]: isLoading,
+        [css['is-disabled']]: isDisabled,
+      })}
       onClick={onClick}
     >
       {isLoading && (
