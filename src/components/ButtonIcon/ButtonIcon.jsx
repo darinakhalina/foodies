@@ -9,7 +9,7 @@ const ButtonIcon = ({
   isDisabled = false,
   isLoading = false,
   className,
-  iconType,
+  iconName,
 }) => {
   return (
     <button
@@ -20,7 +20,7 @@ const ButtonIcon = ({
         [css['is-disabled']]: isDisabled,
       })}
       onClick={onClick}
-      aria-label={iconType}
+      aria-label={iconName}
       aria-busy={isLoading ? 'true' : undefined}
     >
       {isLoading ? (
@@ -29,7 +29,7 @@ const ButtonIcon = ({
         </svg>
       ) : (
         <svg className={css.icon}>
-          <use href={`/images/icons.svg#${iconType}`} />
+          <use href={`/images/icons.svg#${iconName}`} />
         </svg>
       )}
     </button>
