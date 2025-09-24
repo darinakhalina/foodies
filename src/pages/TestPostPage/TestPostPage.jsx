@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { fetchTestById } from '../../redux/test/operations';
 import { selectCurrentPost, selectLoading, selectError } from '../../redux/test/selectors';
 
-const PostPage = () => {
+const TestPostPage = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -34,4 +34,4 @@ const PostPage = () => {
   );
 };
 
-export default PostPage;
+export default TestPostPage;

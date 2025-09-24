@@ -1,7 +1,10 @@
 .layout {
-  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
 }
 
 .layout main {
   height: 100%;
+  flex-grow: 1;
 }

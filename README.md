@@ -1,4 +1,4 @@
-# Foodies-app
+# Foodies
 
 ## Start
 

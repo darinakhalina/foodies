@@ -1,7 +1,5 @@
-/*add css vars here*/
-:root {
-  --color-main: #050505;
-}
+@import './styles/colors.css';
+@import './styles/layout.css';
 
 @font-face {
   font-family: 'Mulish Regular';
@@ -30,13 +28,14 @@
 html {
   scroll-behavior: smooth;
 }
+
 body {
   font-family: 'Mulish Regular', Arial, sans-serif;
   font-size: 14px;
   line-height: 1.4;
   letter-spacing: -0.02em;
   font-weight: 500;
-  color: var(--color-text);
+  color: var(--dark-gray);
 }
 
 h1,

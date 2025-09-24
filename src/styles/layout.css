@@ -1,0 +1,17 @@
+.f-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 80px;
+}
+
+@media (max-width: 1439px) {
+  .f-container {
+    padding: 0 32px;
+  }
+}
+
+@media (max-width: 767px) {
+  .f-container {
+    padding: 0 16px;
+  }
+}
