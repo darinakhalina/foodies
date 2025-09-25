@@ -1,0 +1,10 @@
+.footer {
+  padding-bottom: 16px;
+  text-align: center;
+}
+
+.separator {
+  border: none;
+  border-top: 1px solid var(--gray);
+  margin-block: 40px;
+}

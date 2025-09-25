@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout/Layout';
 
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
-const PostPage = lazy(() => import('./pages/PostPage/PostPage'));
+const TestPostPage = lazy(() => import('./pages/TestPostPage/TestPostPage.jsx'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
 
 const App = () => {
@@ -12,7 +12,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
-          <Route path=":id" element={<PostPage />} />
+          <Route path=":id" element={<TestPostPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
