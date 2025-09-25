@@ -91,6 +91,7 @@ const TestSection = () => {
             currentPage={currentPage}
             totalPages={totalPages}
             onPageChange={handlePageChange}
+            isDisabled={true} // disable pagination while data is loading, pass isLoading for real app
           />
         </div>
       </div>

@@ -1,13 +1,16 @@
 import ReactPaginate from 'react-paginate';
 import css from './Pagination.module.css';
+import clsx from 'clsx';
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+const Pagination = ({ currentPage, totalPages, onPageChange, isDisabled }) => {
   return (
     <ReactPaginate
       forcePage={currentPage - 1}
       pageCount={totalPages}
       onPageChange={({ selected }) => {
-        onPageChange(selected + 1);
+        if (!isDisabled) {
+          onPageChange(selected + 1);
+        }
       }}
       previousLabel={null}
       nextLabel={null}
@@ -18,7 +21,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           <use href="/images/icons.svg#icon-dots" />
         </svg>
       }
-      containerClassName={css.list}
+      containerClassName={clsx(css.list, { [css.disabled]: isDisabled })}
       pageLinkClassName={css['list-item-link']}
       activeClassName={css['list-item-active']}
       breakClassName={css['list-item-break']}
