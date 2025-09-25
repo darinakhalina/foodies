@@ -1,0 +1,44 @@
+.list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.list-item-link {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid transparent;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+}
+
+.list-item-link:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.list-item-active a {
+  border-color: var(--gray);
+}
+
+.list-item-break {
+  margin-top: 8px;
+  pointer-events: none;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
