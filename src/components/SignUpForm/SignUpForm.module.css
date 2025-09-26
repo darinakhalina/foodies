@@ -1,0 +1,136 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  padding-top: 32px;
+  width: 100%;
+}
+
+.input {
+  color: #050505;
+  font-family: 'Mulish Regular', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.32px;
+
+  padding: 14px;
+  align-items: center;
+
+  border-radius: 30px;
+  border: 1px solid #bfbebe;
+  width: 100%;
+}
+
+.input:focus {
+  outline: none;
+  border: 1px solid #050505;
+}
+
+.input:not(:placeholder-shown) {
+  border: 1px solid #050505;
+}
+
+.inputWrapper {
+  position: relative;
+  align-items: center;
+  width: 100%;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  fill: none;
+  stroke: #050505;
+}
+
+.error {
+  font-size: 12px;
+  color: #a10707;
+}
+
+.inputError {
+  border: 1px solid #a10707;
+  color: #a10707;
+}
+
+.inputError:focus,
+.inputError:not(:placeholder-shown) {
+  border-color: #a10707 !important;
+}
+
+.passwordWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  color: #bfbebe;
+  transition: color 0.3s;
+}
+
+.buttonWrapper {
+  margin-top: 16px;
+  width: 100%;
+}
+
+.submitButton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 14px 28px;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+@media (min-width: 768px) {
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 40px;
+    max-width: 401px;
+  }
+
+  .input {
+    font-size: 16px;
+    display: flex;
+    padding: 16px 200px 16px 18px;
+    justify-content: center;
+    align-items: center;
+    gap: 225px;
+    width: 100%;
+  }
+
+  .submitButton {
+    padding: 14px 115px;
+    font-size: 16px;
+  }
+}
+
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
