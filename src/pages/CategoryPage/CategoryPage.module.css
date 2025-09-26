@@ -1,0 +1,102 @@
+/* ========= Shared / existing classes (kept as-is) ========= */
+.wrapper {
+  width: 100%;
+  max-width: 1280px;        /* 1440 viewport → 80px left/right inset */
+  margin: 0 auto;
+  padding: 20px 0;          /* vertical padding only */
+}
+
+.backButton {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--black-color);
+  text-transform: uppercase;
+}
+
+.backButton img {
+  margin-right: 6px;
+}
+
+.topSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+/* Older layout hook (kept for backward compatibility) */
+@media screen and (min-width: 1440px) {
+  .filtersSection {
+    display: flex;
+    align-items: flex-start;
+    gap: 40px;
+  }
+}
+
+/* ========= New classes used by your updated CategoryPage.jsx ========= */
+
+/* Spacing under the header (Back + Title + Description) */
+.headerBlock {
+  margin-bottom: 16px;
+}
+
+/* Two-column content: Filters (330px) | Grid (auto) */
+.content {
+  display: grid;
+  grid-template-columns: 330px 1fr;  /* sidebar | main */
+  column-gap: 40px;                  /* space between sidebar and grid */
+  align-items: start;
+}
+
+/* Left column (filters) */
+.filtersCol {
+  width: 330px;
+  min-width: 330px;                  /* prevents wrapping/overlap */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Right column: recipe cards grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 290px);  /* 3 cards per row */
+  gap: 20px;                                 /* gutters between cards */
+  justify-content: end;                      /* hug the right edge */
+}
+
+/* Pagination centered under the grid (right column only) */
+.pagination {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  grid-column: 2;                             /* align under grid, not under filters */
+}
+
+/* ========= Responsive steps (optional) ========= */
+/* On narrower screens you can stack or reduce columns if desired */
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(2, 290px);
+    justify-content: start;                  /* left-align when only 2 columns */
+  }
+}
+
+@media (max-width: 640px) {
+  .content {
+    grid-template-columns: 1fr;             /* stack filters above grid */
+  }
+  .filtersCol {
+    width: 100%;
+    min-width: 0;
+  }
+  .grid {
+    grid-template-columns: 290px;
+    justify-content: start;
+  }
+}
