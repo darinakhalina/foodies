@@ -6,6 +6,17 @@
   margin-bottom: 32px;
 }
 
+/* Планшет */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .filters {
+    flex-direction: row;
+    gap: 16px;
+  }
+  .filters > * {
+    flex: 1 1 0;
+  }
+}
+
 .field {
   display: flex;
   flex-direction: column;
@@ -37,7 +48,6 @@
   transition: box-shadow .15s ease, border-color .15s ease;
 }
 
-
 .selectWrap::after {
   content: "";
   position: absolute;
@@ -57,7 +67,6 @@
   border-color: #bfbebe;
   box-shadow: 0 0 0 3px rgba(5, 5, 5, 0.06);
 }
-
 
 .select option[value=""] {
   color: #7a7a7a;
