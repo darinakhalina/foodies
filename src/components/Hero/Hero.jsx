@@ -1,6 +1,7 @@
 import css from './Hero.module.css';
 import dessert from '../../assets/heroIMG/dessert.webp';
 import rulet from '../../assets/heroIMG/rulet.webp';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
@@ -11,9 +12,9 @@ const Hero = () => {
           Amazing recipes for beginners in the world of cooking, enveloping you in the aromas and
           tastes of various cuisines.
         </p>
-        <button className={css.heroBtn} type="button">
+        <Link to="/recepy/add" className={css.heroBtn}>
           Add Recipe
-        </button>
+        </Link>
         <div className={css.wrapImg}>
           <div className={css.wrapDessert}>
             <img src={`${dessert}`} alt="dessert" />
