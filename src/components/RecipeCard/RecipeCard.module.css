@@ -118,7 +118,6 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url('/images/default-avatar.jpg');
   background-size: cover;
   background-position: center;
 }
@@ -142,25 +141,23 @@
 
 .actions {
   width: auto;
-  min-width: 88px;
-  height: 42px;
   display: flex;
   gap: 4px;
   flex-shrink: 0;
 }
 
 .iconButton {
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   border-radius: 30px;
   border: 1px solid #BFBEBE;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 8px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
   background: transparent;
   cursor: pointer;
   transition: none;
+  overflow: visible;
 }
 
 .iconButton:hover {
@@ -169,9 +166,10 @@
 }
 
 .icon {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   display: block;
+  object-fit: contain;
 }
 
 .favoriteButton.isFavorite {
@@ -183,13 +181,11 @@
 }
 
 .viewButton {
-  /* Кнопка перегляду деталей рецепту */
+  /* Recipe Details*/
   position: relative;
 }
 
-/* Mobile First медіа-запити */
-
-/* Планшети (від 481px) */
+/* Планшети */
 @media (min-width: 481px) {
   .card {
     width: 342px;
@@ -234,11 +230,6 @@
     width: 42px;
     height: 42px;
     padding: 12px;
-  }
-  
-  .icon {
-    width: 18px;
-    height: 18px;
   }
 }
 

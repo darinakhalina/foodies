@@ -1,7 +1,5 @@
-// src/pages/CategoryPage/CategoryPage.jsx
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import CategoryHeader from '../../components/CategoryHeader/CategoryHeader';
 import Filters from '../../components/Filters/Filters';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import Pagination from '../../components/Pagination/Pagination';
@@ -27,13 +25,12 @@ export default function CategoryPage() {
   const [area, setArea] = useState('');
   const [ingredient, setIngredient] = useState('');
   const [authOpen, setAuthOpen] = useState(false);
-  const [limit, setLimit] = useState(() =>
-    typeof window !== 'undefined' && window.innerWidth < 768 ? 8 : 12
-  ); // mobile: 8, desktop: 12 (3x4)
+  const [limit, setLimit] = useState(
+    () => (typeof window !== 'undefined' && window.innerWidth < 768 ? 8 : 12)
+  );
 
   const isAuthed = false;
 
-  // responsive page size (mimics useWindowWidth logic without new imports)
   useEffect(() => {
     function onResize() {
       setLimit(window.innerWidth < 768 ? 8 : 12);
@@ -64,27 +61,43 @@ export default function CategoryPage() {
     [recipes, area, ingredient]
   );
 
-  // client-side pagination (like Reciepes clientPagedData)
+  // client-side pagination
   const totalPages = Math.max(1, Math.ceil(filtered.length / limit));
   const shown = useMemo(() => {
     const start = (page - 1) * limit;
     return filtered.slice(start, start + limit);
   }, [filtered, page, limit]);
 
-  // smooth scroll on page change (anchor behavior)
+  // smooth scroll on page change
   useEffect(() => {
     const anchor = document.getElementById('paginationAnchor');
     if (anchor) anchor.scrollIntoView({ behavior: 'smooth' });
   }, [page]);
 
+  const title = (category || '').toUpperCase();
+  const description = DESCRIPTIONS[title] || 'Category';
+
   return (
     <div className={`f-container ${css.wrapper}`} id="paginationAnchor">
+      {/* Header (Back + Title + Description) */}
       <div className={css.headerBlock}>
-        <CategoryHeader
-          title={(category || '').toUpperCase()}
-          description={DESCRIPTIONS[(category || '').toUpperCase()] || 'Category'}
-          onBack={() => navigate(-1)}
-        />
+        <button
+          type="button"
+          className={css.backButton}
+          onClick={() => navigate(-1)}
+        >
+          <img
+            src="/images/icons/arrow-back.svg"
+            alt="Back"
+            width={16}
+            height={16}
+            style={{ marginRight: 6 }}
+          />
+          Back
+        </button>
+
+        <h1 className={css.title}>{title}</h1>
+        <p className={css.description}>{description}</p>
       </div>
 
       <div className={css.content}>

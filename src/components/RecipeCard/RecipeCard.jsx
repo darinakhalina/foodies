@@ -1,4 +1,3 @@
-// src/components/RecipeCard/RecipeCard.jsx
 import { useState } from 'react';
 import styles from './RecipeCard.module.css';
 import Modal from '../Modal/Modal';
@@ -107,7 +106,7 @@ export default function RecipeCard() {
                 title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
                 type="button"
               >
-                <img src="/icons/heart.svg" alt="" className={styles.icon} />
+                <img src="/images/icons/heart.svg" alt="" className={styles.icon} />
               </button>
 
               <button
@@ -116,7 +115,7 @@ export default function RecipeCard() {
                 title="View recipe"
                 type="button"
               >
-                <img src="/icons/arrow-up-right.svg" alt="" className={styles.icon} />
+                <img src="/images/icons/arrow-up-right.svg" alt="" className={styles.icon} />
               </button>
             </div>
           </div>

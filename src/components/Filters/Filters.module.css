@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  width: 100%;
-  max-width: 220px;
+  max-width: 100%;
+  margin-bottom: 32px;
 }
 
 .field {
@@ -25,14 +25,14 @@
   height: 44px;                 
   padding: 0 44px 0 16px;      
   border: 1px solid #e8e8e8;
-  border-radius: 14px;          /* rounded corners like screenshot */
+  border-radius: 14px; 
   background: #fff;
   color: #050505;
   font-family: 'Mulish', sans-serif;
   font-weight: 500;
   font-size: 14px;
   letter-spacing: -0.02em;
-  line-height: 44px;            /* centers text vertically */
+  line-height: 44px; 
   outline: none;
   transition: box-shadow .15s ease, border-color .15s ease;
 }

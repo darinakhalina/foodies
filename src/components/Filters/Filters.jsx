@@ -1,60 +1,41 @@
+import { Dropdown } from '../Dropdown/Dropdown';
 import css from './Filters.module.css';
 
-const SelectField = ({
-  id,
-  label,
-  value,
-  options,
-  placeholder,
-  onChange,
-}) => {
-  return (
-    <label className={css.field} htmlFor={id}>
-      <span className={css.label}>{label}</span>
-
-      <span className={css.selectWrap}>
-        <select
-          id={id}
-          className={css.select}
-          value={value}
-          onChange={e => onChange(e.target.value)}
-          aria-label={label}
-        >
-          <option value="">{placeholder}</option>
-          {options.map(opt => (
-            <option key={opt} value={opt}>
-              {opt}
-            </option>
-          ))}
-        </select>
-      </span>
-    </label>
-  );
-};
-
 const Filters = ({
-  areas,
-  ingredients,
-  selectedArea,
-  selectedIngredient,
+  areas = [],
+  ingredients = [],
+  selectedArea = '',
+  selectedIngredient = '',
   onArea,
   onIngredient,
+  availableAreas,
+  availableIngredients,
 }) => {
+  const ingredientOptions = [
+    { value: '', label: 'Ingredients' },
+    ...ingredients.map(name => ({ value: name, label: name })),
+  ];
+
+  const areaOptions = [
+    { value: '', label: 'Area' },
+    ...areas.map(name => ({ value: name, label: name })),
+  ];
+
   return (
     <div className={css.filters}>
-      <SelectField
-        id="ingredients"
+      <Dropdown
+        options={ingredientOptions}
         placeholder="Ingredients"
         value={selectedIngredient}
-        options={ingredients}
-        onChange={onIngredient}
+        onChange={(opt) => onIngredient(opt.value)}
+        availableOptions={availableIngredients}
       />
-      <SelectField
-        id="area"
+      <Dropdown
+        options={areaOptions}
         placeholder="Area"
         value={selectedArea}
-        options={areas}
-        onChange={onArea}
+        onChange={(opt) => onArea(opt.value)}
+        availableOptions={availableAreas}
       />
     </div>
   );
