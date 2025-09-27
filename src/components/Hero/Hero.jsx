@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import css from './Hero.module.css';
 import dessert from '../../assets/heroIMG/dessert.webp';
 import rulet from '../../assets/heroIMG/rulet.webp';
+import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (

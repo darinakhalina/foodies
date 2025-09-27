@@ -1,5 +1,6 @@
 .hero {
   background-color: var(--color-main);
+  border-radius: 0 0 30px 30px;
 }
 
 .containerHero {
@@ -56,6 +57,7 @@
 .heroBtn:hover,
 .heroBtn:focus > .heroLink {
   color: var(--white);
+  text-decoration: none;
 }
 
 .heroLink {
