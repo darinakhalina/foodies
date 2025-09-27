@@ -1,12 +1,27 @@
 .wrapper {
   width: 100%;
-  max-width: 1280px;
   margin: 0 auto;
-  padding: 20px 0;
+  padding: 20px 16px;
+}
+
+/* tablet */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .wrapper {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+}
+
+/* desktop/laptop */
+@media (min-width: 1280px) {
+  .wrapper {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
 }
 
 .headerBlock {
-  margin-bottom: 40px;
+  margin-bottom: 0px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -24,6 +39,24 @@
   font-weight: 700;
   color: var(--black-color, #050505);
   text-transform: uppercase;
+}
+
+.description {
+  max-width: 540px;
+  height: 48px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;       /* for Safari/Chrome */
+  display: box;               /* older spec */
+  -webkit-line-clamp: 2;      /* WebKit-based browsers */
+  line-clamp: 2;              /* standard syntax */
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  margin-bottom: 40px;
 }
 
 .content {

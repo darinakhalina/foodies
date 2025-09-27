@@ -12,7 +12,7 @@ import {
 import css from './CategoryPage.module.css';
 
 const DESCRIPTIONS = {
-  DESSERTS: 'Sweet dishes to make your day better.',
+  DESSERTS: 'Go on a taste journey, where every sip is a sophisticated creative chord, and every dessert is an expression of the most refined gastronomic desires.',
   SALADS: 'Fresh and crispy salads.',
 };
 
