@@ -8,6 +8,7 @@ import css from './TestSection.module.css';
 import Pagination from '../Pagination/Pagination';
 import MenuSidePanel from '../MenuSidePanel/MenuSidePanel.jsx';
 import Subtitle from '../Subtitle/Subtitle.jsx';
+import MenuSidePanelContent from '../MenuSidePanelContent/MenuSidePanelContent.jsx';
 
 // test only, mock items used only for demo pagination
 const items = Array.from({ length: 100 }, (_, i) => `Item ${i + 1}`);
@@ -91,7 +92,7 @@ const TestSection = () => {
         <button onClick={() => setOpen(true)}>Open Drawer</button>
 
         <MenuSidePanel isOpen={open} onClose={() => setOpen(false)}>
-          <p>TEST</p>
+          <MenuSidePanelContent />
         </MenuSidePanel>
       </div>
     </section>
