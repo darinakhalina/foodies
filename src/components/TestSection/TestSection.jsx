@@ -9,6 +9,7 @@ import css from './TestSection.module.css';
 
 import Pagination from '../Pagination/Pagination';
 import MenuSidePanel from '../MenuSidePanel/MenuSidePanel.jsx';
+import Subtitle from '../Subtitle/Subtitle.jsx';
 
 // test only, mock items used only for demo pagination
 const items = Array.from({ length: 100 }, (_, i) => `Item ${i + 1}`);
@@ -51,7 +52,7 @@ const TestSection = () => {
   return (
     <section className={css.test}>
       <div className="f-container">
-        <h1>Test Section</h1>
+        <Subtitle tag="h1">Test subtile text</Subtitle>
 
         {loading && <p>Loading…</p>}
         {error && <p style={{ color: 'red' }}>Error: {error}</p>}
