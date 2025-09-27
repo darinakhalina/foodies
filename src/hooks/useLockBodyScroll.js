@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-export default function useLockBodyScroll(isLocked) {
+const useLockBodyScroll = isLocked => {
   useEffect(() => {
     if (typeof document === 'undefined') return;
     const prevOverflow = document.body.style.overflow;
@@ -9,4 +9,6 @@ export default function useLockBodyScroll(isLocked) {
       document.body.style.overflow = prevOverflow || '';
     };
   }, [isLocked]);
-}
+};
+
+export default useLockBodyScroll;
