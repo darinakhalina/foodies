@@ -1,0 +1,88 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0);
+  transition: background 300ms ease-in-out;
+  z-index: 1000;
+}
+
+.overlayAfterOpen {
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.overlayBeforeClose {
+  background: rgba(0, 0, 0, 0);
+}
+
+.sidepanel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  pointer-events: none;
+}
+
+.inner {
+  pointer-events: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-main);
+  color: var(--white);
+
+  transform: translateX(100%);
+  transition: transform 300ms ease-in-out;
+}
+
+.sidepanelAfterOpen .inner {
+  transform: translateX(0);
+}
+
+.sidepanelBeforeClose .inner {
+  transform: translateX(100%);
+}
+
+.closeBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: var(--white);
+}
+
+.closeIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  margin-top: 24px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  justify-content: space-between;
+  padding: 16px 20px;
+}
+
+.logoTitle {
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.2;
+  text-decoration: none;
+  text-transform: lowercase;
+  color: var(--white);
+}

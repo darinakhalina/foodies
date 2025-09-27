@@ -8,6 +8,7 @@ import Button from '../Button/Button';
 import css from './TestSection.module.css';
 
 import Pagination from '../Pagination/Pagination';
+import MenuSidePanel from '../MenuSidePanel/MenuSidePanel.jsx';
 
 // test only, mock items used only for demo pagination
 const items = Array.from({ length: 100 }, (_, i) => `Item ${i + 1}`);
@@ -19,6 +20,7 @@ const TestSection = () => {
   const error = useSelector(selectError);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [open, setOpen] = useState(false);
 
   // fixed page size for demo, should be dynamic for real app
   const limit = 5;
@@ -94,6 +96,13 @@ const TestSection = () => {
             isDisabled={false} // disable pagination while data is loading, pass isLoading for real app
           />
         </div>
+      </div>
+      <div>
+        <button onClick={() => setOpen(true)}>Open Drawer</button>
+
+        <MenuSidePanel isOpen={open} onClose={() => setOpen(false)}>
+          <p>TEST</p>
+        </MenuSidePanel>
       </div>
     </section>
   );
