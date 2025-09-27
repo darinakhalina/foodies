@@ -1,22 +1,105 @@
+// src/pages/UserPage/components/MyRecipes.jsx
+import UserRecipeRow from '../../../components/UserRecipeRow/UserRecipeRow';
+
 export default function MyRecipes() {
-  const items = Array.from({ length: 8 }).map((_, i) => ({
-    id: `r${i+1}`,
-    title: `Recipe ${i+1}`,
-    desc: 'Short description of the dish goes here.',
-    thumb: '/test-cake.png',
-  }));
+  // Replace with real recipes
+  const recipes = [
+    {
+      id: 101,
+      title: 'CHILLI PRAWN LINGUINE',
+      description:
+        'Mix the dressing ingredients in a small bowl and season with salt...',
+      thumb: '/images/mock/pasta.jpg',
+    },
+    {
+      id: 101,
+      title: 'CHILLI PRAWN LINGUINE',
+      description:
+        'Mix the dressing ingredients in a small bowl and season with salt...',
+      thumb: '/images/mock/pasta.jpg',
+    },
+    {
+      id: 101,
+      title: 'CHILLI PRAWN LINGUINE',
+      description:
+        'Mix the dressing ingredients in a small bowl and season with salt...',
+      thumb: '/images/mock/pasta.jpg',
+    },
+    {
+      id: 101,
+      title: 'CHILLI PRAWN LINGUINE',
+      description:
+        'Mix the dressing ingredients in a small bowl and season with salt...',
+      thumb: '/images/mock/pasta.jpg',
+    },
+    {
+      id: 101,
+      title: 'CHILLI PRAWN LINGUINE',
+      description:
+        'Mix the dressing ingredients in a small bowl and season with salt...',
+      thumb: '/images/mock/pasta.jpg',
+    },
+    {
+      id: 101,
+      title: 'CHILLI PRAWN LINGUINE',
+      description:
+        'Mix the dressing ingredients in a small bowl and season with salt...',
+      thumb: '/images/mock/pasta.jpg',
+    },
+    {
+      id: 101,
+      title: 'CHILLI PRAWN LINGUINE',
+      description:
+        'Mix the dressing ingredients in a small bowl and season with salt...',
+      thumb: '/images/mock/pasta.jpg',
+    },
+    {
+      id: 101,
+      title: 'CHILLI PRAWN LINGUINE',
+      description:
+        'Mix the dressing ingredients in a small bowl and season with salt...',
+      thumb: '/images/mock/pasta.jpg',
+    },
+    {
+      id: 101,
+      title: 'CHILLI PRAWN LINGUINE',
+      description:
+        'Mix the dressing ingredients in a small bowl and season with salt...',
+      thumb: '/images/mock/pasta.jpg',
+    },
+    {
+      id: 101,
+      title: 'CHILLI PRAWN LINGUINE',
+      description:
+        'Mix the dressing ingredients in a small bowl and season with salt...',
+      thumb: '/images/mock/pasta.jpg',
+    },
+    {
+      id: 101,
+      title: 'CHILLI PRAWN LINGUINE',
+      description:
+        'Mix the dressing ingredients in a small bowl and season with salt...',
+      thumb: '/images/mock/pasta.jpg',
+    },
+    {
+      id: 101,
+      title: 'CHILLI PRAWN LINGUINE',
+      description:
+        'Mix the dressing ingredients in a small bowl and season with salt...',
+      thumb: '/images/mock/pasta.jpg',
+    },
+  ];
 
   return (
-    <div style={{ display: 'grid', gap: 16 }}>
-      {items.map((it) => (
-        <article key={it.id} style={{ display:'grid', gridTemplateColumns:'64px 1fr auto', gap:12, alignItems:'center', borderBottom:'1px solid #eee', padding:'12px 0' }}>
-          <img src={it.thumb} alt="" style={{ width:64, height:64, borderRadius:12, objectFit:'cover' }} />
-          <div>
-            <div style={{ fontWeight:700 }}>{it.title}</div>
-            <div style={{ color:'#7a7a7a', fontSize:14 }}>{it.desc}</div>
-          </div>
-          <button style={{ border:'1px solid #bfbebe', borderRadius:20, padding:'6px 12px', background:'#fff' }}>View</button>
-        </article>
+    <div>
+      {recipes.map((recipe) => (
+        <UserRecipeRow
+          key={recipe.id}
+          title={recipe.title}
+          description={recipe.description}
+          thumb={recipe.thumb}
+          onOpen={() => console.log('open recipe', recipe.id)}
+        />
       ))}
     </div>
   );

@@ -1,3 +1,19 @@
+.breadcrumb {
+  margin-bottom: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--dark-gray-color);
+}
+
+.breadcrumb a {
+  color: var(--black-color);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}
+
 .page {
   padding: 20px 0;
 }
@@ -9,24 +25,10 @@
   margin-bottom: 32px;
 }
 
-.back {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 700;
-  color: #050505;
-  text-transform: uppercase;
-}
-
 .title {
   font-family: 'Mulish', Arial, sans-serif;
   font-weight: 800;
-  font-size: 28px;
+  font-size: 20px;
   line-height: 1.2;
   letter-spacing: -0.02em;
   text-transform: uppercase;
@@ -34,11 +36,11 @@
 }
 
 .subtitle {
-  max-width: 540px;
-  height: 48px;  
+  max-width: 610px;
+  height: 68px;  
   font-weight: 500;
-  font-size: 14px;
-  line-height: 1.2;
+  font-size: 16px;
+  line-height: 1.5;
   color: #1a1a1a;
   overflow: hidden;
   display: -webkit-box;

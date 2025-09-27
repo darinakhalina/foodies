@@ -58,10 +58,6 @@ export default function UserPage() {
   return (
     <section className={`f-container ${styles.page}`}>
       <header className={styles.header}>
-        <button type="button" className={styles.back} onClick={() => navigate(-1)}>
-          <img src="/images/icons/arrow-back.svg" alt="Back" width={16} height={16} />
-          Back
-        </button>
         <h1 className={styles.title}>PROFILE</h1>
         <p className={styles.subtitle}>
           Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces with us.
