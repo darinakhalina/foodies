@@ -7,7 +7,7 @@ const Logo = () => {
   const classNames = clsx(css.logo, !!homePagePath && css['is-inverted']);
 
   return (
-    <Link to="/" className={classNames}>
+    <Link to="/" className={classNames} viewTransition>
       foodies
     </Link>
   );

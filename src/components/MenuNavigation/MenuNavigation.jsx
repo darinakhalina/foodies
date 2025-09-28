@@ -8,11 +8,11 @@ export default function MenuNavigation({ onClick, isInverted = false, direction 
 
   return (
     <nav className={clsx(css.nav, css[`direction-${direction}`])}>
-      <NavLink to="/" className={buildClassName} onClick={onClick}>
+      <NavLink to="/" className={buildClassName} onClick={onClick} viewTransition>
         Home
       </NavLink>
 
-      <NavLink to="/recipe/add" className={buildClassName} onClick={onClick}>
+      <NavLink to="/recipe/add" className={buildClassName} onClick={onClick} viewTransition>
         Add recipe
       </NavLink>
     </nav>

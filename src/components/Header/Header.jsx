@@ -5,6 +5,7 @@ import useMediaQuery from '../../hooks/useMediaQuery.js';
 import MobileMenu from '../MobileMenu/MobileMenu.jsx';
 import MenuNavigation from '../MenuNavigation/MenuNavigation.jsx';
 import Logo from '../Logo/Logo.jsx';
+import UserBar from '../UserBar/UserBar.jsx';
 
 const Header = () => {
   const homePagePath = useMatch('/');
@@ -16,7 +17,7 @@ const Header = () => {
         <Logo />
         {!isMobile && <MenuNavigation isInverted={!!homePagePath} />}
         <div className={css['header-container-actions']}>
-          <div>3_USer_info</div>
+          <UserBar />
           {isMobile && <MobileMenu />}
         </div>
       </div>

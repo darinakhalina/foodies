@@ -1,10 +1,10 @@
 import Subtitle from '../../components/Subtitle/Subtitle.jsx';
 import { Link } from 'react-router-dom';
 
-const AddRecipePage = () => {
+const UserPage = () => {
   return (
     <section className="f-container">
-      <Subtitle tag={'h1'}>Add Recipe Page</Subtitle>
+      <Subtitle tag={'h1'}>User Page</Subtitle>
       <p>
         <Link to="/" viewTransition>
           Back to HP
@@ -14,4 +14,4 @@ const AddRecipePage = () => {
   );
 };
 
-export default AddRecipePage;
+export default UserPage;
