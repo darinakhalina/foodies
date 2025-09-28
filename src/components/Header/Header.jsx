@@ -6,19 +6,27 @@ import MobileMenu from '../MobileMenu/MobileMenu.jsx';
 import MenuNavigation from '../MenuNavigation/MenuNavigation.jsx';
 import Logo from '../Logo/Logo.jsx';
 import UserBar from '../UserBar/UserBar.jsx';
+import AuthBar from '../AuthBar/AuthBar.jsx';
 
 const Header = () => {
   const homePagePath = useMatch('/');
   const isMobile = useMediaQuery('(max-width: 767px)');
+  const isUserLoggedIn = true;
 
   return (
     <header className={clsx(css['header-holder'], !!homePagePath && css['is-inverted'])}>
       <div className={clsx(css['header-container'], 'f-container')}>
         <Logo />
-        {!isMobile && <MenuNavigation isInverted={!!homePagePath} />}
+        {!isMobile && isUserLoggedIn && <MenuNavigation isInverted={!!homePagePath} />}
         <div className={css['header-container-actions']}>
-          <UserBar />
-          {isMobile && <MobileMenu />}
+          {isUserLoggedIn ? (
+            <>
+              <UserBar />
+              {isMobile && <MobileMenu />}
+            </>
+          ) : (
+            <AuthBar />
+          )}
         </div>
       </div>
     </header>
