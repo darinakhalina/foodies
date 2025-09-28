@@ -2,22 +2,7 @@
   width: 100%;
   margin: 0 auto;
   padding: 20px 16px;
-}
-
-/* tablet */
-@media (min-width: 768px) and (max-width: 1279px) {
-  .wrapper {
-    padding-left: 32px;
-    padding-right: 32px;
-  }
-}
-
-/* desktop/laptop */
-@media (min-width: 1280px) {
-  .wrapper {
-    padding-left: 80px;
-    padding-right: 80px;
-  }
+  max-width: 100%;
 }
 
 .headerBlock {
@@ -80,7 +65,7 @@
   display: grid;
   gap: 20px;
   grid-template-columns: 1fr; 
-  justify-content: start;
+  justify-content: center;
 }
 
 .pagination {
@@ -89,8 +74,21 @@
   justify-content: center;
 }
 
+
+/* Adaptive mobile (≥375px) */
+@media (min-width: 375px) {
+  .wrapper {
+    padding: 20px;
+  }
+}
+
 /* Планшет*/
-@media (min-width: 768px) and (max-width: 1279px) {
+@media (min-width: 768px){
+  .wrapper {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
   .filtersBar {
     flex-direction: row;   
     gap: 16px;
@@ -100,31 +98,43 @@
   }
 
   .grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(2, 345px);  
+    gap: 14px;          
+    justify-content: start; 
   }
 }
 
 /* Desktop */
-@media (min-width: 1280px) {
+@media (min-width: 1440px) {
+  .wrapper {
+    max-width: 1280px;
+  }
+
   .content {
-    flex-direction: row;   
-    align-items: flex-start;
-    gap: 40px;
+    display: grid;
+    grid-template-columns: 330px 1fr; 
+    column-gap: 40px;
+    align-items: start;
   }
 
   .filtersBar {
     width: 330px;
-    flex: 0 0 330px;
+    min-width: 330px;
     display: flex;
     flex-direction: column;
     gap: 20px;
   }
 
-  .main {
-    flex: 1 1 auto;
-  }
 
   .grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: grid;
+    grid-template-columns: repeat(3, 290px);
+    gap: 20px;    
+    justify-content: end;
+  }
+
+  .pagination {
+    grid-column: 2;  
+    justify-content: center;
   }
 }
