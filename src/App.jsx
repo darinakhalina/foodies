@@ -7,6 +7,7 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const AddRecipePage = lazy(() => import('./pages/AddRecipePage/AddRecipePage'));
 const UserPage = lazy(() => import('./pages/UserPage/UserPage'));
+const RecipePage = lazy(() => import('./pages/RecipePage/RecipePage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
 
 const App = () => {
@@ -33,6 +34,7 @@ const App = () => {
               </PrivateRoute>
             }
           />
+          <Route path="recipe/:id" element={<RecipePage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
