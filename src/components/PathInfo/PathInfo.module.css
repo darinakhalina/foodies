@@ -1,0 +1,41 @@
+.path-holder {
+  margin: 0 0 40px 0;
+}
+
+@media (max-width: 767px) {
+  .path-holder {
+    margin: 0 0 32px 0;
+  }
+}
+
+.path-list {
+  display: flex;
+  gap: 8px;
+}
+
+.path-separator {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 18px;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin: 0 8px 0 0;
+}
+
+.path-link {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 18px;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--gray);
+  text-decoration: none;
+}
+
+.path-current {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 18px;
+  text-transform: uppercase;
+  color: var(--color-main);
+}
