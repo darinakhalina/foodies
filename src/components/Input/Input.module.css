@@ -1,0 +1,81 @@
+.inputWithError {
+  width: 100%;
+}
+
+.input {
+  color: #050505;
+  font-family: 'Mulish Regular', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.32px;
+  padding: 14px;
+  align-items: center;
+  border-radius: 30px;
+  border: 1px solid #bfbebe;
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+
+.input:focus {
+  outline: none;
+  border: 1px solid #050505;
+}
+
+.input:not(:placeholder-shown) {
+  border: 1px solid #050505;
+}
+
+.inputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  fill: none;
+  stroke: #050505;
+  transition: stroke 0.2s ease;
+}
+
+.eyeIcon:hover {
+  stroke: #333;
+}
+
+.error {
+  font-size: 12px;
+  color: #a10707;
+  margin-top: 4px;
+  min-height: 16px;
+}
+
+.inputError {
+  border: 1px solid #a10707 !important;
+}
+
+.inputError::placeholder {
+  color: #a10707;
+  opacity: 0.7;
+}
+
+@media (min-width: 768px) {
+  .input {
+    font-size: 16px;
+    padding: 16px 18px;
+  }
+
+  /* Для пароля додаємо відступ праворуч під іконку */
+  .input[type='password'],
+  .input[data-password='true'] {
+    padding-right: 50px;
+  }
+}
