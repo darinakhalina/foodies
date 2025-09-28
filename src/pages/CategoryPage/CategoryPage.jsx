@@ -1,29 +1,34 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
 import Filters from '../../components/Filters/Filters';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import Pagination from '../../components/Pagination/Pagination';
 import Modal from '../../components/Modal/Modal';
-import {
-  fetchRecipesByCategory,
-  getAreasForCategory,
-  getIngredientsForCategory,
-} from '../../api/mock';
+
+import { getRecipesByCategory } from '../../data/recipes';       
+import { AREAS, INGREDIENTS } from '../../data/filters';      
+
+import { selectArea, selectIngredient } from '../../redux/test/filters/selectors';
 import css from './CategoryPage.module.css';
 
 const DESCRIPTIONS = {
-  DESSERTS: 'Go on a taste journey, where every sip is a sophisticated creative chord, and every dessert is an expression of the most refined gastronomic desires.',
+  DESSERTS:
+    'Go on a taste journey, where every sip is a sophisticated creative chord, and every dessert is an expression of the most refined gastronomic desires.',
   SALADS: 'Fresh and crispy salads.',
 };
 
 export default function CategoryPage() {
-  const { category } = useParams();
+  const { category = '' } = useParams();
   const navigate = useNavigate();
+
+  // Redux filters
+  const area = useSelector(selectArea) || '';
+  const ingredient = useSelector(selectIngredient) || '';
 
   const [recipes, setRecipes] = useState([]);
   const [page, setPage] = useState(1);
-  const [area, setArea] = useState('');
-  const [ingredient, setIngredient] = useState('');
   const [authOpen, setAuthOpen] = useState(false);
   const [limit, setLimit] = useState(
     () => (typeof window !== 'undefined' && window.innerWidth < 768 ? 8 : 12)
@@ -32,17 +37,16 @@ export default function CategoryPage() {
   const isAuthed = false;
 
   useEffect(() => {
-    function onResize() {
-      setLimit(window.innerWidth < 768 ? 8 : 12);
-    }
+    const onResize = () => setLimit(window.innerWidth < 768 ? 8 : 12);
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  // fetch recipes when category changes
+  // fetch recipes for this category (sync from data util)
   useEffect(() => {
     setPage(1);
-    fetchRecipesByCategory(category).then(setRecipes);
+    const list = getRecipesByCategory(category);
+    setRecipes(list);
   }, [category]);
 
   // filters change -> reset to page 1
@@ -50,16 +54,15 @@ export default function CategoryPage() {
     setPage(1);
   }, [area, ingredient]);
 
-  // filtered list
-  const filtered = useMemo(
-    () =>
-      recipes.filter(
-        (r) =>
-          (!area || r.area === area) &&
-          (!ingredient || r.ingredients?.includes(ingredient))
-      ),
-    [recipes, area, ingredient]
-  );
+  // filter client-side using Redux values
+  const filtered = useMemo(() => {
+    const list = Array.isArray(recipes) ? recipes : [];
+    return list.filter(
+      (r) =>
+        (!area || r?.area === area) &&
+        (!ingredient || (Array.isArray(r?.ingredients) && r.ingredients.includes(ingredient)))
+    );
+  }, [recipes, area, ingredient]);
 
   // client-side pagination
   const totalPages = Math.max(1, Math.ceil(filtered.length / limit));
@@ -103,14 +106,7 @@ export default function CategoryPage() {
       <div className={css.content}>
         {/* Left: filters column */}
         <div className={css.filtersCol}>
-          <Filters
-            areas={getAreasForCategory(category)}
-            ingredients={getIngredientsForCategory(category)}
-            selectedArea={area}
-            selectedIngredient={ingredient}
-            onArea={setArea}
-            onIngredient={setIngredient}
-          />
+          <Filters areas={AREAS} ingredients={INGREDIENTS} />
         </div>
 
         {/* Right: grid + pagination */}
@@ -118,7 +114,7 @@ export default function CategoryPage() {
           <div className={css.grid}>
             {shown.map((r) => (
               <RecipeCard
-                key={r.id}
+                key={r.id ?? r.title}
                 recipe={r}
                 isAuthed={isAuthed}
                 onNeedAuth={() => setAuthOpen(true)}
