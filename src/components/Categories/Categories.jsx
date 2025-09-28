@@ -31,38 +31,39 @@ const useBreakpoint = () => {
 
 const PATTERNS = {
   mobile: ['sq'],
-  tablet: ['sq', 'sq', 'wide', 'sq', 'sq', 'sq', 'sq', 'wide'],
-  desktop: ['sq', 'sq', 'wide', 'wide', 'sq', 'sq', 'sq', 'wide', 'sq'],
+  tablet: ['sq', 'sq', 'wide', 'sq', 'sq', 'sq', 'sq', 'wide', 'sq', 'sq', 'sq', 'sq', 'wide'],
+  desktop: ['sq', 'sq', 'wide', 'wide', 'sq', 'sq', 'sq', 'wide', 'sq', 'wide', 'sq', 'sq'],
 };
 
-const CategoryCard = ({ item, shape, onOpen }) => {
-  const handleKey = e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      onOpen?.(item);
-    }
-  };
+const repeatPattern = (pattern, n) =>
+  Array.from({ length: n }, (_, i) => pattern[i % pattern.length]);
 
+const CategoryCard = ({ item, shape, onOpen }) => {
   return (
     <li className={clsx(styles.item, styles[shape])}>
-      <button
-        type="button"
-        className={styles.card}
-        onClick={() => onOpen?.(item)}
-        onKeyDown={handleKey}
-        aria-label={`Open ${item?.name} recipes`}
-      >
+      <div className={styles.card}>
         <img
           className={styles.img}
           src={item?.thumb || '/images/placeholder-category.jpg'}
           alt={item?.name || 'Category'}
           loading="lazy"
         />
-        <span className={styles.badge}>{item?.name}</span>
-        <span className={styles.arrow} aria-hidden>
-          ↗
-        </span>
-      </button>
+
+        <div className={styles.tools}>
+          <span className={styles.badge}>{item?.name}</span>
+
+          <button
+            type="button"
+            className={styles.goBtn}
+            onClick={() => onOpen?.(item)}
+            aria-label={`Show ${item?.name} recipes`}
+          >
+            <svg className={styles.icon} aria-hidden>
+              <use href="/images/icons.svg#icon-arrow-up-right" />
+            </svg>
+          </button>
+        </div>
+      </div>
     </li>
   );
 };
@@ -71,14 +72,10 @@ const Categories = ({ items = [], onOpenCategory }) => {
   const bp = useBreakpoint();
   const pattern = PATTERNS[bp] ?? PATTERNS.mobile;
 
-  const shaped = useMemo(
-    () =>
-      items.map((it, idx) => ({
-        ...it,
-        shape: pattern[idx % pattern.length],
-      })),
-    [items, pattern]
-  );
+  const shaped = useMemo(() => {
+    const shapes = repeatPattern(pattern, items.length);
+    return items.map((it, i) => ({ ...it, shape: shapes[i] }));
+  }, [items, pattern]);
 
   return (
     <section className={styles.section} aria-labelledby="categories-title">
