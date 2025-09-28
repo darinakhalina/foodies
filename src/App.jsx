@@ -6,6 +6,7 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute.jsx';
 
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const AddRecipePage = lazy(() => import('./pages/AddRecipePage/AddRecipePage'));
+const UserPage = lazy(() => import('./pages/UserPage/UserPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
 
 const App = () => {
@@ -21,6 +22,14 @@ const App = () => {
             element={
               <PrivateRoute redirectTo="/login">
                 <AddRecipePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="user/:id"
+            element={
+              <PrivateRoute redirectTo="/login">
+                <UserPage />
               </PrivateRoute>
             }
           />

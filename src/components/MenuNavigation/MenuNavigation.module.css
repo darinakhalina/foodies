@@ -1,0 +1,46 @@
+.nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.direction-row {
+  flex-direction: row;
+}
+
+.direction-column {
+  flex-direction: column;
+}
+
+.link {
+  text-decoration: none;
+  color: var(--color-main);
+  font-weight: 700;
+  text-align: center;
+  padding: 14px;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: 30px;
+}
+
+.link:hover {
+  background: var(--light-gray);
+}
+
+.active {
+  border: 1px solid var(--gray);
+}
+
+.is-inverted {
+  color: var(--white);
+  min-width: 100px;
+}
+
+.is-inverted:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.is-inverted.active {
+  color: var(--white);
+  border: 1px solid var(--white);
+}

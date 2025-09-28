@@ -1,8 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { testReducer } from './test/slice';
+
+const noopReducer = (state = {}) => state;
 
 export const store = configureStore({
-  reducer: {
-    test: testReducer,
-  },
+  reducer: noopReducer,
 });

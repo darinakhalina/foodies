@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-// for test purposes
-const baseApiUrl = 'https://jsonplaceholder.typicode.com';
+const baseApiUrl = 'https://add-app-here.com';
 
 export default axios.create({
   baseURL: baseApiUrl,
