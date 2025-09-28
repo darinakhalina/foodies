@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseApiUrl = 'https://add-app-here.com';
+const baseApiUrl = 'https://foddies-rest-api-main.onrender.com/api';
 
 export default axios.create({
   baseURL: baseApiUrl,
