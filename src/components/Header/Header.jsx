@@ -3,16 +3,18 @@ import clsx from 'clsx';
 import css from './Header.module.css';
 import useMediaQuery from '../../hooks/useMediaQuery.js';
 import MobileMenu from '../MobileMenu/MobileMenu.jsx';
+import MenuNavigation from '../MenuNavigation/MenuNavigation.jsx';
+import Logo from '../Logo/Logo.jsx';
 
 const Header = () => {
   const homePagePath = useMatch('/');
   const isMobile = useMediaQuery('(max-width: 767px)');
 
   return (
-    <header className={clsx(css['header-holder'], homePagePath && css['is-inverted'])}>
+    <header className={clsx(css['header-holder'], !!homePagePath && css['is-inverted'])}>
       <div className={clsx(css['header-container'], 'f-container')}>
-        <div>1_Logo</div>
-        {!isMobile && <div>2_Nav</div>}
+        <Logo />
+        {!isMobile && <MenuNavigation isInverted={!!homePagePath} />}
         <div className={css['header-container-actions']}>
           <div>3_USer_info</div>
           {isMobile && <MobileMenu />}
