@@ -7,11 +7,13 @@ import MenuNavigation from '../MenuNavigation/MenuNavigation.jsx';
 import Logo from '../Logo/Logo.jsx';
 import UserBar from '../UserBar/UserBar.jsx';
 import AuthBar from '../AuthBar/AuthBar.jsx';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn } from '../../redux/auth/selectors';
 
 const Header = () => {
   const homePagePath = useMatch('/');
   const isMobile = useMediaQuery('(max-width: 767px)');
-  const isUserLoggedIn = true;
+  const isUserLoggedIn = useSelector(selectIsLoggedIn);
 
   return (
     <header className={clsx(css['header-holder'], !!homePagePath && css['is-inverted'])}>
