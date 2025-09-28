@@ -50,7 +50,7 @@ export default function SignUpForm() {
             />
 
             <Button type="submit" className={styles.submitButton} disabled={isSubmitting}>
-              {isSubmitting ? 'Creating...' : 'Create Account'}
+              Create
             </Button>
           </Form>
         )}

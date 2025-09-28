@@ -12,34 +12,16 @@
 
 .submitButton {
   width: 100%;
-  padding: 16px 24px;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   line-height: 1.2;
   border-radius: 30px;
-  background: #050505;
+  background: var(--color-main);
   color: #ffffff;
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
   margin-top: 8px;
-}
-
-.submitButton:hover:not(:disabled) {
-  background: #333333;
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(5, 5, 5, 0.15);
-}
-
-.submitButton:active {
-  transform: translateY(0);
-}
-
-.submitButton:disabled {
-  background: #bfbebe;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
 }
 
 @media (min-width: 768px) {
@@ -49,7 +31,6 @@
   }
 
   .submitButton {
-    padding: 14px 115px;
     font-size: 16px;
   }
 }

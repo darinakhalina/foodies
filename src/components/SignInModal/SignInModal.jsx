@@ -10,7 +10,7 @@ const SignInModal = ({ isOpen, onClose }) => {
         <SignInForm />
       </div>
       <p className={styles.switchText}>
-        Don't have an account?{' '}
+        Don&apos;t have an account?{' '}
         <button type="button" onClick={() => {}} className={styles.switchButton}>
           Create an account
         </button>
