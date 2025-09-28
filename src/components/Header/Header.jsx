@@ -6,10 +6,8 @@ const Header = () => {
   const homePagePath = useMatch('/');
 
   return (
-    <header
-      className={clsx(css['header-container'], 'f-container', homePagePath && css['is-inverted'])}
-    >
-      Header Content
+    <header className={clsx(css['header-holder'], homePagePath && css['is-inverted'])}>
+      <div className={clsx(css['header-container'], 'f-container')}>Header Content</div>
     </header>
   );
 };
