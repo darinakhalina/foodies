@@ -13,7 +13,6 @@ const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const AddRecipePage = lazy(() => import('./pages/AddRecipePage/AddRecipePage'));
 const UserPage = lazy(() => import('./pages/UserPage/UserPage'));
 const RecipePage = lazy(() => import('./pages/RecipePage/RecipePage'));
-const DemoPage = lazy(() => import('./pages/DemoPage/DemoPage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
 
 const App = () => {
@@ -49,7 +48,6 @@ const App = () => {
           }
         />
         <Route path="recipe/:id" element={<RecipePage />} />
-        <Route path="demo" element={<DemoPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
