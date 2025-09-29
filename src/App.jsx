@@ -12,30 +12,66 @@ import { selectIsFetchingUser } from './redux/auth/selectors';
 import { fetchUser } from './redux/auth/operations';
 
 // Pages
-const UserPage = lazy(() => import('./pages/UserPage/UserPage'));
-const UserPageLayout = lazy(() => import('./pages/UserPage/UserPageLayout'));
-
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const CategoryPage = lazy(() => import('./pages/CategoryPage/CategoryPage'));
-//const TestPostPage = lazy(() => import('./pages/TestPostPage/TestPostPage'));
+const AddRecipePage = lazy(() => import('./pages/AddRecipePage/AddRecipePage'));
+const UserPage = lazy(() => import('./pages/UserPage/UserPage'));
+const UserPageLayout = lazy(() => import('./pages/UserPage/UserPageLayout'));
+const RecipePage = lazy(() => import('./pages/RecipePage/RecipePage'));
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
 
-const App = () => (
-  <Routes>
-    <Route path="/" element={<Layout />}>
-      <Route index element={<HomePage />} />
-      <Route path="category/:category" element={<CategoryPage />} />
-      <Route path="*" element={<NotFoundPage />} />
-    </Route>
-    {/* User profile */}
-    <Route path="user/:id" element={<UserPage />}>
-      <Route index element={<UserPageLayout />} />
-      <Route path="recipes" element={<UserPageLayout />} />
-      <Route path="favorites" element={<UserPageLayout />} />
-      <Route path="followers" element={<UserPageLayout />} />
-      <Route path="following" element={<UserPageLayout />} />
-    </Route>
-  </Routes>
-);
+const App = () => {
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsFetchingUser);
+
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
+
+  if (isLoading) return <Loader />;
+
+  return (
+    <Routes>
+      {/* Public home shell */}
+      <Route path="/" element={<HomePageLayout />}>
+        <Route index element={<HomePage />} />
+      </Route>
+
+      {/* Main app shell */}
+      <Route path="/" element={<Layout />}>
+        {/* Public routes */}
+        <Route path="category/:category" element={<CategoryPage />} />
+        <Route path="recipe/:id" element={<RecipePage />} />
+
+        {/* Private routes with nested user tabs */}
+        <Route
+          path="recipe/add"
+          element={
+            <PrivateRoute redirectTo="/login">
+              <AddRecipePage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="user/:id"
+          element={
+            <PrivateRoute redirectTo="/login">
+              <UserPage />
+            </PrivateRoute>
+          }
+        >
+          <Route index element={<UserPageLayout />} />
+          <Route path="recipes" element={<UserPageLayout />} />
+          <Route path="favorites" element={<UserPageLayout />} />
+          <Route path="followers" element={<UserPageLayout />} />
+          <Route path="following" element={<UserPageLayout />} />
+        </Route>
+
+        {/* 404 */}
+        <Route path="*" element={<NotFoundPage />} />
+      </Route>
+    </Routes>
+  );
+};
 
 export default App;

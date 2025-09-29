@@ -4,7 +4,7 @@ import { authReducer } from './auth/slice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 
-import { testReducer } from './test/slice';
+//import { testReducer } from './test/slice';
 import filtersReducer from './test/filters/slice';
 
 const persistAuthConfig = {
@@ -16,7 +16,7 @@ const persistAuthConfig = {
 export const store = configureStore({
   reducer: {
     auth: persistReducer(persistAuthConfig, authReducer),
-    test: testReducer,
+    //test: testReducer,
     filters: filtersReducer,
   },
   middleware: getDefaultMiddleware =>
