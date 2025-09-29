@@ -1,13 +1,27 @@
-import { useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import Button from '../Button/Button.jsx';
+import SignInModal from '../SignInModal/SignInModal.jsx';
+import SignUpModal from '../SignUpModal/SignUpModal.jsx';
 import css from './AuthBar.module.css';
 
 const AuthBar = () => {
+  const [isSignInOpen, setSignInOpen] = useState(false);
+  const [isSignUpOpen, setSignUpOpen] = useState(false);
+
   const openSignInModal = useCallback(() => {
-    console.log('Open Sign In Modal');
+    setSignInOpen(true);
   }, []);
+
   const openSignUpModal = useCallback(() => {
-    console.log('Open Sign Up Modal');
+    setSignUpOpen(true);
+  }, []);
+
+  const closeSignInModal = useCallback(() => {
+    setSignInOpen(false);
+  }, []);
+
+  const closeSignUpModal = useCallback(() => {
+    setSignUpOpen(false);
   }, []);
 
   return (
@@ -18,6 +32,9 @@ const AuthBar = () => {
       <Button variant="primary" size="sm" onClick={openSignUpModal}>
         Sign up
       </Button>
+
+      {isSignInOpen && <SignInModal isOpen={isSignInOpen} onClose={closeSignInModal} />}
+      {isSignUpOpen && <SignUpModal isOpen={isSignUpOpen} onClose={closeSignUpModal} />}
     </div>
   );
 };

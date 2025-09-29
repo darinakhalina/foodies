@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../redux/auth/operations';
-import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import { selectIsLoggedIn, selectUserError } from '../../redux/auth/selectors';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import Button from '../Button/Button';
@@ -11,7 +11,7 @@ import styles from './SignInForm.module.css';
 const SignInForm = ({ onSuccess }) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const [error, setError] = useState(null);
+  const error = useSelector(selectUserError);
 
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Email is required'),
@@ -21,11 +21,10 @@ const SignInForm = ({ onSuccess }) => {
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    setError(null);
     try {
       await dispatch(login(values)).unwrap();
     } catch (err) {
-      setError(err);
+      console.log(err);
     } finally {
       setSubmitting(false);
     }

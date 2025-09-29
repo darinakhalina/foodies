@@ -1,32 +1,33 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser, selectIsLoggedIn } from '../../redux/auth/selectors';
+import { logout } from '../../redux/auth/operations';
+import LogOutModal from '../LogOutModal/LogOutModal';
 import css from './UserBar.module.css';
 
-const mockCurrentUser = {
-  id: '123456789',
-  name: 'Jane Doe',
-  email: 'jane.doe@example.com',
-  avatar: 'https://placehold.co/64x64',
-};
-
 const UserBar = () => {
-  const user = mockCurrentUser;
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isLogoutOpen, setIsLogoutOpen] = useState(false);
   const dropdownRef = useRef(null);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const close = () => {
-    setIsOpen(false);
-  };
+  const toggleDropdown = () => setIsOpen(prev => !prev);
+  const close = () => setIsOpen(false);
 
   const handleLogoutClick = useCallback(() => {
     setIsOpen(false);
+    setIsLogoutOpen(true);
   }, []);
+
+  const confirmLogout = () => {
+    dispatch(logout());
+    setIsLogoutOpen(false);
+  };
 
   useEffect(() => {
     const handleClickOutside = event => {
@@ -34,14 +35,11 @@ const UserBar = () => {
         setIsOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  if (!user) {
+  if (!isLoggedIn || !user) {
     return null;
   }
 
@@ -84,6 +82,14 @@ const UserBar = () => {
           </button>
         </li>
       </ul>
+
+      {isLogoutOpen && (
+        <LogOutModal
+          isOpen={isLogoutOpen}
+          onClose={() => setIsLogoutOpen(false)}
+          onConfirm={confirmLogout}
+        />
+      )}
     </div>
   );
 };
