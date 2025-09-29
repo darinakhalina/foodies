@@ -1,0 +1,35 @@
+/* Mulish 500 (Medium) */
+@font-face {
+  font-family: 'Mulish';
+  src:
+    local('Mulish Medium'),
+    local('Mulish-Medium'),
+    url('/fonts/mulish/Mulish-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Mulish 600 (SemiBold) */
+@font-face {
+  font-family: 'Mulish';
+  src:
+    local('Mulish SemiBold'),
+    local('Mulish-SemiBold'),
+    url('/fonts/mulish/Mulish-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Mulish 800 (ExtraBold) */
+@font-face {
+  font-family: 'Mulish';
+  src:
+    local('Mulish ExtraBold'),
+    local('Mulish-ExtraBold'),
+    url('/fonts/mulish/Mulish-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
