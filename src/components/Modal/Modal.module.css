@@ -24,7 +24,7 @@
 
 .modal-content {
   flex: 1 1 auto;
-  padding: 0 80px;
+  padding: 0 30px;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
@@ -54,4 +54,10 @@
   width: 24px;
   height: 24px;
   color: var(--color-main);
+}
+
+@media (min-width: 768px) {
+  .modal-content {
+    padding: 0 80px;
+  }
 }
