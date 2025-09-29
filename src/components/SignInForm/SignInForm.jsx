@@ -1,10 +1,18 @@
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { login } from '../../redux/auth/operations';
+import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './SignInForm.module.css';
 
-const SignInForm = () => {
+const SignInForm = ({ onSuccess }) => {
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const [error, setError] = useState(null);
+
   const validationSchema = Yup.object({
     email: Yup.string().email('Invalid email address').required('Email is required'),
     password: Yup.string()
@@ -13,10 +21,21 @@ const SignInForm = () => {
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    // TODO: Implement signin logic
-    console.log('SignIn form submitted:', values);
-    setSubmitting(false);
+    setError(null);
+    try {
+      await dispatch(login(values)).unwrap();
+    } catch (err) {
+      setError(err);
+    } finally {
+      setSubmitting(false);
+    }
   };
+
+  useEffect(() => {
+    if (isLoggedIn && onSuccess) {
+      onSuccess();
+    }
+  }, [isLoggedIn, onSuccess]);
 
   return (
     <Formik
@@ -44,7 +63,7 @@ const SignInForm = () => {
             errors={errors}
             touched={touched}
           />
-
+          {error && <p className={styles.error}>{error}</p>}
           <div className={styles.buttonWrapper}>
             <Button type="submit" className={styles.submitButton}>
               Sign in
