@@ -2,11 +2,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Dropdown } from '../Dropdown/Dropdown';
 import css from './Filters.module.css';
 
-import { selectArea, selectIngredient } from '../../redux/test/filters/selectors';
+import { selectArea, selectIngredient } from '../../redux/filters/selectors';
 import {
   setArea as setAreaFilter,
   setIngredient as setIngredientFilter,
-} from '../../redux/test/filters/slice';
+} from '../../redux/filters/slice';
 
 const Filters = ({
   areas = [],

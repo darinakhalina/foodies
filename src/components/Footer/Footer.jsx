@@ -1,10 +1,11 @@
+import clsx from 'clsx';
 import css from './Footer.module.css';
 import { Link } from 'react-router-dom';
 import icons from '/images/icons.svg';
 
 const Footer = () => {
   return (
-    <footer className={css.footer}>
+    <footer className={clsx(css['footer'], 'f-container')}>
       <div className={css.footerTop}>
         <Link to="/">Foodies</Link>
         <ul className={css.footerSocials}>
