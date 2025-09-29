@@ -61,6 +61,7 @@
 .footerSocialsItem:focus {
   background-color: var(--dark-gray);
   fill: var(--white);
+  color: var(--white);
 }
 
 @media screen and (min-width: 375px) and (max-width: 768px) {
