@@ -44,7 +44,7 @@ const CategoryCard = ({ item, shape, onOpen }) => {
       <div className={styles.card}>
         <img
           className={styles.img}
-          src={item?.thumb || '/images/placeholder-category.jpg'}
+          src={item?.img || '/images/placeholder-category.jpg'}
           alt={item?.name || 'Category'}
           loading="lazy"
         />
