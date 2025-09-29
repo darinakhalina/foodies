@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../redux/auth/operations';
-import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import { selectIsLoggedIn, selectUserError } from '../../redux/auth/selectors';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import Button from '../Button/Button';
@@ -11,7 +11,7 @@ import styles from './SignUpForm.module.css';
 export default function SignUpForm({ onSuccess }) {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const [error, setError] = useState(null);
+  const error = useSelector(selectUserError);
 
   const validationSchema = Yup.object({
     name: Yup.string().min(3, 'Name must be at least 3 characters').required('Name is required'),
@@ -25,13 +25,13 @@ export default function SignUpForm({ onSuccess }) {
   });
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
-    setError(null);
     try {
       await dispatch(register(values)).unwrap();
       resetForm();
       if (onSuccess) onSuccess();
+      console.log('Account created successfully 🎉');
     } catch (err) {
-      setError(err);
+      console.log(err || 'Registration failed');
     } finally {
       setSubmitting(false);
     }
