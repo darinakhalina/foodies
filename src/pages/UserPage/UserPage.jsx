@@ -1,21 +1,27 @@
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useMemo } from 'react';
+
+import Subtitle from '../../components/Subtitle/Subtitle.jsx';
+import PathInfo from '../../components/PathInfo/PathInfo.jsx';
+
 import styles from './UserPage.module.css';
 import UserInfo from './components/UserInfo';
 import TabBar from './components/TabBar';
 
-// ------- Mocked data  -------
+// ------- Temporary mocked data -------
 const MOCK_USER = {
   id: 'u1',
   name: 'Victoria',
   email: 'victoria@example.com',
-  avatar: '/images/avatar-cat.png', 
+  avatar: '/images/avatar-cat.png',
   stats: { recipes: 12, favorites: 8, followers: 221, following: 97 },
 };
 
+// -------------------------------------
+
 const TABS_OWN = ['MY RECIPES', 'MY FAVORITES', 'FOLLOWERS', 'FOLLOWING'];
 const TABS_OTHER = ['RECIPES', 'FOLLOWERS', 'FOLLOWING'];
-// -------------------------------------------------
+
 
 export default function UserPage() {
   const { id } = useParams();
@@ -35,7 +41,7 @@ export default function UserPage() {
     return isOwnProfile ? 'MY RECIPES' : 'RECIPES';
   }, [location.pathname, isOwnProfile]);
 
-  const handleTabClick = (tab) => {
+  const handleTabClick = tab => {
     switch (tab) {
       case 'MY RECIPES':
       case 'RECIPES':
@@ -58,7 +64,17 @@ export default function UserPage() {
   return (
     <section className={`f-container ${styles.page}`}>
       <header className={styles.header}>
-        <h1 className={styles.title}>PROFILE</h1>
+        {/* Title from main */}
+        <Subtitle tag="h1">PROFILE</Subtitle>
+
+        {/* Breadcrumb from main */}
+        <PathInfo
+          pages={[
+            { name: 'Home', path: '/' },
+            { name: 'Profile', path: `/user/${id}` },
+          ]}
+        />
+
         <p className={styles.subtitle}>
           Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces with us.
         </p>

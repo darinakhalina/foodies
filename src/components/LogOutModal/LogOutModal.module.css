@@ -1,0 +1,107 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.title {
+  color: var(--color-main);
+  text-align: center;
+  font-family: 'Mulish Bold', sans-serif;
+  font-size: 28px;
+  line-height: 1.14;
+  letter-spacing: -0.56px;
+  text-transform: uppercase;
+  padding-bottom: 16px;
+}
+
+.text {
+  color: var(--gray);
+  text-align: center;
+  font-family: 'Mulish Regular', sans-serif;
+  font-size: 14px;
+  line-height: 1.43;
+  letter-spacing: -0.28px;
+  padding-bottom: 32px;
+}
+
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 250px;
+  width: 100%;
+}
+
+.modalButton {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  font-size: 14px;
+  line-height: 1.43;
+}
+
+.modalButtonSize {
+  padding: 12px 50px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    max-width: 401px;
+    width: 100%;
+  }
+
+  .title {
+    font-size: 0;
+    position: relative;
+    padding-bottom: 0px;
+  }
+
+  .title::after {
+    content: 'Are you logging out?';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 32px;
+    font-weight: 800;
+    line-height: 1.32;
+    color: var(--color-main);
+    text-transform: uppercase;
+    width: 400px;
+  }
+
+  .text {
+    color: var(--dark-gray);
+    font-size: 16px;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+    padding-top: 20px;
+    padding-bottom: 0;
+  }
+
+  .buttonsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    min-width: 401px;
+    width: 100%;
+  }
+  .modalButton {
+    padding: 18px 114px;
+    font-size: 15px;
+    gap: 10px;
+  }
+
+  .modalButtonSize {
+    padding: 15px 114px;
+    gap: 10px;
+  }
+}

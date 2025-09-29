@@ -5,7 +5,7 @@ const NotFoundPage = () => {
     <div className="align-block">
       <p className="text-md">Sorry, this page doesn&apos;t exist.</p>
       <p className="text-md">
-        <Link className="link" to="/">
+        <Link className="link" to="/" viewTransition>
           Go back to the homepage.
         </Link>
       </p>

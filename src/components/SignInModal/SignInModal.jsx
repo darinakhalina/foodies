@@ -1,42 +1,22 @@
+import Modal from '../Modal/Modal';
+import SignInForm from '../SignInForm/SignInForm';
 import styles from './SignInModal.module.css';
 
-export default function SignInModal() {
+const SignInModal = ({ isOpen, onClose }) => {
   return (
-    <div className={styles.modal}>
-      <h2 className={styles.title}>Sign in</h2>
-      <p className={styles.subtitle}>
-        Please log in to like recipes, view profiles, and save favorites.
-      </p>
-
-      <form className={styles.form}>
-        <label className={styles.label}>
-          Email
-          <input
-            type="email"
-            className={styles.input}
-            placeholder="you@example.com"
-            disabled
-          />
-        </label>
-
-        <label className={styles.label}>
-          Password
-          <input
-            type="password"
-            className={styles.input}
-            placeholder="••••••••"
-            disabled
-          />
-        </label>
-
-        <button type="button" className={styles.button} disabled>
-          Sign in
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <div className={styles.container}>
+        <h2 className={styles.title}>Sign In</h2>
+        <SignInForm />
+      </div>
+      <p className={styles.switchText}>
+        Don&apos;t have an account?{' '}
+        <button type="button" onClick={() => {}} className={styles.switchButton}>
+          Create an account
         </button>
-      </form>
-
-      <p className={styles.hint}>
-        Static demo only — replace with real auth flow later.
       </p>
-    </div>
+    </Modal>
   );
-}
+};
+
+export default SignInModal;

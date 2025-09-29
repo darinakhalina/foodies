@@ -1,6 +1,17 @@
 import { lazy } from 'react';
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+
 import Layout from './components/Layout/Layout';
+import HomePageLayout from './components/HomePageLayout/HomePageLayout';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import Loader from './components/Loader/Loader';
+
+import { selectIsFetchingUser } from './redux/auth/selectors';
+import { fetchUser } from './redux/auth/operations';
+
+// Pages
 const UserPage = lazy(() => import('./pages/UserPage/UserPage'));
 const UserPageLayout = lazy(() => import('./pages/UserPage/UserPageLayout'));
 

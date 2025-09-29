@@ -37,7 +37,7 @@
 
 .subtitle {
   max-width: 610px;
-  height: 68px;  
+  height: 68px;
   font-weight: 500;
   font-size: 16px;
   line-height: 1.5;
@@ -45,7 +45,7 @@
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
-  line-clamp: 2; 
+  line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 
