@@ -6,7 +6,7 @@ import SignInModal from '../SignInModal/SignInModal';
 // --- STATIC MOCK DATA (replace with backend later) ---
 const STATIC_RECIPE = {
   id: 'demo-recipe-1',
-  image: '/images/test-cake.png', 
+  image: '/images/test-cake.png',
   title: 'BAKEWELL TART',
   description:
     'Classic almond tart with raspberry jam and a delicate shortcrust — a tea-time staple.',
@@ -15,12 +15,12 @@ const STATIC_RECIPE = {
 const STATIC_AUTHOR = {
   id: 'demo-user-1',
   name: 'Ivetta',
-  avatar: '/images/test-cat.png', 
+  avatar: '/images/test-cat.png',
 };
 
 export default function RecipeCard() {
   // ---- STATIC “AUTH” + “FAVORITE” STATES ----
-  const [isAuthenticated] = useState(false); 
+  const [isAuthenticated] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
 
@@ -38,7 +38,6 @@ export default function RecipeCard() {
   const handleAuthorClick = () => {
     if (isAuthenticated) {
       // later: navigate(`/user/${author.id}`)
-      // for static: just log
       console.log('Open author profile:', author.id);
     } else {
       setIsSignInModalOpen(true);
@@ -106,7 +105,9 @@ export default function RecipeCard() {
                 title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
                 type="button"
               >
-                <img src="/images/icons/heart.svg" alt="" className={styles.icon} />
+                <svg className={styles.icon} aria-hidden="true" focusable="false">
+                  <use href="/images/icons.svg#icon-heart" />
+                </svg>
               </button>
 
               <button
@@ -115,7 +116,9 @@ export default function RecipeCard() {
                 title="View recipe"
                 type="button"
               >
-                <img src="/images/icons/arrow-up-right.svg" alt="" className={styles.icon} />
+                <svg className={styles.icon} aria-hidden="true" focusable="false">
+                  <use href="/images/icons.svg#icon-arrow-up-right" />
+                </svg>
               </button>
             </div>
           </div>
