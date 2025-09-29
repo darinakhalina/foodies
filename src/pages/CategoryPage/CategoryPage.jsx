@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import styles from './CategoryPage.module.css';
 
 import Filters from '../../components/Filters/Filters';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
@@ -89,13 +90,9 @@ export default function CategoryPage() {
           className={css.backButton}
           onClick={() => navigate(-1)}
         >
-          <img
-            src="/images/icons/arrow-back.svg"
-            alt="Back"
-            width={16}
-            height={16}
-            style={{ marginRight: 6 }}
-          />
+          <svg className={styles.icon} width="16" height="16">
+              <use href="/images/icons.svg#icon-arrow-up-right" />
+          </svg>
           Back
         </button>
 
