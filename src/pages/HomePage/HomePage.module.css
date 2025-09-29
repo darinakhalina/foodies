@@ -1,0 +1,7 @@
+.homePageUiHolder {
+  flex-grow: 1;
+  border-radius: 30px;
+  border-color: var(--color-main);
+  margin: 24px;
+  overflow: hidden;
+}

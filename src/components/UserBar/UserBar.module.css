@@ -1,0 +1,164 @@
+.user-bar-holder {
+  position: relative;
+  display: inline-block;
+  animation: fade-in 0.3s ease-in-out;
+}
+
+.profile-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--dark-gray);
+  color: var(--white);
+  border-radius: 30px;
+  border: solid 2px var(--dark-gray);
+  cursor: pointer;
+  width: 100%;
+  padding: 0 14px 0 0;
+  gap: 10px;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
+  object-fit: cover;
+}
+
+.fallback-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 30px;
+  background-color: var(--white);
+  border: 1px solid var(--dark-gray);
+  color: var(--color-main);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.username {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 18px;
+  text-transform: uppercase;
+}
+
+.icon {
+  height: 18px;
+  width: 18px;
+  fill: none;
+  stroke: var(--white);
+  transition: transform 0.2s ease-in-out;
+
+  &.is-opened {
+    transform: rotate(180deg);
+  }
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 16px);
+  left: -12px;
+  width: 150px;
+  color: var(--white);
+  border: 1px solid var(--gray);
+  background-color: var(--color-main);
+  border-radius: 16px;
+  padding: 16px;
+  display: none;
+  flex-direction: column;
+  gap: 8px;
+  animation:
+    slide-up 0.3s forwards,
+    fade-out 0.3s forwards;
+}
+
+.is-visible {
+  display: flex;
+  animation:
+    slide-down 0.3s forwards,
+    fade-in 0.3s forwards;
+}
+
+.dropdown-menu-button,
+.dropdown-menu-link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  color: var(--white);
+  text-align: left;
+  cursor: pointer;
+  background-color: var(--color-main);
+  border: none;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 18px;
+  padding: 0;
+  text-decoration: none;
+}
+
+.dropdown-menu-button:hover,
+.dropdown-menu-link:hover {
+  text-decoration: underline;
+}
+
+.dropdown-menu-button-icon {
+  height: 14px;
+  width: 14px;
+  stroke: var(--white);
+  margin-left: 4px;
+}
+
+@media (max-width: 767px) {
+  .avatar,
+  .fallback-avatar {
+    width: 32px;
+    height: 32px;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    display: block;
+    opacity: 1;
+  }
+
+  to {
+    display: none;
+    opacity: 0;
+  }
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-20%) scale(0.8);
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(0) scale(1);
+  }
+
+  to {
+    transform: translateY(-20%) scale(0.8);
+  }
+}

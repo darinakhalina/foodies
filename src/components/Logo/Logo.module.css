@@ -1,0 +1,19 @@
+.logo {
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.2;
+  text-decoration: none;
+  text-transform: lowercase;
+  color: var(--color-main);
+}
+
+.logo.is-inverted {
+  color: var(--white);
+}
+
+@media screen and (min-width: 768px) {
+  .logo {
+    font-size: 28px;
+    line-height: 1.16;
+  }
+}

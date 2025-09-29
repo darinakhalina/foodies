@@ -1,3 +1,159 @@
 .hero {
-  background-color: var(--gray);
+  background-color: var(--color-main);
+}
+
+.containerHero {
+  max-width: 375px;
+  padding: 140px 16px 100px 16px;
+  margin: 0 auto;
+}
+
+.heroTitle {
+  font-family: 'Mulish Bold';
+  font-weight: 800;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 40px;
+  line-height: 1;
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+.heroText {
+  font-family: 'Mulish Regular';
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  text-align: center;
+  color: var(--white);
+}
+
+.heroBtn {
+  display: flex;
+  cursor: pointer;
+  border: 1px solid var(--dark-gray);
+  border-radius: 30px;
+  padding: 12px 24px;
+  background-color: var(--white);
+  margin: 0 auto;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  transition-property: background-color, border-color, color;
+  transition-duration: 250ms, 250ms, 250ms;
+  transition-timing-function: ease-in-out, ease-in-out, ease-in-out;
+}
+
+.heroBtn:hover,
+.heroBtn:focus {
+  background-color: var(--main);
+  border-color: var(--color-main);
+  color: var(--main);
+}
+
+.heroBtn:hover,
+.heroBtn:focus > .heroLink {
+  color: var(--white);
+}
+
+.heroLink {
+  display: block;
+  font-family: 'Mulish Medium';
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--main);
+  letter-spacing: -0.02em;
+}
+
+.wrapImg {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.wrapDessert {
+  width: 77px;
+  height: 70px;
+  border-radius: 15px;
+  transform: rotate(11deg);
+  overflow: hidden;
+}
+
+.wrapRulet {
+  width: 190px;
+  height: 172px;
+  border-radius: 30px;
+  transform: rotate(-12deg);
+  overflow: hidden;
+}
+
+.wrapDessert img,
+.wrapRulet img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media screen and (min-width: 375px) {
+  .heroText {
+    width: 326px;
+  }
+  .wrapImg {
+    gap: 20px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .containerHero {
+    max-width: 762px;
+    padding: 151px 29px 90px 29px;
+    margin: 0 auto;
+  }
+  .heroTitle {
+    font-size: 70px;
+    margin-bottom: 40px;
+  }
+  .heroText {
+    font-size: 16px;
+    width: 577px;
+    margin-bottom: 40px;
+    line-height: 1.5;
+  }
+  .heroBtn {
+    font-size: 16px;
+    padding: 16px 32px;
+    line-height: 1.5;
+  }
+  .wrapDessert {
+    width: 128px;
+    height: 116px;
+  }
+  .wrapRulet {
+    width: 302px;
+    height: 273px;
+  }
+  .wrapImg {
+    gap: 30px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .containerHero {
+    max-width: 1440px;
+    padding-left: 80px;
+    padding-right: 80px;
+    padding-top: 88px;
+  }
+  .heroTitle {
+    width: 875px;
+    font-size: 90px;
+    line-height: 1;
+  }
+  .heroBtn {
+    margin-bottom: 30px;
+  }
 }

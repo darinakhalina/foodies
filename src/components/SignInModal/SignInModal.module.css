@@ -1,0 +1,45 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.title {
+  font-family: 'Mulish Bold', sans-serif;
+  font-size: 28px;
+  line-height: 1.14;
+  color: var(--color-main);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.switchText {
+  font-family: 'Mulish Regular', sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--gray);
+  padding-top: 16px;
+  text-align: center;
+}
+
+.switchButton {
+  background: none;
+  border: none;
+  color: var(--color-main);
+  cursor: pointer;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 32px;
+    line-height: 1.25;
+    letter-spacing: -0.64px;
+  }
+
+  .switchText {
+    font-size: 14px;
+    line-height: 1.28;
+  }
+}
