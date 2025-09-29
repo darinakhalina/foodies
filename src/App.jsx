@@ -35,7 +35,7 @@ const App = () => {
         <Route
           path="recipe/add"
           element={
-            <PrivateRoute redirectTo="/login">
+            <PrivateRoute>
               <AddRecipePage />
             </PrivateRoute>
           }
