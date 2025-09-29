@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import css from './Hero.module.css';
 import dessert from '../../assets/heroIMG/dessert.webp';
 import rulet from '../../assets/heroIMG/rulet.webp';
@@ -12,7 +13,9 @@ const Hero = () => {
           tastes of various cuisines.
         </p>
         <button className={css.heroBtn} type="button">
-          Add Recipe
+          <Link className={css.heroLink} to={'/recipe/add'}>
+            Add Recipe
+          </Link>
         </button>
         <div className={css.wrapImg}>
           <div className={css.wrapDessert}>

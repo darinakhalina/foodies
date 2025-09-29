@@ -1,15 +1,17 @@
 import Subtitle from '../../components/Subtitle/Subtitle.jsx';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import PathInfo from '../../components/PathInfo/PathInfo.jsx';
 
-const AddRecipePage = () => {
+const UserPage = () => {
+  const { id } = useParams();
+
   return (
     <section className="f-container">
-      <Subtitle tag={'h1'}>Add Recipe Page</Subtitle>
+      <Subtitle tag={'h1'}>User Page</Subtitle>
       <PathInfo
         pages={[
           { name: 'Home', path: '/' },
-          { name: 'Add Recipe', path: '/recipe/add' },
+          { name: 'Profile', path: `user/${id}` },
         ]}
       />
       <p>
@@ -21,4 +23,4 @@ const AddRecipePage = () => {
   );
 };
 
-export default AddRecipePage;
+export default UserPage;

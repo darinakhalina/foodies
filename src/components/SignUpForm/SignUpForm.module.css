@@ -1,0 +1,36 @@
+.formWrapper {
+  width: 100%;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  padding-top: 32px;
+  width: 100%;
+}
+
+.submitButton {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  border-radius: 30px;
+  background: var(--color-main);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+}
+
+@media (min-width: 768px) {
+  .form {
+    padding-top: 40px;
+    max-width: 401px;
+  }
+
+  .submitButton {
+    font-size: 16px;
+  }
+}
