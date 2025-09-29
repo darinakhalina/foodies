@@ -9,7 +9,7 @@ const initialState = {
   isFetchingUser: false,
 };
 
-const authorizationCase = (state, action) => {
+const authorization = (state, action) => {
   const { token, user } = action.payload;
   if (token) {
     state.user = user;
@@ -24,8 +24,8 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(login.fulfilled, authorizationCase)
-      .addCase(register.fulfilled, authorizationCase)
+      .addCase(login.fulfilled, authorization)
+      .addCase(register.fulfilled, () => {})
       .addCase(logout.fulfilled, state => {
         state.user = null;
         state.token = null;

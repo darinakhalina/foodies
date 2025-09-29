@@ -11,7 +11,11 @@ export const register = createAsyncThunk('auth/register', async (user, { rejectW
 
 export const login = createAsyncThunk('auth/login', async (user, { rejectWithValue }) => {
   try {
-    return await usersLogin(user);
+    const { token } = await usersLogin(user);
+
+    const fullUser = await fetchCurrentUser(token);
+
+    return { token, user: fullUser };
   } catch (error) {
     return rejectWithValue(error.response?.data?.message || error.message || 'Server error');
   }
