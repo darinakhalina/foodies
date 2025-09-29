@@ -10,7 +10,7 @@ import Modal from '../../components/Modal/Modal';
 import { getRecipesByCategory } from '../../data/recipes';       
 import { AREAS, INGREDIENTS } from '../../data/filters';      
 
-import { selectArea, selectIngredient } from '../../redux/test/filters/selectors';
+import { selectArea, selectIngredient } from '../../redux/filters/selectors';
 import css from './CategoryPage.module.css';
 
 const DESCRIPTIONS = {
