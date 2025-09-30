@@ -8,8 +8,8 @@ import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import Pagination from '../../components/Pagination/Pagination';
 import Modal from '../../components/Modal/Modal';
 
-import { getRecipesByCategory } from '../../data/recipes';       
-import { AREAS, INGREDIENTS } from '../../data/filters';      
+import { getRecipesByCategory } from '../../data/recipes';
+import { AREAS, INGREDIENTS } from '../../data/filters';
 
 import { selectArea, selectIngredient } from '../../redux/filters/selectors';
 import css from './CategoryPage.module.css';
@@ -31,8 +31,8 @@ export default function CategoryPage() {
   const [recipes, setRecipes] = useState([]);
   const [page, setPage] = useState(1);
   const [authOpen, setAuthOpen] = useState(false);
-  const [limit, setLimit] = useState(
-    () => (typeof window !== 'undefined' && window.innerWidth < 768 ? 8 : 12)
+  const [limit, setLimit] = useState(() =>
+    typeof window !== 'undefined' && window.innerWidth < 768 ? 8 : 12
   );
 
   const isAuthed = false;
@@ -59,7 +59,7 @@ export default function CategoryPage() {
   const filtered = useMemo(() => {
     const list = Array.isArray(recipes) ? recipes : [];
     return list.filter(
-      (r) =>
+      r =>
         (!area || r?.area === area) &&
         (!ingredient || (Array.isArray(r?.ingredients) && r.ingredients.includes(ingredient)))
     );
@@ -85,13 +85,9 @@ export default function CategoryPage() {
     <div className={`f-container ${css.wrapper}`} id="paginationAnchor">
       {/* Header (Back + Title + Description) */}
       <div className={css.headerBlock}>
-        <button
-          type="button"
-          className={css.backButton}
-          onClick={() => navigate(-1)}
-        >
+        <button type="button" className={css.backButton} onClick={() => navigate(-1)}>
           <svg className={styles.icon} width="16" height="16">
-              <use href="/images/icons.svg#icon-arrow-up-right" />
+            <use href="/images/icons.svg#icon-arrow-up-right" />
           </svg>
           Back
         </button>
@@ -109,7 +105,7 @@ export default function CategoryPage() {
         {/* Right: grid + pagination */}
         <div>
           <div className={css.grid}>
-            {shown.map((r) => (
+            {shown.map(r => (
               <RecipeCard
                 key={r.id ?? r.title}
                 recipe={r}

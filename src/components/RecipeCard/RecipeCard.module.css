@@ -65,7 +65,7 @@
   font-size: 14px;
   line-height: 20px;
   letter-spacing: -0.02em;
-  color: #1A1A1A;
+  color: #1a1a1a;
   margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -114,7 +114,7 @@
   width: 40px;
   height: 40px;
   border-radius: 30px;
-  background-color: #BFBEBE;
+  background-color: #bfbebe;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -132,7 +132,7 @@
   font-size: 14px;
   line-height: 24px;
   letter-spacing: -0.02em;
-  color: #1A1A1A;
+  color: #1a1a1a;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -150,7 +150,7 @@
   width: 42px;
   height: 42px;
   border-radius: 30px;
-  border: 1px solid #BFBEBE;
+  border: 1px solid #bfbebe;
   flex: 0 0 auto;
   place-items: center;
   padding: 0;
@@ -162,7 +162,7 @@
 
 .iconButton:hover {
   background: transparent;
-  border-color: #BFBEBE;
+  border-color: #bfbebe;
 }
 
 .icon {
@@ -191,41 +191,41 @@
     width: 342px;
     height: 427px;
   }
-  
+
   .imageContainer {
     height: 275px;
     border-radius: 30px;
   }
-  
+
   .title {
     font-size: 19px;
     line-height: 24px;
     max-width: 342px;
   }
-  
+
   .description {
     font-size: 15px;
     line-height: 24px;
   }
-  
+
   .footer {
     gap: 8px;
     flex-wrap: nowrap;
   }
-  
+
   .author {
     max-width: 140px;
   }
-  
+
   .authorName {
     font-size: 16px;
     max-width: 80px;
   }
-  
+
   .actions {
     width: 88px;
   }
-  
+
   .iconButton {
     width: 42px;
     height: 42px;
@@ -239,19 +239,19 @@
     width: 290px;
     height: 427px;
   }
-  
+
   .title {
     font-size: 20px;
   }
-  
+
   .description {
     font-size: 16px;
   }
-  
+
   .author {
     max-width: 120px;
   }
-  
+
   .authorName {
     max-width: 60px;
   }

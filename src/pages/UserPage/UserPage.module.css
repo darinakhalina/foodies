@@ -35,7 +35,6 @@ h1 {
   color: #050505;
 }
 
-
 .subtitle {
   max-width: 100%;
   height: 40px;
@@ -58,12 +57,14 @@ h1 {
 
 /* Tablet */
 @media (min-width: 768px) {
-  .layout { gap: 40px; }
+  .layout {
+    gap: 40px;
+  }
   .subtitle {
     max-width: 443px;
     height: 48px;
     font-size: 16px;
-}
+  }
 }
 
 /* Desktop */
@@ -78,8 +79,8 @@ h1 {
     font-size: 16px;
   }
   h1 {
-  padding-bottom: 20px;
-}
+    padding-bottom: 20px;
+  }
 }
 
 .sidebar {
