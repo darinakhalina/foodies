@@ -1,4 +1,3 @@
-// src/pages/UserPage/components/MyRecipes.jsx
 import UserRecipeRow from '../../../components/UserRecipeRow/UserRecipeRow';
 
 export default function MyRecipes() {
