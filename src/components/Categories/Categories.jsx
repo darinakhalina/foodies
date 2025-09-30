@@ -130,7 +130,12 @@ const Categories = ({ onOpenCategory }) => {
   if (status === 'error') {
     return (
       <section className={styles.section}>
-        <p>Error: {err}</p>
+        <div className={styles.errorBox}>
+          <p className={styles.errorMessage}>Oops! Something went wrong: {err}</p>
+          <button className={styles.retryBtn} onClick={() => window.location.reload()}>
+            Try again
+          </button>
+        </div>
       </section>
     );
   }
