@@ -1,0 +1,144 @@
+.wrapper {
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 16px;
+  max-width: 100%;
+}
+
+.headerBlock {
+  margin-bottom: 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.backButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--black-color, #050505);
+  text-transform: uppercase;
+}
+
+.icon {
+  transform: rotate(225deg);
+}
+
+.description {
+  max-width: 540px;
+  height: 48px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1a1a1a;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;       /* for Safari/Chrome */
+  display: box;               /* older spec */
+  -webkit-line-clamp: 2;      /* WebKit-based browsers */
+  line-clamp: 2;              /* standard syntax */
+  -webkit-box-orient: vertical;
+  box-orient: vertical;
+  margin-bottom: 40px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column; 
+  gap: 20px;
+}
+
+.filtersBar {
+  width: 100%;
+  display: flex;
+  flex-direction: column; 
+  gap: 12px;
+}
+
+.main {
+  width: 100%;
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1fr; 
+  justify-content: center;
+}
+
+.pagination {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+}
+
+
+/* Adaptive mobile (≥375px) */
+@media (min-width: 375px) {
+  .wrapper {
+    padding: 20px;
+  }
+}
+
+/* Планшет*/
+@media (min-width: 768px){
+  .wrapper {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .filtersBar {
+    flex-direction: row;   
+    gap: 16px;
+  }
+  .filtersBar > * {
+    flex: 1 1 0; 
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 345px);  
+    gap: 14px;          
+    justify-content: start; 
+  }
+}
+
+/* Desktop */
+@media (min-width: 1440px) {
+  .wrapper {
+    max-width: 1280px;
+  }
+
+  .content {
+    display: grid;
+    grid-template-columns: 330px 1fr; 
+    column-gap: 40px;
+    align-items: start;
+  }
+
+  .filtersBar {
+    width: 330px;
+    min-width: 330px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 290px);
+    gap: 20px;    
+    justify-content: end;
+  }
+
+  .pagination {
+    grid-column: 2;  
+    justify-content: center;
+  }
+}

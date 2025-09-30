@@ -1,0 +1,86 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  margin-bottom: 32px;
+  align-items: center;
+}
+
+.filters > * {
+  width: 343px;
+  max-width: 100%;
+}
+
+/* Планшет */
+@media (min-width: 768px) and (max-width: 1439px) {
+  .filters {
+    flex-direction: row;
+    gap: 16px;
+  }
+  .filters > * {
+    flex: 1 1 0;
+  }
+}
+/* Desktop */
+@media (min-width: 1440px) {
+  .filters {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.selectWrap {
+  position: relative;
+  display: block;
+  width: 330px;
+  height: 56px;
+}
+
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 44px;                 
+  padding: 0 44px 0 16px;      
+  border: 1px solid #e8e8e8;
+  border-radius: 14px; 
+  background: #fff;
+  color: #050505;
+  font-family: 'Mulish', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  line-height: 44px; 
+  outline: none;
+  transition: box-shadow .15s ease, border-color .15s ease;
+}
+
+.selectWrap::after {
+  content: "";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+/* hover/focus states */
+.select:hover {
+  border-color: #d9d9d9;
+}
+.select:focus {
+  border-color: #bfbebe;
+  box-shadow: 0 0 0 3px rgba(5, 5, 5, 0.06);
+}
+
+.select option[value=""] {
+  color: #7a7a7a;
+}

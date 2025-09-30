@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../redux/auth/operations';
-import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import { selectIsLoggedIn, selectUserError } from '../../redux/auth/selectors';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import toast from 'react-hot-toast';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import styles from './SignInForm.module.css';
@@ -11,21 +12,23 @@ import styles from './SignInForm.module.css';
 const SignInForm = ({ onSuccess }) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const [error, setError] = useState(null);
+  const error = useSelector(selectUserError);
+
+  const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
   const validationSchema = Yup.object({
-    email: Yup.string().email('Invalid email address').required('Email is required'),
+    email: Yup.string().matches(emailRegexp, 'Invalid email address').required('Email is required'),
     password: Yup.string()
       .min(6, 'Password must be at least 6 characters')
       .required('Password is required'),
   });
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    setError(null);
     try {
       await dispatch(login(values)).unwrap();
+      toast.success('Welcome back!');
     } catch (err) {
-      setError(err);
+      toast.error(err?.message || 'Invalid email or password');
     } finally {
       setSubmitting(false);
     }

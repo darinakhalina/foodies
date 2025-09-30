@@ -1,32 +1,34 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser, selectIsLoggedIn } from '../../redux/auth/selectors';
+import { logout } from '../../redux/auth/operations';
+import { openLogout, closeLogout } from '../../redux/modal/slice';
+import LogOutModal from '../LogOutModal/LogOutModal';
 import css from './UserBar.module.css';
 
-const mockCurrentUser = {
-  id: '123456789',
-  name: 'Jane Doe',
-  email: 'jane.doe@example.com',
-  avatar: 'https://placehold.co/64x64',
-};
-
 const UserBar = () => {
-  const user = mockCurrentUser;
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLogoutOpen = useSelector(state => state.modal.isLogoutOpen);
 
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // тільки для дропдауну
   const dropdownRef = useRef(null);
 
-  const toggleDropdown = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const close = () => {
-    setIsOpen(false);
-  };
+  const toggleDropdown = () => setIsOpen(prev => !prev);
+  const close = () => setIsOpen(false);
 
   const handleLogoutClick = useCallback(() => {
     setIsOpen(false);
-  }, []);
+    dispatch(openLogout());
+  }, [dispatch]);
+
+  const confirmLogout = () => {
+    dispatch(logout());
+    dispatch(closeLogout());
+  };
 
   useEffect(() => {
     const handleClickOutside = event => {
@@ -34,14 +36,11 @@ const UserBar = () => {
         setIsOpen(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  if (!user) {
+  if (!isLoggedIn || !user) {
     return null;
   }
 
@@ -84,6 +83,14 @@ const UserBar = () => {
           </button>
         </li>
       </ul>
+
+      {isLogoutOpen && (
+        <LogOutModal
+          isOpen={isLogoutOpen}
+          onClose={() => dispatch(closeLogout())}
+          onConfirm={confirmLogout}
+        />
+      )}
     </div>
   );
 };
