@@ -6,6 +6,8 @@ import styles from './Categories.module.css';
 
 import { cdnCategoryImg, cdnPlaceholder } from '../../utils/cdn';
 import useBreakpoint from '../../hooks/useBreakpoint';
+import MainTitle from '../MainTitle/MainTitle';
+import Subtitle from '../Subtitle/Subtitle';
 
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
@@ -27,6 +29,7 @@ const CategoryCard = ({ item, shape }) => {
   const [step, setStep] = useState(0);
 
   const navigate = useNavigate();
+
   const handleClick = () => {
     navigate(`/category/${item.name.toLowerCase().replace(/\s+/g, '-')}`);
   };
@@ -140,13 +143,13 @@ const Categories = () => {
   return (
     <section className={styles.section} aria-labelledby="categories-title">
       <div>
-        <h2 id="categories-title" className={styles.title}>
+        <MainTitle id="categories-title" className={styles.title}>
           Categories
-        </h2>
-        <p className={styles.subtitle}>
+        </MainTitle>
+        <Subtitle className={styles.subtitle}>
           Discover a limitless world of culinary possibilities and enjoy exquisite recipes that
           combine taste, style and the warm atmosphere of the kitchen.
-        </p>
+        </Subtitle>
 
         <ul className={styles.grid}>
           {visibleItems.map(it => (
