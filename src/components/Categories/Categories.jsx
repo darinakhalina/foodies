@@ -15,7 +15,7 @@ const slugify = (s = '') =>
 const cdnUrl = name =>
   `https://res.cloudinary.com/${CLOUD}/image/upload/w_343,h_250,c_fill,q_auto,f_auto/foodies/categories/${slugify(
     name
-  )}.jpg`;
+  )}`;
 
 const NO_PHOTO = `https://res.cloudinary.com/${CLOUD}/image/upload/w_343,h_250,c_fill,q_auto,f_auto/foodies/placeholders/category.png`;
 
@@ -54,7 +54,7 @@ const LIMITS = {
 };
 
 const CategoryCard = ({ item, shape, onOpen }) => {
-  const [src, setSrc] = useState(item?.img || cdnUrl(item?.name));
+  const [src, setSrc] = useState(item?.img ? item.img : cdnUrl(item?.name));
   const navigate = useNavigate();
   const handleClick = () => {
     navigate(`/category/${slugify(item.name)}`);
