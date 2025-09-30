@@ -12,10 +12,22 @@ export default function UserInfo({ user, isOwnProfile }) {
       </div>
 
       <ul className={styles.stats}>
-        <li><span>Recipes</span><strong>{user.stats.recipes}</strong></li>
-        <li><span>Favorites</span><strong>{user.stats.favorites}</strong></li>
-        <li><span>Followers</span><strong>{user.stats.followers}</strong></li>
-        <li><span>Following</span><strong>{user.stats.following}</strong></li>
+        <li>
+          <span>Recipes</span>
+          <strong>{user.stats.recipes}</strong>
+        </li>
+        <li>
+          <span>Favorites</span>
+          <strong>{user.stats.favorites}</strong>
+        </li>
+        <li>
+          <span>Followers</span>
+          <strong>{user.stats.followers}</strong>
+        </li>
+        <li>
+          <span>Following</span>
+          <strong>{user.stats.following}</strong>
+        </li>
       </ul>
 
       <button className={styles.logout} type="button">

@@ -1,6 +1,6 @@
 .wrapper {
   position: relative;
-  width: 330px;   
+  width: 330px;
 }
 
 .toggle {
@@ -28,7 +28,9 @@
   flex: 0 0 18px;
   transition: transform 160ms ease;
 }
-.rotate { transform: rotate(180deg); }
+.rotate {
+  transform: rotate(180deg);
+}
 
 /*opened menu*/
 .menu {
@@ -44,10 +46,10 @@
   background: #fff;
   border-radius: 16px;
   box-shadow:
-    0 2px 6px rgba(0,0,0,0.05),
-    0 12px 24px rgba(0,0,0,0.06);
+    0 2px 6px rgba(0, 0, 0, 0.05),
+    0 12px 24px rgba(0, 0, 0, 0.06);
 
-  padding: 8px 0;        /* space before/after items */
+  padding: 8px 0; /* space before/after items */
   margin: 0;
   list-style: none;
   border: 1px solid #efefef;
@@ -62,7 +64,9 @@
   cursor: pointer;
   user-select: none;
 }
-.item:hover { background: #f5f5f5; }
+.item:hover {
+  background: #f5f5f5;
+}
 
 /* Visually disabled options (not clickable) */
 .disabled {
@@ -72,5 +76,7 @@
 }
 
 @media (max-width: 767px) {
-  .wrapper { width: 100%; }
+  .wrapper {
+    width: 100%;
+  }
 }

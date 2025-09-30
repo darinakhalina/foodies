@@ -23,31 +23,28 @@ const Filters = ({
   const areaFromRedux = useSelector(selectArea);
   const ingredientFromRedux = useSelector(selectIngredient);
 
-  const effectiveArea =
-    typeof selectedArea !== 'undefined' ? selectedArea : areaFromRedux;
+  const effectiveArea = typeof selectedArea !== 'undefined' ? selectedArea : areaFromRedux;
   const effectiveIngredient =
-    typeof selectedIngredient !== 'undefined'
-      ? selectedIngredient
-      : ingredientFromRedux;
+    typeof selectedIngredient !== 'undefined' ? selectedIngredient : ingredientFromRedux;
 
-  const handleAreaChange = (val) => {
+  const handleAreaChange = val => {
     if (onArea) onArea(val);
     else dispatch(setAreaFilter(val));
   };
 
-  const handleIngredientChange = (val) => {
+  const handleIngredientChange = val => {
     if (onIngredient) onIngredient(val);
     else dispatch(setIngredientFilter(val));
   };
 
   const ingredientOptions = [
     { value: '', label: 'Ingredients' },
-    ...ingredients.map((name) => ({ value: name, label: name })),
+    ...ingredients.map(name => ({ value: name, label: name })),
   ];
 
   const areaOptions = [
     { value: '', label: 'Area' },
-    ...areas.map((name) => ({ value: name, label: name })),
+    ...areas.map(name => ({ value: name, label: name })),
   ];
 
   return (
@@ -56,7 +53,7 @@ const Filters = ({
         options={ingredientOptions}
         placeholder="Ingredients"
         value={effectiveIngredient}
-        onChange={(opt) => handleIngredientChange(opt.value)}
+        onChange={opt => handleIngredientChange(opt.value)}
         availableOptions={availableIngredients}
       />
 
@@ -64,7 +61,7 @@ const Filters = ({
         options={areaOptions}
         placeholder="Area"
         value={effectiveArea}
-        onChange={(opt) => handleAreaChange(opt.value)}
+        onChange={opt => handleAreaChange(opt.value)}
         availableOptions={availableAreas}
       />
     </div>

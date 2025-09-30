@@ -23,12 +23,12 @@ export default function UserRecipeRow({
               onClick={onLike}
             >
               <svg className={styles.icon} aria-hidden="true" focusable="false">
-                  <use href="/images/icons.svg#icon-arrow-up-right" />
+                <use href="/images/icons.svg#icon-arrow-up-right" />
               </svg>
             </button>
             <button type="button" className={styles.actionBtn} onClick={onOpen}>
               <svg className={styles.icon} aria-hidden="true" focusable="false">
-                  <use href="/images/icons.svg#icon-trash" />
+                <use href="/images/icons.svg#icon-trash" />
               </svg>
             </button>
           </div>

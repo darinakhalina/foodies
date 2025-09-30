@@ -77,4 +77,17 @@
     <symbol id="icon-arrow-down" viewBox="0 0 1536 1024">
         <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="230.4" d="m192 224 576 576 576-576"/>
     </symbol>
+
+    <symbol id="icon-chevron-down" viewBox="0 0 32 32">
+        <path fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-width="3.2" d="m8 12 8 8 8-8"/>
+    </symbol>
+
+    <symbol id="icon-chevron-up" viewBox="0 0 32 32">
+        <path fill="none" stroke-linejoin="round" stroke-linecap="round" stroke-width="3.2" d="m8 20 8-8 8 8"/>
+    </symbol>
+
+    <symbol id="icon-close" viewBox="0 0 24 24">
+        <path d="M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
 </svg>
