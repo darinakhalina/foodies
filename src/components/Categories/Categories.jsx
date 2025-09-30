@@ -24,10 +24,8 @@ const LIMITS = {
 };
 
 const CategoryCard = ({ item, shape }) => {
-  const initialSrc = cdnCategoryImg(item?.img, item?.name);
-  const [src, setSrc] = useState(initialSrc);
+  const [src, setSrc] = useState(cdnCategoryImg(item?.img, item?.name));
   const [step, setStep] = useState(0);
-
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -76,7 +74,7 @@ const Categories = () => {
   const [items, setItems] = useState([]);
   const [status, setStatus] = useState('loading');
   const [err, setErr] = useState('');
-  const [showAll, setShowAll] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -122,7 +120,7 @@ const Categories = () => {
   }, [items, bp]);
 
   const limit = LIMITS[bp] ?? LIMITS.mobile;
-  const visibleItems = showAll ? shaped : shaped.slice(0, limit);
+  const visibleItems = shaped.slice(0, limit);
 
   if (status === 'loading') {
     return (
@@ -156,37 +154,16 @@ const Categories = () => {
             <CategoryCard key={it.id} item={it} shape={it.shape} />
           ))}
 
-          {!showAll && items.length > limit && (
-            <li className={clsx(styles.item, styles.sq, styles.all)}>
-              <button
-                type="button"
-                className={styles.allBtn}
-                onClick={async () => {
-                  try {
-                    setStatus('loading');
-                    const res = await fetch(`${API_BASE}/api/categories?all=true`);
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                    const json = await res.json();
-                    const data = (json?.data ?? []).map(c => ({
-                      id: c.id,
-                      name: c.name,
-                      img: c.img || '',
-                    }));
-                    setItems(data);
-                    setShowAll(true);
-                    setStatus('ready');
-                  } catch (e) {
-                    setErr(e.message || 'Request failed');
-                    setStatus('error');
-                    toast.error(`Failed to load all categories: ${e.message}`);
-                  }
-                }}
-                aria-label="Show all categories"
-              >
-                All categories
-              </button>
-            </li>
-          )}
+          <li className={clsx(styles.item, styles.sq, styles.all)}>
+            <button
+              type="button"
+              className={styles.allBtn}
+              onClick={() => navigate('/category/all')}
+              aria-label="Show all categories"
+            >
+              All categories
+            </button>
+          </li>
         </ul>
       </div>
     </section>
