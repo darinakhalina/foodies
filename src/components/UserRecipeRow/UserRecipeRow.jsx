@@ -22,10 +22,14 @@ export default function UserRecipeRow({
               aria-pressed={liked}
               onClick={onLike}
             >
-              <img src="/images/icons/arrow-up-right.svg" alt="like" />
+              <svg className={styles.icon} aria-hidden="true" focusable="false">
+                  <use href="/images/icons.svg#icon-arrow-up-right" />
+              </svg>
             </button>
             <button type="button" className={styles.actionBtn} onClick={onOpen}>
-              <img src="/images/icons/trash.svg" alt="open" />
+              <svg className={styles.icon} aria-hidden="true" focusable="false">
+                  <use href="/images/icons.svg#icon-trash" />
+              </svg>
             </button>
           </div>
         </div>
