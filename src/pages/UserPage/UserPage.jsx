@@ -22,14 +22,13 @@ const MOCK_USER = {
 const TABS_OWN = ['MY RECIPES', 'MY FAVORITES', 'FOLLOWERS', 'FOLLOWING'];
 const TABS_OTHER = ['RECIPES', 'FOLLOWERS', 'FOLLOWING'];
 
-
 export default function UserPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // For now: show "own profile" UI if id === "me"
-  const isOwnProfile = id === 'me';
+  // For now: show "own profile" UI if id === "23"
+  const isOwnProfile = id === '23';
   const tabs = isOwnProfile ? TABS_OWN : TABS_OTHER;
 
   const activeTab = useMemo(() => {
@@ -64,9 +63,6 @@ export default function UserPage() {
   return (
     <section className={`f-container ${styles.page}`}>
       <header className={styles.header}>
-        {/* Title from main */}
-        <Subtitle tag="h1">PROFILE</Subtitle>
-
         {/* Breadcrumb from main */}
         <PathInfo
           pages={[
@@ -75,8 +71,12 @@ export default function UserPage() {
           ]}
         />
 
+        {/* Title from main */}
+        <Subtitle tag="h1">PROFILE</Subtitle>
+
         <p className={styles.subtitle}>
-          Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces with us.
+          Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces
+          with us.
         </p>
       </header>
 

@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser, selectIsLoggedIn } from '../../redux/auth/selectors';
 import { logout } from '../../redux/auth/operations';
+import { openLogout, closeLogout } from '../../redux/modal/slice';
 import LogOutModal from '../LogOutModal/LogOutModal';
 import css from './UserBar.module.css';
 
@@ -11,9 +12,9 @@ const UserBar = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLogoutOpen = useSelector(state => state.modal.isLogoutOpen);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLogoutOpen, setIsLogoutOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false); // тільки для дропдауну
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => setIsOpen(prev => !prev);
@@ -21,12 +22,12 @@ const UserBar = () => {
 
   const handleLogoutClick = useCallback(() => {
     setIsOpen(false);
-    setIsLogoutOpen(true);
-  }, []);
+    dispatch(openLogout());
+  }, [dispatch]);
 
   const confirmLogout = () => {
     dispatch(logout());
-    setIsLogoutOpen(false);
+    dispatch(closeLogout());
   };
 
   useEffect(() => {
@@ -86,7 +87,7 @@ const UserBar = () => {
       {isLogoutOpen && (
         <LogOutModal
           isOpen={isLogoutOpen}
-          onClose={() => setIsLogoutOpen(false)}
+          onClose={() => dispatch(closeLogout())}
           onConfirm={confirmLogout}
         />
       )}

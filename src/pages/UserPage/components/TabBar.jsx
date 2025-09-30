@@ -3,7 +3,7 @@ import styles from './TabBar.module.css';
 export default function TabBar({ tabs, activeTab, onTabClick }) {
   return (
     <div className={styles.tabs}>
-      {tabs.map((t) => (
+      {tabs.map(t => (
         <button
           key={t}
           type="button"

@@ -32,10 +32,15 @@ export const Dropdown = ({
         type="button"
         aria-expanded={isOpen}
       >
-        <div>{selected ? (selected.searchLabel || selected.label) : placeholder}</div>
+        <div>{selected ? selected.searchLabel || selected.label : placeholder}</div>
 
         {/* rotate the chevron when open */}
-        <svg className={clsx(styles.icon, isOpen && styles.rotate)} width="18" height="18" aria-hidden="true">
+        <svg
+          className={clsx(styles.icon, isOpen && styles.rotate)}
+          width="18"
+          height="18"
+          aria-hidden="true"
+        >
           <use href={`${icons}#icon-arrow-down`} />
         </svg>
       </button>
@@ -43,7 +48,8 @@ export const Dropdown = ({
       {isOpen && (
         <ul className={styles.menu}>
           {options.map(opt => {
-            const isAvailable = !availableOptions || !opt.value || availableOptions.includes(opt.value);
+            const isAvailable =
+              !availableOptions || !opt.value || availableOptions.includes(opt.value);
             return (
               <li
                 key={opt.value}

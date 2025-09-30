@@ -14,7 +14,6 @@ import css from './CategoryPage.module.css';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
-
 function normalizeRecipe(r) {
   return {
     id: r.id,
@@ -59,6 +58,7 @@ export default function CategoryPage() {
   const title = (category || '').toUpperCase();
   const description = getCategoryDescription(category);
 
+  // keep limit responsive
   useEffect(() => {
     const onResize = () => setLimit(window.innerWidth < 768 ? 8 : 12);
     window.addEventListener('resize', onResize);
@@ -101,7 +101,7 @@ export default function CategoryPage() {
     setPage(1);
   }, [title, area, ingredient]);
 
-  // filters change -> reset to page 1
+  // Fetch recipes (server-side pagination + filtering)
   useEffect(() => {
     let cancelled = false;
 
@@ -160,6 +160,8 @@ export default function CategoryPage() {
 
   const hasResults = recipes.length > 0;
 
+  const shown = recipes;
+
   return (
     <div className={`f-container ${css.wrapper}`} id="paginationAnchor">
       {/* Header (Back + Title + Description) */}
@@ -191,7 +193,7 @@ export default function CategoryPage() {
           {isLoading && <div className={css.loading}>Loading…</div>}
 
           <div className={css.grid}>
-            {recipes.map((r) => (
+            {shown.map(r => (
               <RecipeCard
                 key={r.id}
                 recipe={r}
