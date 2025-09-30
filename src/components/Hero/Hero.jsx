@@ -1,9 +1,21 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import css from './Hero.module.css';
 import dessert from '../../assets/heroIMG/dessert.webp';
 import rulet from '../../assets/heroIMG/rulet.webp';
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+
+  const handleClick = e => {
+    if (!isLoggedIn) {
+      e.preventDefault();
+      navigate('/');
+    }
+  };
+
   return (
     <section className={css.hero}>
       <div className={css.containerHero}>
@@ -12,11 +24,9 @@ const Hero = () => {
           Amazing recipes for beginners in the world of cooking, enveloping you in the aromas and
           tastes of various cuisines.
         </p>
-        <button className={css.heroBtn} type="button">
-          <Link className={css.heroLink} to={'/recipe/add'}>
-            Add Recipe
-          </Link>
-        </button>
+        <Link className={css.heroBtn} to="/recipe/add" onClick={handleClick}>
+          Add Recipe
+        </Link>
         <div className={css.wrapImg}>
           <div className={css.wrapDessert}>
             <img src={`${dessert}`} alt="dessert" />
