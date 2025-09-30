@@ -1,0 +1,19 @@
+.form {
+    margin-top: 32px;
+}
+
+@media (min-width: 481px) {
+    .form {
+        margin-top: 40px;
+    }
+}
+
+@media (min-width: 769px) {
+
+    .form {
+        display: flex;
+        flex-direction: row;
+        gap: 80px;
+    }
+
+}

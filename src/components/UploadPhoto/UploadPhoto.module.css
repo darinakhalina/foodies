@@ -1,0 +1,24 @@
+.box {
+    border: 2px dashed #e6e6e6;
+    border-radius: 18px;
+    height: 318px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9aa0a6;
+    position: relative;
+    overflow: hidden;
+}
+
+@media (min-width: 481px) {
+    .box {
+        height: 400px;
+    }
+
+}
+
+@media (min-width: 769px) {
+    .box {
+        max-width: 551px;
+    }
+}

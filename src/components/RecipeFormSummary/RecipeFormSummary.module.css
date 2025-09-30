@@ -1,0 +1,15 @@
+.summary {
+    margin-top: 32px;
+}
+
+@media (min-width: 481px) {
+    .summary {
+        margin-top: 80px;
+    }
+}
+
+@media (min-width: 769px) {
+    .summary {
+        margin-top: 0px;
+    }
+}
