@@ -110,7 +110,6 @@
     border-radius: 30px;
     background: var(--color-main);
     color: var(--white);
-    border: 1px dashed var(--light-gray);
     cursor: pointer;
     font-size: 24px;
     line-height: 1.5;

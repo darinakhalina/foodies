@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import clsx from 'clsx';
 import styles from './Categories.module.css';
 
@@ -68,7 +69,7 @@ const CategoryCard = ({ item, shape }) => {
   );
 };
 
-const Categories = ({ onOpenCategory }) => {
+const Categories = () => {
   const [items, setItems] = useState([]);
   const [status, setStatus] = useState('loading');
   const [err, setErr] = useState('');
@@ -91,6 +92,7 @@ const Categories = ({ onOpenCategory }) => {
       } catch (e) {
         setErr(e.message || 'Request failed');
         setStatus('error');
+        toast.error(`Failed to load categories: ${e.message}`);
       }
     })();
   }, []);
@@ -130,12 +132,7 @@ const Categories = ({ onOpenCategory }) => {
   if (status === 'error') {
     return (
       <section className={styles.section}>
-        <div className={styles.errorBox}>
-          <p className={styles.errorMessage}>Oops! Something went wrong: {err}</p>
-          <button className={styles.retryBtn} onClick={() => window.location.reload()}>
-            Try again
-          </button>
-        </div>
+        <p>Error: {err}</p>
       </section>
     );
   }
@@ -153,7 +150,7 @@ const Categories = ({ onOpenCategory }) => {
 
         <ul className={styles.grid}>
           {visibleItems.map(it => (
-            <CategoryCard key={it.id} item={it} shape={it.shape} onOpen={onOpenCategory} />
+            <CategoryCard key={it.id} item={it} shape={it.shape} />
           ))}
 
           {!showAll && items.length > limit && (
@@ -161,7 +158,26 @@ const Categories = ({ onOpenCategory }) => {
               <button
                 type="button"
                 className={styles.allBtn}
-                onClick={() => setShowAll(true)}
+                onClick={async () => {
+                  try {
+                    setStatus('loading');
+                    const res = await fetch(`${API_BASE}/api/categories?all=true`);
+                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                    const json = await res.json();
+                    const data = (json?.data ?? []).map(c => ({
+                      id: c.id,
+                      name: c.name,
+                      img: c.img || '',
+                    }));
+                    setItems(data);
+                    setShowAll(true);
+                    setStatus('ready');
+                  } catch (e) {
+                    setErr(e.message || 'Request failed');
+                    setStatus('error');
+                    toast.error(`Failed to load all categories: ${e.message}`);
+                  }
+                }}
                 aria-label="Show all categories"
               >
                 All categories
