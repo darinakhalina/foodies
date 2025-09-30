@@ -9,15 +9,11 @@ import Modal from '../../components/Modal/Modal';
 
 import { selectArea, selectIngredient } from '../../redux/filters/selectors';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import { getCategoryDescription } from '../../data/categoryDescriptions';
 import css from './CategoryPage.module.css';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
-const DESCRIPTIONS = {
-  DESSERTS:
-    'Go on a taste journey, where every sip is a sophisticated creative chord, and every dessert is an expression of the most refined gastronomic desires.',
-  SALADS: 'Fresh and crispy salads.',
-};
 
 function normalizeRecipe(r) {
   return {
@@ -61,7 +57,7 @@ export default function CategoryPage() {
   );
 
   const title = (category || '').toUpperCase();
-  const description = DESCRIPTIONS[title] || 'Category';
+  const description = getCategoryDescription(category);
 
   useEffect(() => {
     const onResize = () => setLimit(window.innerWidth < 768 ? 8 : 12);
