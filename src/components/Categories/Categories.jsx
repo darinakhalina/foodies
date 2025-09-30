@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import styles from './Categories.module.css';
 
@@ -54,6 +55,10 @@ const LIMITS = {
 
 const CategoryCard = ({ item, shape, onOpen }) => {
   const [src, setSrc] = useState(item?.img || cdnUrl(item?.name));
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/category/${slugify(item.name)}`);
+  };
   return (
     <li className={clsx(styles.item, styles[shape])}>
       <div className={styles.card}>
@@ -69,7 +74,7 @@ const CategoryCard = ({ item, shape, onOpen }) => {
           <button
             type="button"
             className={styles.goBtn}
-            onClick={() => onOpen?.(item)}
+            onClick={handleClick}
             aria-label={`Show ${item?.name} recipes`}
           >
             <svg className={styles.icon} aria-hidden>
