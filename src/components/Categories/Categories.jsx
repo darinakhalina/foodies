@@ -3,43 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import styles from './Categories.module.css';
 
+import { cdnCategoryImg, cdnPlaceholder } from '../../utils/cdn';
+import useBreakpoint from '../../hooks/useBreakpoint';
+
 const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-const CLOUD = import.meta.env.VITE_CLOUDINARY_CLOUD || 'dp87ga5sb';
-
-const slugify = (s = '') =>
-  s
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9-]/g, '');
-
-const cdnUrl = name =>
-  `https://res.cloudinary.com/${CLOUD}/image/upload/w_343,h_250,c_fill,q_auto,f_auto/foodies/categories/${slugify(
-    name
-  )}`;
-
-const NO_PHOTO = `https://res.cloudinary.com/${CLOUD}/image/upload/w_343,h_250,c_fill,q_auto,f_auto/foodies/placeholders/category.png`;
-
-const useBreakpoint = () => {
-  const getBp = () => {
-    if (typeof window === 'undefined') return 'mobile';
-    if (window.matchMedia('(min-width: 1440px)').matches) return 'desktop';
-    if (window.matchMedia('(min-width: 768px)').matches) return 'tablet';
-    return 'mobile';
-  };
-  const [bp, setBp] = useState(getBp);
-  useEffect(() => {
-    const onChange = () => setBp(getBp());
-    const mqDesktop = window.matchMedia('(min-width: 1440px)');
-    const mqTablet = window.matchMedia('(min-width: 768px)');
-    mqDesktop.addEventListener('change', onChange);
-    mqTablet.addEventListener('change', onChange);
-    return () => {
-      mqDesktop.removeEventListener('change', onChange);
-      mqTablet.removeEventListener('change', onChange);
-    };
-  }, []);
-  return bp;
-};
 
 const PATTERNS = {
   mobile: ['sq'],
@@ -53,12 +20,26 @@ const LIMITS = {
   desktop: 11,
 };
 
-const CategoryCard = ({ item, shape, onOpen }) => {
-  const [src, setSrc] = useState(item?.img ? item.img : cdnUrl(item?.name));
+const CategoryCard = ({ item, shape }) => {
+  const initialSrc = cdnCategoryImg(item?.img, item?.name);
+  const [src, setSrc] = useState(initialSrc);
+  const [step, setStep] = useState(0);
+
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate(`/category/${slugify(item.name)}`);
+    navigate(`/category/${item.name.toLowerCase().replace(/\s+/g, '-')}`);
   };
+
+  const handleError = () => {
+    if (step === 0) {
+      setSrc(cdnCategoryImg('', item?.name));
+      setStep(1);
+    } else if (step === 1) {
+      setSrc(cdnPlaceholder());
+      setStep(2);
+    }
+  };
+
   return (
     <li className={clsx(styles.item, styles[shape])}>
       <div className={styles.card}>
@@ -67,7 +48,7 @@ const CategoryCard = ({ item, shape, onOpen }) => {
           src={src}
           alt={item?.name || 'Category'}
           loading="lazy"
-          onError={() => setSrc(cdnUrl(item?.name) || NO_PHOTO)}
+          onError={handleError}
         />
         <div className={styles.tools}>
           <span className={styles.badge}>{item?.name}</span>
@@ -94,11 +75,10 @@ const Categories = ({ onOpenCategory }) => {
   const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
-    const ctrl = new AbortController();
     (async () => {
       try {
         setStatus('loading');
-        const res = await fetch(`${API_BASE}/api/categories`, { signal: ctrl.signal });
+        const res = await fetch(`${API_BASE}/api/categories`);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json = await res.json();
         const data = (json?.data ?? []).map(c => ({
@@ -109,13 +89,10 @@ const Categories = ({ onOpenCategory }) => {
         setItems(data);
         setStatus('ready');
       } catch (e) {
-        if (e.name !== 'AbortError') {
-          setErr(e.message || 'Request failed');
-          setStatus('error');
-        }
+        setErr(e.message || 'Request failed');
+        setStatus('error');
       }
     })();
-    return () => ctrl.abort();
   }, []);
 
   const bp = useBreakpoint();
@@ -124,12 +101,11 @@ const Categories = ({ onOpenCategory }) => {
     if (bp === 'mobile') {
       return items.map(it => ({ ...it, shape: 'sq' }));
     }
-
     const pattern = PATTERNS[bp] ?? ['sq'];
-    const shapedItems = items.map((it, i) => {
-      const shape = pattern[i % pattern.length] || 'sq';
-      return { ...it, shape };
-    });
+    const shapedItems = items.map((it, i) => ({
+      ...it,
+      shape: pattern[i % pattern.length] || 'sq',
+    }));
 
     if (bp === 'desktop' && shapedItems.length > 0) {
       const lastIndex = shapedItems.length - 1;
@@ -137,7 +113,6 @@ const Categories = ({ onOpenCategory }) => {
         shapedItems[lastIndex].shape = 'sq';
       }
     }
-
     return shapedItems;
   }, [items, bp]);
 
