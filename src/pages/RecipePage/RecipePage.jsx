@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
 import { fetchRecipeById } from '../../api/recipesApi';
 import Subtitle from '../../components/Subtitle/Subtitle';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import PathInfo from '../../components/PathInfo/PathInfo';
 import Loader from '../../components/Loader/Loader.jsx';
 import PopularRecipes from '../../components/PopularRecipes/PopularRecipes.jsx';
@@ -17,9 +18,8 @@ const RecipePage = () => {
         setLoading(true);
         const recipeData = await fetchRecipeById(id);
         setRecipe(recipeData);
-      } catch (e) {
-        // todo
-        console.log(e);
+      } catch {
+        toast.error('Failed to load recipe');
       } finally {
         setLoading(false);
       }
@@ -49,11 +49,6 @@ const RecipePage = () => {
         />
       </div>
       <PopularRecipes />
-      <p>
-        <Link to="/" viewTransition>
-          Back to HP
-        </Link>
-      </p>
     </section>
   );
 };

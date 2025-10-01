@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast';
 import css from './PopularRecipes.module.css';
 import RecipeCard from '../RecipeCard/RecipeCard';
 import { useEffect, useState } from 'react';
@@ -8,19 +9,19 @@ const PopularRecipes = () => {
   const [recipes, setRecipes] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const fetchRecipes = async () => {
-    try {
-      setLoading(true);
-      const recipesData = await fetchPopularRecipes();
-      setRecipes(recipesData.recipes);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        setLoading(true);
+        const recipesData = await fetchPopularRecipes();
+        setRecipes(recipesData.recipes);
+      } catch {
+        toast.error('Failed to load recipes');
+      } finally {
+        setLoading(false);
+      }
+    };
+
     fetchRecipes();
   }, []);
 
