@@ -24,7 +24,9 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(login.fulfilled, authorization)
+      .addCase(login.fulfilled, (state, action) => {
+        authorization(state, action);
+      })
       .addCase(register.fulfilled, authorization)
       .addCase(logout.fulfilled, state => {
         state.user = null;

@@ -4,7 +4,7 @@ import { authReducer } from './auth/slice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import filtersReducer from './filters/slice';
-import { modalReducer } from './modal/slice';
+import modalReducer from './ui/modalSlice';
 
 const persistAuthConfig = {
   key: 'auth',

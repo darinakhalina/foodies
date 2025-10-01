@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../redux/auth/operations';
-import { selectIsLoggedIn, selectUserError } from '../../redux/auth/selectors';
+import { selectUserError } from '../../redux/auth/selectors';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
@@ -11,10 +10,8 @@ import styles from './SignInForm.module.css';
 
 const SignInForm = ({ onSuccess }) => {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
   const error = useSelector(selectUserError);
 
-  // eslint-disable-next-line no-useless-escape
   const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
   const validationSchema = Yup.object({
@@ -28,18 +25,15 @@ const SignInForm = ({ onSuccess }) => {
     try {
       await dispatch(login(values)).unwrap();
       toast.success('Welcome back!');
+      if (onSuccess) onSuccess();
     } catch (err) {
-      toast.error(err?.message || 'Invalid email or password');
+      const errorMessage = typeof err === 'string' ? err : err?.message;
+      toast.error(errorMessage || 'Invalid email or password');
+      console.log(errorMessage);
     } finally {
       setSubmitting(false);
     }
   };
-
-  useEffect(() => {
-    if (isLoggedIn && onSuccess) {
-      onSuccess();
-    }
-  }, [isLoggedIn, onSuccess]);
 
   return (
     <Formik
@@ -57,7 +51,6 @@ const SignInForm = ({ onSuccess }) => {
             errors={errors}
             touched={touched}
           />
-
           <Input
             name="password"
             type="password"

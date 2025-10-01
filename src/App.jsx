@@ -7,6 +7,7 @@ import Layout from './components/Layout/Layout';
 import HomePageLayout from './components/HomePageLayout/HomePageLayout';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Loader from './components/Loader/Loader';
+import ModalRoot from './components/ModalRoot/ModalRoot.jsx';
 
 import { selectIsFetchingUser } from './redux/auth/selectors';
 import { fetchUser } from './redux/auth/operations';
@@ -31,46 +32,50 @@ const App = () => {
   if (isLoading) return <Loader />;
 
   return (
-    <Routes>
-      {/* Public home shell */}
-      <Route path="/" element={<HomePageLayout />}>
-        <Route index element={<HomePage />} />
-      </Route>
-
-      {/* Main app shell */}
-      <Route path="/" element={<Layout />}>
-        {/* Public routes */}
-        <Route path="category/:category" element={<CategoryPage />} />
-        <Route path="recipe/:id" element={<RecipePage />} />
-
-        {/* Private routes with nested user tabs */}
-        <Route
-          path="recipe/add"
-          element={
-            <PrivateRoute>
-              <AddRecipePage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="user/:id"
-          element={
-            <PrivateRoute redirectTo="/login">
-              <UserPage />
-            </PrivateRoute>
-          }
-        >
-          <Route index element={<UserPageLayout />} />
-          <Route path="recipes" element={<UserPageLayout />} />
-          <Route path="favorites" element={<UserPageLayout />} />
-          <Route path="followers" element={<UserPageLayout />} />
-          <Route path="following" element={<UserPageLayout />} />
+    <>
+      <Routes>
+        {/* Public home shell */}
+        <Route path="/" element={<HomePageLayout />}>
+          <Route index element={<HomePage />} />
         </Route>
 
-        {/* 404 */}
-        <Route path="*" element={<NotFoundPage />} />
-      </Route>
-    </Routes>
+        {/* Main app shell */}
+        <Route path="/" element={<Layout />}>
+          {/* Public routes */}
+          <Route path="category/:category" element={<CategoryPage />} />
+          <Route path="recipe/:id" element={<RecipePage />} />
+
+          {/* Private routes with nested user tabs */}
+          <Route
+            path="recipe/add"
+            element={
+              <PrivateRoute>
+                <AddRecipePage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="user/:id"
+            element={
+              <PrivateRoute redirectTo="/login">
+                <UserPage />
+              </PrivateRoute>
+            }
+          >
+            <Route index element={<UserPageLayout />} />
+            <Route path="recipes" element={<UserPageLayout />} />
+            <Route path="favorites" element={<UserPageLayout />} />
+            <Route path="followers" element={<UserPageLayout />} />
+            <Route path="following" element={<UserPageLayout />} />
+          </Route>
+
+          {/* 404 */}
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
+      </Routes>
+
+      <ModalRoot />
+    </>
   );
 };
 

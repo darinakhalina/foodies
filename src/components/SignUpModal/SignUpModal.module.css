@@ -14,6 +14,7 @@
 }
 
 .switchText {
+  width: 100%;
   font-family: 'Mulish Regular', sans-serif;
   font-size: 12px;
   color: #bfbebe;
@@ -31,10 +32,6 @@
 }
 
 @media (min-width: 768px) {
-  /* .container {
-    max-width: 401px;
-  } */
-
   .title {
     color: #050505;
     text-align: center;
