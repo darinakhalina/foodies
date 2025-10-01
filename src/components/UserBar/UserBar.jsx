@@ -3,18 +3,15 @@ import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUser, selectIsLoggedIn } from '../../redux/auth/selectors';
-import { logout } from '../../redux/auth/operations';
-import { openLogout, closeLogout } from '../../redux/modal/slice';
-import LogOutModal from '../LogOutModal/LogOutModal';
+import { openModal } from '../../redux/ui/modalSlice';
 import css from './UserBar.module.css';
 
 const UserBar = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const isLogoutOpen = useSelector(state => state.modal.isLogoutOpen);
 
-  const [isOpen, setIsOpen] = useState(false); // тільки для дропдауну
+  const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => setIsOpen(prev => !prev);
@@ -22,13 +19,8 @@ const UserBar = () => {
 
   const handleLogoutClick = useCallback(() => {
     setIsOpen(false);
-    dispatch(openLogout());
+    dispatch(openModal('logout'));
   }, [dispatch]);
-
-  const confirmLogout = () => {
-    dispatch(logout());
-    dispatch(closeLogout());
-  };
 
   useEffect(() => {
     const handleClickOutside = event => {
@@ -83,14 +75,6 @@ const UserBar = () => {
           </button>
         </li>
       </ul>
-
-      {isLogoutOpen && (
-        <LogOutModal
-          isOpen={isLogoutOpen}
-          onClose={() => dispatch(closeLogout())}
-          onConfirm={confirmLogout}
-        />
-      )}
     </div>
   );
 };
