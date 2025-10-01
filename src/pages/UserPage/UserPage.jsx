@@ -35,8 +35,7 @@ export default function UserPage() {
 
   // determines if this profile belongs to the logged-in user
   const isOwnProfile =
-    (routeId === 'me' && isLoggedIn) ||
-    (!!authUserId && String(authUserId) === String(routeId));
+    (routeId === 'me' && isLoggedIn) || (!!authUserId && String(authUserId) === String(routeId));
 
   const tabs = isOwnProfile ? TABS_OWN : TABS_OTHER;
 
@@ -49,7 +48,7 @@ export default function UserPage() {
     return isOwnProfile ? 'MY RECIPES' : 'RECIPES';
   }, [location.pathname, isOwnProfile]);
 
-  const handleTabClick = (tab) => {
+  const handleTabClick = tab => {
     const userIdForUrl = isOwnProfile ? (routeId === 'me' ? 'me' : authUserId) : routeId;
     switch (tab) {
       case 'MY RECIPES':
@@ -92,7 +91,8 @@ export default function UserPage() {
         />
 
         <p className={styles.subtitle}>
-          Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces with us.
+          Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces
+          with us.
         </p>
       </header>
 
