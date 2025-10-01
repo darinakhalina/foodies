@@ -4,6 +4,7 @@ import Subtitle from '../../components/Subtitle/Subtitle';
 import { Link, useParams } from 'react-router-dom';
 import PathInfo from '../../components/PathInfo/PathInfo';
 import Loader from '../../components/Loader/Loader.jsx';
+import PopularRecipes from '../../components/PopularRecipes/PopularRecipes.jsx';
 
 const RecipePage = () => {
   const { id } = useParams();
@@ -47,6 +48,7 @@ const RecipePage = () => {
           ]}
         />
       </div>
+      <PopularRecipes />
       <p>
         <Link to="/" viewTransition>
           Back to HP
