@@ -1,19 +1,19 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import { Link } from 'react-router-dom';
+// import { useSelector } from 'react-redux';
+// import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import css from './Hero.module.css';
 import dessert from '../../assets/heroIMG/dessert.webp';
 import rulet from '../../assets/heroIMG/rulet.webp';
 
 const Hero = () => {
-  const navigate = useNavigate();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  // const navigate = useNavigate();
+  // const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  const handleClick = e => {
-    if (!isLoggedIn) {
-      e.preventDefault();
-      navigate('/');
-    }
+  const handleClick = () => {
+    // if (!isLoggedIn) {
+    //   e.preventDefault();
+    //   navigate('/');
+    // }
   };
 
   return (
