@@ -6,6 +6,10 @@
   padding-right: 80px;
 }
 
+.f-container.no-margin {
+  margin: 0;
+}
+
 @media (max-width: 1439px) {
   .f-container {
     padding-left: 32px;
