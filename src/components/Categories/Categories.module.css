@@ -1,205 +1,206 @@
 .section {
-    padding-top: 40px;
-    padding-bottom: 64px;
+  padding-top: 40px;
+  padding-bottom: 64px;
 }
 
 .title {
-    font-weight: 800;
-    font-size: 28px;
-    line-height: 1.14;
-    text-transform: uppercase;
-    color: var(--color-main);
-    margin-bottom: 16px;
+  font-weight: 800;
+  font-size: 28px;
+  line-height: 1.14;
+  text-transform: uppercase;
+  color: var(--color-main);
+  margin-bottom: 16px;
 }
 
 .subtitle {
-    font-weight: 500;
-    color: var(--gray);
-    margin-bottom: 32px;
+  font-weight: 500;
+  color: var(--gray);
+  margin-bottom: 32px;
 }
 
 .grid {
-    display: grid;
-    gap: 20px;
+  display: grid;
+  gap: 20px;
 }
 
 .item.sq .card {
-    aspect-ratio: 343 / 250;
+  aspect-ratio: 343 / 250;
 }
 
 .card {
-    position: relative;
-    width: 100%;
-    border-radius: 30px;
-    overflow: hidden;
+  position: relative;
+  width: 100%;
+  border-radius: 30px;
+  overflow: hidden;
 }
 
 .card::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(0deg,
-            rgba(var(--color-main-rgb), 0.2),
-            rgba(var(--color-main-rgb), 0.2));
-    pointer-events: none;
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    rgba(var(--color-main-rgb), 0.2),
+    rgba(var(--color-main-rgb), 0.2)
+  );
+  pointer-events: none;
 }
 
 .img {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .tools {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
 }
 
 .badge {
-    font-weight: 700;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 8px 12px;
-    border-radius: 30px;
-    background: rgba(var(--white-rgb), 0.2);
-    border: 1px solid var(--white);
-    color: var(--white);
-    font-size: 16px;
-    line-height: 1.5;
-    white-space: nowrap;
-    backdrop-filter: blur(6px);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 30px;
+  background: rgba(var(--white-rgb), 0.2);
+  border: 1px solid var(--white);
+  color: var(--white);
+  font-size: 16px;
+  line-height: 1.5;
+  white-space: nowrap;
+  backdrop-filter: blur(6px);
 }
 
 .goBtn {
-    display: grid;
-    place-items: center;
-    width: 40px;
-    height: 40px;
-    border: 1px solid rgba(var(--white-rgb), 0.2);
-    border-radius: 50px;
-    background: transparent;
-    color: var(--white);
-    cursor: pointer;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(var(--white-rgb), 0.2);
+  border-radius: 50px;
+  background: transparent;
+  color: var(--white);
+  cursor: pointer;
 }
 
 .icon {
-    width: 18px;
-    height: 18px;
-    fill: currentColor;
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
 }
 
 .goBtn:hover,
 .goBtn:focus-visible {
-    background: var(--color-main);
-    border-color: var(--color-main);
-    outline: none;
+  background: var(--color-main);
+  border-color: var(--color-main);
+  outline: none;
 }
 
 .all .allBtn {
-    font-family: 'Mulish', sans-serif;
-    font-weight: 800;
-    display: grid;
-    place-items: center;
-    width: 100%;
-    aspect-ratio: 343 / 250;
-    border-radius: 30px;
-    background: var(--color-main);
-    color: var(--white);
-    cursor: pointer;
-    font-size: 24px;
-    line-height: 1.5;
-    text-transform: uppercase;
+  font-family: 'Mulish', sans-serif;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 343 / 250;
+  border-radius: 30px;
+  background: var(--color-main);
+  color: var(--white);
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1.5;
+  text-transform: uppercase;
 }
 
 @media (min-width: 768px) {
-    .section {
-        padding: 120px 0;
-    }
+  .section {
+    padding: 120px 0;
+  }
 
-    .title {
-        font-size: 40px;
-        line-height: 1.1;
-        margin-bottom: 40px;
-    }
+  .title {
+    font-size: 40px;
+    line-height: 1.1;
+    margin-bottom: 40px;
+  }
 
-    .subtitle {
-        font-size: 16px;
-        line-height: 1.5;
-        color: var(--dark-gray);
-        max-width: 531px;
-        margin-bottom: 40px;
-    }
+  .subtitle {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--dark-gray);
+    max-width: 531px;
+    margin-bottom: 40px;
+  }
 
-    .tools {
-        padding: 24px;
-    }
+  .tools {
+    padding: 24px;
+  }
 
-    .badge {
-        font-size: 20px;
-        padding: 10px 14px;
-    }
+  .badge {
+    font-size: 20px;
+    padding: 10px 14px;
+  }
 
-    .goBtn {
-        width: 44px;
-        height: 44px;
-    }
+  .goBtn {
+    width: 44px;
+    height: 44px;
+  }
 
-    .grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    .item.wide {
-        grid-column: span 2;
-    }
+  .item.wide {
+    grid-column: span 2;
+  }
 
-    .item.sq .card {
-        aspect-ratio: 342 / 369;
-    }
+  .item.sq .card {
+    aspect-ratio: 342 / 369;
+  }
 
-    .item.wide .card {
-        aspect-ratio: 704 / 369;
-    }
+  .item.wide .card {
+    aspect-ratio: 704 / 369;
+  }
 
-    .all .allBtn {
-        flex: 0 0 342px;
-        aspect-ratio: 342 / 369;
-        font-size: 20px;
-        line-height: 1.2;
-    }
-
+  .all .allBtn {
+    flex: 0 0 342px;
+    aspect-ratio: 342 / 369;
+    font-size: 20px;
+    line-height: 1.2;
+  }
 }
 
 @media (min-width: 1440px) {
-    .grid {
-        display: flex;
-        flex-wrap: wrap;
-    }
+  .grid {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-    .item.sq {
-        flex: 0 0 325px;
-        height: 369px;
-    }
+  .item.sq {
+    flex: 0 0 325px;
+    height: 369px;
+  }
 
-    .item.wide {
-        flex: 0 0 590px;
-        height: 369px;
-    }
+  .item.wide {
+    flex: 0 0 590px;
+    height: 369px;
+  }
 
-    .item.sq .card,
-    .item.wide .card,
-    .all .allBtn {
-        width: 100%;
-        height: 100%;
-        aspect-ratio: auto;
-    }
+  .item.sq .card,
+  .item.wide .card,
+  .all .allBtn {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+  }
 
-    .all .allBtn {
-        flex: 0 0 325px;
-    }
+  .all .allBtn {
+    flex: 0 0 325px;
+  }
 }

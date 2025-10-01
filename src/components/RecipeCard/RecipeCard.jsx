@@ -39,7 +39,7 @@ export default function RecipeCard({
 
   const isFavorite = favoriteFromParent ?? localFav;
 
-  const requireAuth = (fn) => {
+  const requireAuth = fn => {
     if (isAuthed) return fn();
     if (onNeedAuth) onNeedAuth();
     setIsSignInModalOpen(true);

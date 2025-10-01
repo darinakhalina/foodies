@@ -18,9 +18,7 @@ function normalizeRecipe(r) {
   return {
     id: r.id,
     title: r.title,
-    description:
-      r.description ??
-      (r.instructions ? String(r.instructions).slice(0, 160) : ''),
+    description: r.description ?? (r.instructions ? String(r.instructions).slice(0, 160) : ''),
     image: r.thumb || r.preview || r.img || '/images/placeholder.png',
     author: {
       id: r.owner?.id ?? r.ownerId ?? null,
@@ -51,8 +49,8 @@ export default function CategoryPage() {
   const [err, setErr] = useState('');
 
   // Responsive page size
-  const [limit, setLimit] = useState(
-    () => (typeof window !== 'undefined' && window.innerWidth < 768 ? 8 : 12)
+  const [limit, setLimit] = useState(() =>
+    typeof window !== 'undefined' && window.innerWidth < 768 ? 8 : 12
   );
 
   const title = (category || '').toUpperCase();
@@ -126,8 +124,8 @@ export default function CategoryPage() {
         const apiRecipes = Array.isArray(payload.recipes)
           ? payload.recipes
           : Array.isArray(json.recipes)
-          ? json.recipes
-          : [];
+            ? json.recipes
+            : [];
 
         const normalized = apiRecipes.map(normalizeRecipe);
 
@@ -166,11 +164,7 @@ export default function CategoryPage() {
     <div className={`f-container ${css.wrapper}`} id="paginationAnchor">
       {/* Header (Back + Title + Description) */}
       <div className={css.headerBlock}>
-        <button
-          type="button"
-          className={css.backButton}
-          onClick={() => navigate(-1)}
-        >
+        <button type="button" className={css.backButton} onClick={() => navigate(-1)}>
           <svg className={css.icon} width="16" height="16" style={{ transform: 'rotate(225deg)' }}>
             <use href="/images/icons.svg#icon-arrow-up-right" />
           </svg>
@@ -199,8 +193,8 @@ export default function CategoryPage() {
                 recipe={r}
                 isAuthed={isAuthed}
                 onNeedAuth={() => setAuthOpen(true)}
-                onOpen={(id) => navigate(`/recipe/${id}`)}
-                onAuthor={(authorId) => navigate(`/user/${authorId}/recipes`)}
+                onOpen={id => navigate(`/recipe/${id}`)}
+                onAuthor={authorId => navigate(`/user/${authorId}/recipes`)}
               />
             ))}
 

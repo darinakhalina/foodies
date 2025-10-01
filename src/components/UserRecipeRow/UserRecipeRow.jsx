@@ -1,11 +1,6 @@
 import styles from './UserRecipeRow.module.css';
 
-export default function UserRecipeRow({
-  title,
-  description,
-  thumb,
-  onOpen,
-}) {
+export default function UserRecipeRow({ title, description, thumb, onOpen }) {
   return (
     <article className={styles.row}>
       <img className={styles.thumb} src={thumb} alt={title} />
