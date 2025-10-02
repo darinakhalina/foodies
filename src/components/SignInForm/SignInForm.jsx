@@ -30,7 +30,6 @@ const SignInForm = ({ onSuccess }) => {
     } catch (err) {
       const errorMessage = typeof err === 'string' ? err : err?.message;
       toast.error(errorMessage || 'Invalid email or password');
-      console.log(errorMessage);
     } finally {
       setSubmitting(false);
     }

@@ -6,7 +6,6 @@ const RecipeIngredients = ({ ingredients = [] }) => {
     return null;
   }
 
-  console.log(ingredients[0]);
   return (
     <div className={css.ingredients}>
       <Subtitle className={css.title}>Ingredients:</Subtitle>

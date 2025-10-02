@@ -17,7 +17,6 @@ const RecipeMainInfo = ({ recipe }) => {
     }
   };
 
-  console.log(recipe?.owner);
   return (
     <div>
       <Subtitle className={css.title}>{recipe.title}</Subtitle>
