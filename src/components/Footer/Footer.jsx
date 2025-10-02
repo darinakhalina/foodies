@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 import icons from '/images/icons.svg';
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className={clsx(css['footer'], 'f-container')}>
-      <div className={css.footerTop}>
+    <footer className={css['footer']}>
+      <div className={clsx(css['footerTop'], 'f-container')}>
         <Link to="/">Foodies</Link>
         <ul className={css.footerSocials}>
           <li>
@@ -39,8 +41,8 @@ const Footer = () => {
         </ul>
       </div>
       <hr className={css.separator} />
-      <div className={css.footerBottom}>
-        <p>@2024, Foodies. All rights reserved</p>
+      <div className={clsx(css['footerBottom'], 'f-container')}>
+        <p>@{currentYear}, Foodies. All rights reserved</p>
       </div>
     </footer>
   );

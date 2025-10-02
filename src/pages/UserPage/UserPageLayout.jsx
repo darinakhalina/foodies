@@ -19,8 +19,7 @@ export default function UserPageLayout() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const isOwnProfile =
-    (routeId === 'me' && isLoggedIn) ||
-    (!!authUserId && String(authUserId) === String(routeId));
+    (routeId === 'me' && isLoggedIn) || (!!authUserId && String(authUserId) === String(routeId));
 
   // guard private tabs on foreign profile
   useEffect(() => {

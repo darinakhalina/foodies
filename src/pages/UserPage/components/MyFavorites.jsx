@@ -1,9 +1,9 @@
-import UserRecipeRow from "../../../components/UserRecipeRow/UserRecipeRow"
-import { useEffect, useState } from "react";
+import UserRecipeRow from '../../../components/UserRecipeRow/UserRecipeRow';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { fetchFavoriteRecipes } from "../../../api/favorite"
-import UserPageTabs from "../../../components/UserPageTabs/UserPageTabs"
-import Loader from "../../../components/Loader/Loader"
+import { fetchFavoriteRecipes } from '../../../api/favorite';
+import UserPageTabs from '../../../components/UserPageTabs/UserPageTabs';
+import Loader from '../../../components/Loader/Loader';
 
 export default function MyFavorites() {
   const token = useSelector(state => state.auth.token);
@@ -16,7 +16,7 @@ export default function MyFavorites() {
   useEffect(() => {
     const loadFavorites = async (page = 1) => {
       if (!token) {
-        setError("User is not authenticated");
+        setError('User is not authenticated');
         setLoading(false);
         return;
       }
@@ -24,10 +24,10 @@ export default function MyFavorites() {
         setLoading(true);
         const data = await fetchFavoriteRecipes(token, page, 9);
         setItems(data.recipes);
-        setTotalPages(data.totalPages || 1)
+        setTotalPages(data.totalPages || 1);
       } catch (error) {
-        console.error("Error loading favorite recipes:", error);
-        setError("Failed to load favorite recipes");
+        console.error('Error loading favorite recipes:', error);
+        setError('Failed to load favorite recipes');
       } finally {
         setLoading(false);
       }
@@ -35,20 +35,20 @@ export default function MyFavorites() {
     loadFavorites(currentPage);
   }, [token, currentPage]);
 
-  const handlePageChange = (page) => {
+  const handlePageChange = page => {
     setCurrentPage(page);
   };
 
   if (loading) {
-    return <Loader/>
+    return <Loader />;
   }
 
   if (error) {
-    return <div>{error}</div>
+    return <div>{error}</div>;
   }
 
   return (
-  <UserPageTabs
+    <UserPageTabs
       currentPage={currentPage}
       totalPages={totalPages}
       onPageChange={handlePageChange}
@@ -56,20 +56,19 @@ export default function MyFavorites() {
     >
       {error ? (
         <div>{error}</div>
-      ) :
-        items.length > 0 ? (
-          items.map(recipe => (
-            <UserRecipeRow
-              key={recipe.id}
-              title={recipe.title}
-              description={recipe.description}
-              thumb={recipe.thumb}
-              onOpen={() => console.log('open recipe', recipe.id)}
-            />
-          ))
-        ) : (
-          <div>There are no favorite recipes yet</div>
-        )}
-  </UserPageTabs>
+      ) : items.length > 0 ? (
+        items.map(recipe => (
+          <UserRecipeRow
+            key={recipe.id}
+            title={recipe.title}
+            description={recipe.description}
+            thumb={recipe.thumb}
+            onOpen={() => console.log('open recipe', recipe.id)}
+          />
+        ))
+      ) : (
+        <div>There are no favorite recipes yet</div>
+      )}
+    </UserPageTabs>
   );
 }

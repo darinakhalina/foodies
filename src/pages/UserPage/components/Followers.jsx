@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect } from 'react';
 
 export default function Followers({ followers, isLoading, error }) {
   // If no followers prop is provided, fallback to empty array
