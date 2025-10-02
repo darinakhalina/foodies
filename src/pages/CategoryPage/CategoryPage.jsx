@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Filters from '../../components/Filters/Filters';
+
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import Pagination from '../../components/Pagination/Pagination';
 import Modal from '../../components/Modal/Modal';
@@ -10,6 +12,21 @@ import { selectIsLoggedIn, selectToken } from '../../redux/auth/selectors';
 import { getCategoryDescription } from '../../data/categoryDescriptions';
 import css from './CategoryPage.module.css';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
+const CATEGORY_ALIASES = {
+  Desserts: 'Dessert',
+  Beefs: 'Beef',
+  'Side Dishes': 'Side',
+};
+
+function normalizeCategoryParam(routeParam) {
+  if (!routeParam) return '';
+  const spaced = String(routeParam).toLowerCase().replace(/-/g, ' ');
+  return spaced.replace(/\b\w/g, ch => ch.toUpperCase());
+}
+function toBackendCategory(name) {
+  return CATEGORY_ALIASES[name] || name;
+}
 function normalizeRecipe(r) {
   return {
     id: r.id,
@@ -21,10 +38,12 @@ function normalizeRecipe(r) {
       name: r.owner?.name ?? 'User',
       avatar: r.owner?.avatar ?? '/images/avatar-placeholder.png',
     },
-    isFavorite: Boolean(r.isFavorite),
+    isFavorite: !!r.isFavorite,
   };
 }
-export default function CategoryPage({ category = '', onBack }) {
+export default function CategoryPage() {
+  const { category = '' } = useParams();
+  const navigate = useNavigate();
   // Redux filters
   const area = useSelector(selectArea) || '';
   const ingredient = useSelector(selectIngredient) || '';
@@ -43,9 +62,12 @@ export default function CategoryPage({ category = '', onBack }) {
   const [limit, setLimit] = useState(() =>
     typeof window !== 'undefined' && window.innerWidth < 768 ? 8 : 12
   );
-  const title = (category || '').toUpperCase();
+  const uiTitle = (category || '').replace(/-/g, ' ').toUpperCase();
   const description = getCategoryDescription(category);
-  const isAllCategory = title === 'ALL';
+  // Backend category param
+  const normalizedForUi = normalizeCategoryParam(category);
+  const normalizedCategory =
+    normalizedForUi.toLowerCase() === 'all' ? '' : toBackendCategory(normalizedForUi);
   // keep limit responsive
   useEffect(() => {
     const onResize = () => setLimit(window.innerWidth < 768 ? 8 : 12);
@@ -59,7 +81,7 @@ export default function CategoryPage({ category = '', onBack }) {
       try {
         setErr('');
         const url = new URL('/api/recipes/filters', API_URL);
-        if (!isAllCategory && title) url.searchParams.set('category', title);
+        if (normalizedCategory) url.searchParams.set('category', normalizedCategory);
         const res = await fetch(url.toString());
         if (!res.ok) throw new Error(`Filters request failed: ${res.status}`);
         const json = await res.json();
@@ -76,11 +98,11 @@ export default function CategoryPage({ category = '', onBack }) {
     return () => {
       cancelled = true;
     };
-  }, [title, isAllCategory]);
+  }, [normalizedCategory]);
   // Reset page whenever category or filters change
   useEffect(() => {
     setPage(1);
-  }, [title, area, ingredient]);
+  }, [normalizedCategory, area, ingredient]);
   // Fetch recipes (server-side pagination + filtering)
   useEffect(() => {
     let cancelled = false;
@@ -89,7 +111,7 @@ export default function CategoryPage({ category = '', onBack }) {
         setIsLoading(true);
         setErr('');
         const url = new URL('/api/recipes', API_URL);
-        if (!isAllCategory && title) url.searchParams.set('category', title);
+        if (normalizedCategory) url.searchParams.set('category', normalizedCategory);
         if (area) url.searchParams.set('area', area);
         if (ingredient) url.searchParams.set('ingredient', ingredient);
         url.searchParams.set('page', String(page));
@@ -101,8 +123,8 @@ export default function CategoryPage({ category = '', onBack }) {
         const apiRecipes = Array.isArray(payload.recipes)
           ? payload.recipes
           : Array.isArray(json.recipes)
-          ? json.recipes
-          : [];
+            ? json.recipes
+            : [];
         const normalized = apiRecipes.map(normalizeRecipe);
         if (!cancelled) {
           setRecipes(normalized);
@@ -122,13 +144,14 @@ export default function CategoryPage({ category = '', onBack }) {
     return () => {
       cancelled = true;
     };
-  }, [title, isAllCategory, area, ingredient, page, limit]);
+  }, [normalizedCategory, area, ingredient, page, limit]);
   // smooth scroll on page change
   useEffect(() => {
     const anchor = document.getElementById('paginationAnchor');
     if (anchor) anchor.scrollIntoView({ behavior: 'smooth' });
   }, [page]);
   const hasResults = recipes.length > 0;
+  const shown = recipes;
   const handleToggleFavorite = async id => {
     setRecipes(prev => prev.map(r => (r.id === id ? { ...r, isFavorite: !r.isFavorite } : r)));
     try {
@@ -139,28 +162,21 @@ export default function CategoryPage({ category = '', onBack }) {
       } else {
         await addFavorite(id, token);
       }
-    } catch (error) {
-      // Rollback UI on failure
-      setRecipes(prev => prev.map(r => (r.id === id ? { ...r, isFavorite: !r.isFavorite } : r)));
-      console.error('Failed to toggle favorite:', error);
-      if (!isAuthed) setAuthOpen(true);
+    } catch (err) {
+      console.error('Failed to toggle favorite:', err);
     }
-  };
-  const handleBack = () => {
-    if (typeof onBack === 'function') onBack();
-    else window.history.back();
   };
   return (
     <div className={`f-container ${css.wrapper}`} id="paginationAnchor">
       {/* Header (Back + Title + Description) */}
       <div className={css.headerBlock}>
-        <button type="button" className={css.backButton} onClick={handleBack}>
+        <button type="button" className={css.backButton} onClick={() => navigate(-1)}>
           <svg className={css.icon} width="16" height="16" style={{ transform: 'rotate(225deg)' }}>
             <use href="/images/icons.svg#icon-arrow-up-right" />
           </svg>
           Back
         </button>
-        <h1 className={css.title}>{title}</h1>
+        <h1 className={css.title}>{uiTitle}</h1>
         <p className={css.description}>{description}</p>
       </div>
       <div className={css.content}>
@@ -173,14 +189,14 @@ export default function CategoryPage({ category = '', onBack }) {
           {err && <div className={css.error}>{err}</div>}
           {isLoading && <div className={css.loading}>Loading…</div>}
           <div className={css.grid}>
-            {recipes.map(r => (
+            {shown.map(r => (
               <RecipeCard
                 key={r.id}
                 recipe={r}
                 isAuthed={isAuthed}
                 onNeedAuth={() => setAuthOpen(true)}
-                onOpen={id => console.log('open recipe', id)}    
-                onAuthor={authorId => console.log('open author', authorId)} 
+                onOpen={id => navigate(`/recipe/${id}`)}
+                onAuthor={authorId => navigate(`/user/${authorId}/recipes`)}
                 onToggleFavorite={() => handleToggleFavorite(r.id)}
                 isFavorite={r.isFavorite}
               />

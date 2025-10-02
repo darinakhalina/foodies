@@ -1,16 +1,18 @@
 import api from './axios';
 import { getAuthorizationHeader } from './helpers.js';
 
-export async function fetchCategoryRecipes({ category, area, ingredient, page = 1, limit = 12 }) {
+export async function fetchRecipes({ category, area, ingredient, page = 1, limit = 12 }) {
   const { data } = await api.get('/recipes', {
     params: { category, area, ingredient, page, limit },
   });
-  return data.data; // { recipes, total, page, totalPages }
+  return data?.data || data;
 }
 
-export async function fetchCategoryFilters({ category }) {
-  const { data } = await api.get('/recipes/filters', { params: { category } });
-  return data.data; // { areas, ingredients }
+export async function fetchRecipeFilters({ category, area }) {
+  const { data } = await api.get('/recipes/filters', {
+    params: { category, area },
+  });
+  return data?.data || data; 
 }
 
 export const addRecipeToFavorites = async (token, recipeId) => {
