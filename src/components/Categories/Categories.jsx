@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import clsx from 'clsx';
 import styles from './Categories.module.css';
 
@@ -23,13 +22,15 @@ const LIMITS = {
   desktop: 11,
 };
 
-const CategoryCard = ({ item, shape }) => {
+const CategoryCard = ({ item, shape, onSelect }) => {
   const [src, setSrc] = useState(cdnCategoryImg(item?.img, item?.name));
   const [step, setStep] = useState(0);
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/category/${item.name.toLowerCase().replace(/\s+/g, '-')}`);
+    const slug = item.name.toLowerCase().replace(/\s+/g, '-');
+    if (onSelect) onSelect(slug);
+    else navigate(`/category/${slug}`); 
   };
 
   const handleError = () => {
@@ -70,11 +71,10 @@ const CategoryCard = ({ item, shape }) => {
   );
 };
 
-const Categories = () => {
+const Categories = ({ onSelect }) => {
   const [items, setItems] = useState([]);
   const [status, setStatus] = useState('loading');
   const [err, setErr] = useState('');
-  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -93,7 +93,6 @@ const Categories = () => {
       } catch (e) {
         setErr(e.message || 'Request failed');
         setStatus('error');
-        toast.error(`Failed to load categories: ${e.message}`);
       }
     })();
   }, []);
@@ -109,7 +108,6 @@ const Categories = () => {
       ...it,
       shape: pattern[i % pattern.length] || 'sq',
     }));
-
     if (bp === 'desktop' && shapedItems.length > 0) {
       const lastIndex = shapedItems.length - 1;
       if (shapedItems[lastIndex].shape === 'wide') {
@@ -149,16 +147,16 @@ const Categories = () => {
           combine taste, style and the warm atmosphere of the kitchen.
         </Subtitle>
 
-        <ul className={styles.grid}>
+                <ul className={styles.grid}>
           {visibleItems.map(it => (
-            <CategoryCard key={it.id} item={it} shape={it.shape} />
+            <CategoryCard key={it.id} item={it} shape={it.shape} onSelect={onSelect} />
           ))}
 
           <li className={clsx(styles.item, styles.sq, styles.all)}>
             <button
               type="button"
               className={styles.allBtn}
-              onClick={() => navigate('/category/all')}
+              onClick={() => (onSelect ? onSelect('all') : null)}
               aria-label="Show all categories"
             >
               All categories
