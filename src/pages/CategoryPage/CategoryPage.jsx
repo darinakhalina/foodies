@@ -8,7 +8,8 @@ import Pagination from '../../components/Pagination/Pagination';
 import Modal from '../../components/Modal/Modal';
 
 import { selectArea, selectIngredient } from '../../redux/filters/selectors';
-import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import { addFavorite, deleteFavorite } from '../../api/favorite';
+import { selectIsLoggedIn, selectToken } from '../../redux/auth/selectors';
 import { getCategoryDescription } from '../../data/categoryDescriptions';
 import css from './CategoryPage.module.css';
 
@@ -38,6 +39,7 @@ export default function CategoryPage() {
   const area = useSelector(selectArea) || '';
   const ingredient = useSelector(selectIngredient) || '';
   const isAuthed = useSelector(selectIsLoggedIn);
+  const token = useSelector(selectToken);
 
   // UI state
   const [recipes, setRecipes] = useState([]);
@@ -162,6 +164,28 @@ export default function CategoryPage() {
 
   const shown = recipes;
 
+  const handleToggleFavorite = async (id) => {
+    setRecipes(prev =>
+      prev.map(r =>
+        r.id === id ? { ...r, isFavorite: !r.isFavorite } : r
+      )
+    );
+
+    try {
+
+      const target = recipes.find(r => r.id === id);
+      const currentlyFav = !!target?.isFavorite;
+
+      if (currentlyFav) {
+        await deleteFavorite(id, token);
+      } else {
+        await addFavorite(id, token);
+      }
+    } catch (err) {
+      console.error('Помилка зміни улюбленого рецепта:', err);
+    }
+  };
+
   return (
     <div className={`f-container ${css.wrapper}`} id="paginationAnchor">
       {/* Header (Back + Title + Description) */}
@@ -201,6 +225,8 @@ export default function CategoryPage() {
                 onNeedAuth={() => setAuthOpen(true)}
                 onOpen={(id) => navigate(`/recipe/${id}`)}
                 onAuthor={(authorId) => navigate(`/user/${authorId}/recipes`)}
+                onToggleFavorite={() => handleToggleFavorite(r.id)}
+                isFavorite={r.isFavorite}
               />
             ))}
 
