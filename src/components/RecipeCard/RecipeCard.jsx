@@ -30,6 +30,7 @@ export default function RecipeCard({
     id,
     title,
     description,
+    image,
     thumb,
     author = { id: null, name: 'User', avatar: '/images/avatar-placeholder.png' },
   } = recipe || {};
@@ -72,7 +73,7 @@ export default function RecipeCard({
         {/* Image */}
         <div
           className={styles.imageContainer}
-          style={{ backgroundImage: `url(${thumb || '/images/placeholder.png'})` }}
+          style={{ backgroundImage: `url(${image || thumb || '/images/placeholder.png'})` }}
           aria-label={title}
           role="img"
           onClick={handleNavigateToRecipe}
