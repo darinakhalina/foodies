@@ -1,31 +1,74 @@
+import UserRecipeRow from '../../../components/UserRecipeRow/UserRecipeRow';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { fetchFavoriteRecipes } from '../../../api/favorite';
+import UserPageTabs from '../../../components/UserPageTabs/UserPageTabs';
+import Loader from '../../../components/Loader/Loader';
+
 export default function MyFavorites() {
-  const items = Array.from({ length: 6 }).map((_, i) => ({
-    id: `f${i + 1}`,
-    title: `Favorite ${i + 1}`,
-    thumb: '/test-cake.png',
-  }));
+  const token = useSelector(state => state.auth.token);
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  useEffect(() => {
+    const loadFavorites = async (page = 1) => {
+      if (!token) {
+        setError('User is not authenticated');
+        setLoading(false);
+        return;
+      }
+      try {
+        setLoading(true);
+        const data = await fetchFavoriteRecipes(token, page, 9);
+        setItems(data.recipes);
+        setTotalPages(data.totalPages || 1);
+      } catch (error) {
+        console.error('Error loading favorite recipes:', error);
+        setError('Failed to load favorite recipes');
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadFavorites(currentPage);
+  }, [token, currentPage]);
+
+  const handlePageChange = page => {
+    setCurrentPage(page);
+  };
+
+  if (loading) {
+    return <Loader />;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
+  }
+
   return (
-    <div style={{ display: 'grid', gap: 16 }}>
-      {items.map(it => (
-        <article
-          key={it.id}
-          style={{
-            display: 'grid',
-            gridTemplateColumns: '64px 1fr',
-            gap: 12,
-            alignItems: 'center',
-            borderBottom: '1px solid #eee',
-            padding: '12px 0',
-          }}
-        >
-          <img
-            src={it.thumb}
-            alt=""
-            style={{ width: 64, height: 64, borderRadius: 12, objectFit: 'cover' }}
+    <UserPageTabs
+      currentPage={currentPage}
+      totalPages={totalPages}
+      onPageChange={handlePageChange}
+      isLoading={loading}
+    >
+      {error ? (
+        <div>{error}</div>
+      ) : items.length > 0 ? (
+        items.map(recipe => (
+          <UserRecipeRow
+            key={recipe.id}
+            title={recipe.title}
+            description={recipe.description}
+            thumb={recipe.thumb}
+            onOpen={() => console.log('open recipe', recipe.id)}
           />
-          <div style={{ fontWeight: 700 }}>{it.title}</div>
-        </article>
-      ))}
-    </div>
+        ))
+      ) : (
+        <div>There are no favorite recipes yet</div>
+      )}
+    </UserPageTabs>
   );
 }
