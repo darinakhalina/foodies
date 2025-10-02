@@ -1,5 +1,6 @@
 .section {
     text-align: center;
+    padding-bottom: 20px;
 }
 
 .subtitle {
@@ -63,7 +64,6 @@
     width: 14px;
     height: 14px;
     background-color: var(--gray);
-    ;
     opacity: 1;
     margin: 0 8px;
     border-radius: 50%;
