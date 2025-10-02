@@ -6,92 +6,80 @@ export default function MyRecipes() {
     {
       id: 101,
       title: 'CHILLI PRAWN LINGUINE',
-      description:
-        'Mix the dressing ingredients in a small bowl and season with salt...',
+      description: 'Mix the dressing ingredients in a small bowl and season with salt...',
       thumb: '/images/mock/pasta.jpg',
     },
     {
       id: 101,
       title: 'CHILLI PRAWN LINGUINE',
-      description:
-        'Mix the dressing ingredients in a small bowl and season with salt...',
+      description: 'Mix the dressing ingredients in a small bowl and season with salt...',
       thumb: '/images/mock/pasta.jpg',
     },
     {
       id: 101,
       title: 'CHILLI PRAWN LINGUINE',
-      description:
-        'Mix the dressing ingredients in a small bowl and season with salt...',
+      description: 'Mix the dressing ingredients in a small bowl and season with salt...',
       thumb: '/images/mock/pasta.jpg',
     },
     {
       id: 101,
       title: 'CHILLI PRAWN LINGUINE',
-      description:
-        'Mix the dressing ingredients in a small bowl and season with salt...',
+      description: 'Mix the dressing ingredients in a small bowl and season with salt...',
       thumb: '/images/mock/pasta.jpg',
     },
     {
       id: 101,
       title: 'CHILLI PRAWN LINGUINE',
-      description:
-        'Mix the dressing ingredients in a small bowl and season with salt...',
+      description: 'Mix the dressing ingredients in a small bowl and season with salt...',
       thumb: '/images/mock/pasta.jpg',
     },
     {
       id: 101,
       title: 'CHILLI PRAWN LINGUINE',
-      description:
-        'Mix the dressing ingredients in a small bowl and season with salt...',
+      description: 'Mix the dressing ingredients in a small bowl and season with salt...',
       thumb: '/images/mock/pasta.jpg',
     },
     {
       id: 101,
       title: 'CHILLI PRAWN LINGUINE',
-      description:
-        'Mix the dressing ingredients in a small bowl and season with salt...',
+      description: 'Mix the dressing ingredients in a small bowl and season with salt...',
       thumb: '/images/mock/pasta.jpg',
     },
     {
       id: 101,
       title: 'CHILLI PRAWN LINGUINE',
-      description:
-        'Mix the dressing ingredients in a small bowl and season with salt...',
+      description: 'Mix the dressing ingredients in a small bowl and season with salt...',
       thumb: '/images/mock/pasta.jpg',
     },
     {
       id: 101,
       title: 'CHILLI PRAWN LINGUINE',
-      description:
-        'Mix the dressing ingredients in a small bowl and season with salt...',
+      description: 'Mix the dressing ingredients in a small bowl and season with salt...',
       thumb: '/images/mock/pasta.jpg',
     },
     {
       id: 101,
       title: 'CHILLI PRAWN LINGUINE',
-      description:
-        'Mix the dressing ingredients in a small bowl and season with salt...',
+      description: 'Mix the dressing ingredients in a small bowl and season with salt...',
       thumb: '/images/mock/pasta.jpg',
     },
     {
       id: 101,
       title: 'CHILLI PRAWN LINGUINE',
-      description:
-        'Mix the dressing ingredients in a small bowl and season with salt...',
+      description: 'Mix the dressing ingredients in a small bowl and season with salt...',
       thumb: '/images/mock/pasta.jpg',
     },
     {
       id: 101,
       title: 'CHILLI PRAWN LINGUINE',
-      description:
-        'Mix the dressing ingredients in a small bowl and season with salt...',
+      description: 'Mix the dressing ingredients in a small bowl and season with salt...',
       thumb: '/images/mock/pasta.jpg',
     },
   ];
 
   return (
     <div>
-      {recipes.map((recipe) => (
+      {recipes.map(recipe => (
         <UserRecipeRow
           key={recipe.id}
           title={recipe.title}

@@ -1,56 +1,69 @@
 import { useState } from 'react';
 import styles from './RecipeCard.module.css';
-import Modal from '../Modal/Modal';
-import SignInModal from '../SignInModal/SignInModal';
+// import Modal from '../Modal/Modal';
+// import SignInModal from '../SignInModal/SignInModal';
+import icons from '/images/icons.svg';
 
-// --- STATIC MOCK DATA (replace with backend later) ---
-const STATIC_RECIPE = {
-  id: 'demo-recipe-1',
-  image: '/images/test-cake.png',
-  title: 'BAKEWELL TART',
-  description:
-    'Classic almond tart with raspberry jam and a delicate shortcrust — a tea-time staple.',
-};
+/**
+ * Props
+ * - recipe: {
+ *     id, title, description, image,
+ *     author: { id, name, avatar }
+ *   }
+ * - isAuthed: boolean
+ * - onNeedAuth: () => void
+ * - onOpen: (id) => void            // optional: open recipe details
+ * - onAuthor: (authorId) => void     // optional: open author profile
+ * - onToggleFavorite: (id) => Promise|void  // optional: toggle favorite
+ * - isFavorite: boolean              // optional: favorite state from parent
+ */
+export default function RecipeCard({
+  recipe,
+  isAuthed = false,
+  onNeedAuth,
+  onOpen,
+  onAuthor,
+  onToggleFavorite,
+  isFavorite: favoriteFromParent,
+}) {
+  const {
+    id,
+    title,
+    description,
+    image,
+    author = { id: null, name: 'User', avatar: '/images/avatar-placeholder.png' },
+  } = recipe || {};
 
-const STATIC_AUTHOR = {
-  id: 'demo-user-1',
-  name: 'Ivetta',
-  avatar: '/images/test-cat.png',
-};
-
-export default function RecipeCard() {
-  // ---- STATIC “AUTH” + “FAVORITE” STATES ----
-  const [isAuthenticated] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const [localFav, setLocalFav] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
 
-  const recipe = STATIC_RECIPE;
-  const author = STATIC_AUTHOR;
+  const isFavorite = favoriteFromParent ?? localFav;
+
+  const requireAuth = fn => {
+    if (isAuthed) return fn();
+    if (onNeedAuth) onNeedAuth();
+    setIsSignInModalOpen(true);
+  };
 
   const handleFavoriteToggle = () => {
-    if (isAuthenticated) {
-      setIsFavorite(v => !v);
-    } else {
-      setIsSignInModalOpen(true);
-    }
+    requireAuth(async () => {
+      if (onToggleFavorite) await onToggleFavorite(id);
+      else setLocalFav(v => !v);
+    });
   };
 
   const handleAuthorClick = () => {
-    if (isAuthenticated) {
-      // later: navigate(`/user/${author.id}`)
-      console.log('Open author profile:', author.id);
-    } else {
-      setIsSignInModalOpen(true);
-    }
+    requireAuth(() => {
+      if (onAuthor && author?.id) onAuthor(author.id);
+    });
   };
 
   const handleNavigateToRecipe = () => {
-    if (isAuthenticated) {
-      // later: navigate(`/recipe/${recipe.id}`)
-      console.log('Open recipe details:', recipe.id);
-    } else {
-      setIsSignInModalOpen(true);
-    }
+    if (onOpen) return onOpen(id);
+    requireAuth(() => {
+      //
+    });
   };
 
   return (
@@ -59,19 +72,19 @@ export default function RecipeCard() {
         {/* Image */}
         <div
           className={styles.imageContainer}
-          style={{ backgroundImage: `url(${recipe.image})` }}
-          aria-label={recipe.title}
+          style={{ backgroundImage: `url(${image || '/images/placeholder.png'})` }}
+          aria-label={title}
           role="img"
+          onClick={handleNavigateToRecipe}
         />
 
         {/* Info */}
         <div className={styles.info}>
           <div className={styles.header}>
-            <h3 className={styles.title}>{recipe.title}</h3>
-
-            {/* Fixed-height slot keeps footer position stable */}
+            <h3 className={styles.title}>{title}</h3>
+            {/* Keep a fixed-height desc slot so footer is aligned */}
             <div className={styles.descSlot}>
-              <p className={styles.description}>{recipe.description}</p>
+              <p className={styles.description}>{description}</p>
             </div>
           </div>
 
@@ -82,31 +95,29 @@ export default function RecipeCard() {
                 onClick={handleAuthorClick}
                 className={styles.authorButton}
                 type="button"
-                title={author.name}
-                aria-label={`Open ${author.name} profile`}
+                title={author?.name}
+                aria-label={`Open ${author?.name} profile`}
               >
                 <div
                   className={styles.authorImage}
                   style={{
-                    backgroundImage: `url(${author.avatar})`,
+                    backgroundImage: `url(${author?.avatar || '/images/avatar-placeholder.png'})`,
                   }}
                 />
-                <span className={styles.authorName}>{author.name}</span>
+                <span className={styles.authorName}>{author?.name}</span>
               </button>
             </div>
 
             <div className={styles.actions}>
               <button
                 onClick={handleFavoriteToggle}
-                className={`${styles.iconButton} ${styles.favoriteButton} ${
-                  isFavorite ? styles.isFavorite : ''
-                }`}
+                className={`${styles.iconButton} ${styles.favoriteButton} ${isFavorite ? styles.isFavorite : ''}`}
                 aria-pressed={isFavorite}
                 title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
                 type="button"
               >
-                <svg className={styles.icon} aria-hidden="true" focusable="false">
-                  <use href="/images/icons.svg#icon-heart" />
+                <svg className={styles.icon} width="16" height="16">
+                  <use href={`${icons}#icon-heart`} />
                 </svg>
               </button>
 
@@ -116,8 +127,8 @@ export default function RecipeCard() {
                 title="View recipe"
                 type="button"
               >
-                <svg className={styles.icon} aria-hidden="true" focusable="false">
-                  <use href="/images/icons.svg#icon-arrow-up-right" />
+                <svg className={styles.icon} width="16" height="16">
+                  <use href={`${icons}#icon-arrow-up-right`} />
                 </svg>
               </button>
             </div>
@@ -126,11 +137,11 @@ export default function RecipeCard() {
       </div>
 
       {/* Auth modal */}
-      {isSignInModalOpen && (
-        <Modal isOpen={isSignInModalOpen} onClose={() => setIsSignInModalOpen(false)}>
-          <SignInModal />
-        </Modal>
-      )}
+      {/*{isSignInModalOpen && (*/}
+      {/*  <Modal isOpen={isSignInModalOpen} onClose={() => setIsSignInModalOpen(false)}>*/}
+      {/*    <SignInModal />*/}
+      {/*  </Modal>*/}
+      {/*)}*/}
     </>
   );
 }

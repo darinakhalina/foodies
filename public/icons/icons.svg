@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+
+  <!-- Стрілка -->
+  <symbol id="icon-arrow-up-right" viewBox="0 0 32 32">
+    <path d="M8 24 L24 8 M13 8h11v11"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+  </symbol>
+
+  <!-- Лапки -->
+  <symbol id="icon-untitled" viewBox="0 0 39 32">
+    <path fill="currentColor" d="M0 32v-10.706c0-4 0.704-7.686 
+      2.113-11.059s3.796-6.784 7.162-10.235l6.105 4.824c-1.957 
+      1.961-3.444 3.804-4.462 5.529s-1.683 3.49-1.996 5.294h7.514
+      v16.353h-16.438zM22.896 32v-10.706c0-4 0.704-7.686 
+      2.113-11.059s3.796-6.784 7.162-10.235l6.105 4.824c-1.957 
+      1.961-3.444 3.804-4.462 5.529s-1.683 3.49-1.996 5.294h7.514
+      v16.353h-16.438z"/>
+  </symbol>
+
+</svg>

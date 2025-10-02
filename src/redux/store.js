@@ -1,11 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-
 import { authReducer } from './auth/slice';
-import modalReducer from './auth/modalSlice';
 import storage from 'redux-persist/lib/storage';
 import { persistReducer, persistStore } from 'redux-persist';
 import filtersReducer from './filters/slice';
-// import { modalReducer } from './modal/slice';
+import modalReducer from './ui/modalSlice';
+import { recipesReducer } from './recipes/slice';
 
 const persistAuthConfig = {
   key: 'auth',
@@ -18,6 +17,7 @@ export const store = configureStore({
     auth: persistReducer(persistAuthConfig, authReducer),
     filters: filtersReducer,
     modal: modalReducer,
+    recipes: recipesReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

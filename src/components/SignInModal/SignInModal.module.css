@@ -15,6 +15,7 @@
 }
 
 .switchText {
+  width: 100%;
   font-family: 'Mulish Regular', sans-serif;
   font-size: 12px;
   line-height: 1.5;
