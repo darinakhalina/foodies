@@ -34,7 +34,7 @@ const PopularRecipes = () => {
         <ul>
           {recipes?.map(el => (
             <li key={el.id}>
-              <RecipeCard data={el} />
+              <RecipeCard recipe={el} />
             </li>
           ))}
         </ul>
