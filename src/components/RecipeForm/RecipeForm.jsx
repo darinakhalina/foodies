@@ -1,4 +1,4 @@
-import { Formik, Form, Field } from 'formik';
+import { Formik, Form } from 'formik';
 import RecipeFormSummary from '../RecipeFormSummary/RecipeFormSummary';
 import UploadPhoto from '../UploadPhoto/UploadPhoto';
 import RecipeFormIngredients from '../RecipeFormIngredients/RecipeFormIngredients';

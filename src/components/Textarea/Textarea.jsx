@@ -30,7 +30,7 @@ const Textarea = ({ name, placeholder, maxLength = 1000, counter = true, classNa
       />
       {counter && (
         <p className={css.counter}>
-          <span className={text.length > 0 && css.accent}>{text.length}</span>/{maxLength}
+          <span className={clsx(text.length > 0 && css.accent)}>{text.length}</span>/{maxLength}
         </p>
       )}
     </div>

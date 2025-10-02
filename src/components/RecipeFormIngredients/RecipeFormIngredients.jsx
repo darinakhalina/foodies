@@ -46,35 +46,33 @@ const RecipeFormIngredients = ({ values }) => {
                 </svg>
               </Button>
             </div>
-
+            {values.ingredients.length > 0 ? (
             <ul className={css['all-igredients']}>
-              {values.ingredients.length > 0 &&
-                values.ingredients.map((ingredient, index) => (
-                  <>
-                    {index !== 0 && (
-                      <li className={css['ingredient-card']} key={index}>
-                        <img
-                          src="http://localhost:5173/images/test-cake.png"
-                          alt="ingredient.id"
-                          width="50"
-                          height="50"
-                        ></img>
-                        <div>
-                          <p name={`ingredients.${index}.id`}>{ingredient.id}</p>
-                          <span name={`ingredients.${index}.quantity`}>{ingredient.quantity}</span>
-                        </div>
-                        <ButtonIcon
-                          iconName="icon-plus"
-                          variant="secondary"
-                          size="sm"
-                          className={css.rotate}
-                          onClick={() => remove(index)}
-                        />
-                      </li>
-                    )}
-                  </>
-                ))}
+              {values.ingredients.map((ingredient, index) =>
+                index > 0 ? (
+                  <li className={css['ingredient-card']} key={index}>
+                    <img
+                      src="http://localhost:5173/images/test-cake.png"
+                      alt="ingredient.id"
+                      width="50"
+                      height="50"
+                    ></img>
+                    <div>
+                      <p name={`ingredients.${index}.id`}>{ingredient.id}</p>
+                      <span name={`ingredients.${index}.quantity`}>{ingredient.quantity}</span>
+                    </div>
+                    <ButtonIcon
+                      iconName="icon-plus"
+                      variant="secondary"
+                      size="sm"
+                      className={css.rotate}
+                      onClick={() => remove(index)}
+                    />
+                  </li>
+                ) : null
+              )}
             </ul>
+            ) :null}
           </>
         )}
       </FieldArray>
