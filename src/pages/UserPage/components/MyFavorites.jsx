@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import UserRecipeRow from '../../../components/UserRecipeRow/UserRecipeRow';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -6,6 +7,7 @@ import UserPageTabs from '../../../components/UserPageTabs/UserPageTabs';
 import Loader from '../../../components/Loader/Loader';
 
 export default function MyFavorites() {
+  const navigate = useNavigate();
   const token = useSelector(state => state.auth.token);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -60,10 +62,11 @@ export default function MyFavorites() {
         items.map(recipe => (
           <UserRecipeRow
             key={recipe.id}
+            id={recipe.id}
             title={recipe.title}
             description={recipe.description}
             thumb={recipe.thumb}
-            onOpen={() => console.log('open recipe', recipe.id)}
+            onOpen={(id) => navigate(`/recipe/${id}`) }
           />
         ))
       ) : (

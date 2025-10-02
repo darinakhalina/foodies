@@ -8,6 +8,11 @@ export async function fetchCategoryRecipes({ category, area, ingredient, page = 
   return data.data; // { recipes, total, page, totalPages }
 }
 
+export async function fetchRecipeById({ id }) {
+  const { data } = await api.get(`/recipes/${id}`);
+  return data.data;
+}
+
 export async function fetchCategoryFilters({ category }) {
   const { data } = await api.get('/recipes/filters', { params: { category } });
   return data.data; // { areas, ingredients }
