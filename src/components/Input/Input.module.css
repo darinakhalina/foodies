@@ -13,18 +13,18 @@
   padding: 14px;
   align-items: center;
   border-radius: 30px;
-  border: 1px solid #bfbebe;
+  border: 1px solid var(--gray);
   width: 100%;
   transition: border-color 0.2s ease;
 }
 
 .input:focus {
   outline: none;
-  border: 1px solid #050505;
+  border: 1px solid var(--color-main);
 }
 
 .input:not(:placeholder-shown) {
-  border: 1px solid #050505;
+  border: 1px solid var(--color-main);
 }
 
 .inputWrapper {
@@ -34,21 +34,33 @@
   width: 100%;
 }
 
-.eyeIcon {
+.eyeButton {
+  cursor: pointer;
   position: absolute;
   right: 16px;
   top: 50%;
   transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 20px;
   height: 20px;
-  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+}
+
+.eyeIcon {
+  width: 20px;
+  height: 20px;
   fill: none;
-  stroke: #050505;
+  color: var(--color-main);
   transition: stroke 0.2s ease;
 }
 
-.eyeIcon:hover {
-  stroke: #333;
+.eyeButton:hover .eyeIcon {
+  color: #333;
 }
 
 .error {
@@ -56,10 +68,37 @@
   color: #a10707;
   margin-top: 4px;
   min-height: 16px;
+  animation: slideDown 0.2s ease-out;
+  transform-origin: top;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .inputError {
   border: 1px solid #a10707 !important;
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
+  }
 }
 
 .inputError::placeholder {
