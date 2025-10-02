@@ -1,6 +1,7 @@
 import styles from './Dropdown.module.css';
 import clsx from 'clsx';
 import { useState, useEffect } from 'react';
+import icons from '/images/icons.svg';
 
 export const Dropdown = ({
   options = [],
@@ -20,9 +21,7 @@ export const Dropdown = ({
   const handleSelect = option => {
     setSelected(option);
     setIsOpen(false);
-    if (onChange) {
-      onChange(option);
-    }
+    onChange?.(option);
   };
 
   return (
@@ -31,13 +30,14 @@ export const Dropdown = ({
         className={styles.toggle}
         onClick={() => setIsOpen(!isOpen)}
         type="button"
+        aria-expanded={isOpen}
       >
         <div>{selected ? (selected.searchLabel || selected.label) : placeholder}</div>
-        <img
-          src="/images/icons/chevron-down.svg"
-          alt="toggle"
-          className={clsx(styles.icon, isOpen && styles.rotate)}
-        />
+
+        {/* rotate the chevron when open */}
+        <svg className={clsx(styles.icon, isOpen && styles.rotate)} width="18" height="18" aria-hidden="true">
+          <use href={`${icons}#icon-arrow-down`} />
+        </svg>
       </button>
 
       {isOpen && (
@@ -49,6 +49,8 @@ export const Dropdown = ({
                 key={opt.value}
                 className={clsx(styles.item, !isAvailable && styles.disabled)}
                 onClick={() => isAvailable && handleSelect(opt)}
+                role="option"
+                aria-disabled={!isAvailable}
               >
                 {opt.label}
               </li>

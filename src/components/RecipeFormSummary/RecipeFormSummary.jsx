@@ -1,24 +1,11 @@
-import Input from '../Input/Input';
+import { Field } from 'formik';
+import Textarea from '../Textarea/Textarea';
 import css from './RecipeFormSummary.module.css';
-const RecipeFormSummary = ({ errors, touched }) => {
+const RecipeFormSummary = () => {
   return (
     <div className={css.summary}>
-      <Input
-        name="name"
-        placeholder="THE NAME OF THE RECIPE"
-        required
-        errors={errors}
-        touched={touched}
-      />
-      <Input
-        name="description"
-        type="textarea"
-        placeholder="Enter a description of the dish"
-        required
-        errors={errors}
-        touched={touched}
-        maxLength={200}
-      />
+      <Field className={css.caption} name="name" placeholder="THE NAME OF THE RECIPE" required />
+      <Textarea name="description" placeholder="Enter a description of the dish" maxLength={200} />
     </div>
   );
 };

@@ -1,0 +1,72 @@
+.inputWrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.input {
+    cursor: pointer;
+    box-sizing: border-box;
+    height: 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #050505;
+    font-family: 'Mulish Regular', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 1.5;
+    letter-spacing: -0.32px;
+    padding: 14px;
+    border-radius: 30px;
+    border: 1px solid #bfbebe;
+    width: 100%;
+    transition: border-color 0.2s ease;
+
+}
+
+/* .input:focus {
+    outline: none;
+    border: 1px solid #050505;
+}*/
+
+
+.arrow {
+    font-size: 12px;
+    margin-left: 8px;
+}
+
+.rotate {
+    transform: rotate(180deg);
+}
+
+.dropdownContent {
+    border-radius: 15px;
+    padding: 16px 18px;
+    position: absolute;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #bfbebe;
+    overflow: hidden;
+    z-index: 10;
+}
+
+.dropdownItem {
+    padding: 10px 14px;
+    cursor: pointer;
+}
+
+.dropdownItem:hover {
+    background: #f2f2f2;
+}
+
+@media (min-width: 768px) {
+    .input {
+        font-size: 16px;
+        padding: 16px 18px;
+    }
+}

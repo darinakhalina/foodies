@@ -1,0 +1,22 @@
+.time {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.category {
+    width: 200px;
+}
+
+@media (min-width: 481px) {
+    .cooking {
+        display: flex;
+        gap: 20px;
+    }
+
+    .time {
+        gap: 16px;
+    }
+}
+
+@media (min-width: 769px) {}

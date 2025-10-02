@@ -1,0 +1,65 @@
+.card {
+  width: 100%;
+  border: 1px solid #e8e8e8;
+  border-radius: 30px;
+  padding: 20px;
+  background: #fff;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid #bfbebe;
+}
+
+.name {
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: #050505;
+}
+
+.email {
+  font-size: 14px;
+  color: #7a7a7a;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 16px;
+  margin: 16px 0 20px;
+}
+
+.stats li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.stats span {
+  color: #7a7a7a;
+}
+
+.stats strong {
+  color: #050505;
+}
+
+.logout {
+  width: 100%;
+  border: 1px solid #1a1a1a;
+  border-radius: 30px;
+  padding: 12px 18px;
+  background: transparent;
+  font-weight: 700;
+  cursor: pointer;
+}
