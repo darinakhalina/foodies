@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import {
   addToFavorites,
   getFavoriteRecipes,
@@ -7,12 +7,13 @@ import {
 } from '../../redux/recipes/operations';
 import Button from '../Button/Button';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
-import { selectIsFavorite } from '../../redux/recipes/selectors';
+import { selectIsFavorite, selectFavoritesLoading } from '../../redux/recipes/selectors';
 import css from './RecipePreparation.module.css';
 
 const RecipePreparation = ({ recipe }) => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoading = useSelector(selectFavoritesLoading);
   const isFavorite = useSelector(recipe?.id != null ? selectIsFavorite(recipe.id) : () => false);
 
   const handleFavoriteClick = () => {
@@ -28,7 +29,16 @@ const RecipePreparation = ({ recipe }) => {
     }
   };
 
-  const paragraphs = recipe.instructions.split(/\r?\n\s*\r?\n/).filter(p => p.trim() !== '');
+  const paragraphs = useMemo(() => {
+    const raw = recipe?.instructions ?? '';
+
+    const normalized = raw.replace(/<br\s*\/?>/gi, '\n').replace(/\r\n/g, '\n');
+
+    return normalized
+      .split(/\n\s*\n+/)
+      .map(p => p.trim())
+      .filter(Boolean);
+  }, [recipe?.instructions]);
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -45,7 +55,13 @@ const RecipePreparation = ({ recipe }) => {
         </p>
       ))}
       <div className={css.actions}>
-        <Button variant="secondary" className={css.action} onClick={handleFavoriteClick}>
+        <Button
+          variant="secondary"
+          isLoading={isLoading}
+          isDisabled={isLoading}
+          className={css.action}
+          onClick={handleFavoriteClick}
+        >
           {isFavorite ? 'Remove from favorites' : 'Add to favorites'}
         </Button>
       </div>

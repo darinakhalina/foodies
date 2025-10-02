@@ -12,9 +12,9 @@ const api = axios.create({
 
 // ToDO: remove in production
 // small logger to see final URLs in DevTools
-api.interceptors.request.use(cfg => {
-  console.log('[API]', cfg.method?.toUpperCase(), `${cfg.baseURL}${cfg.url}`, cfg.params || '');
-  return cfg;
-});
+// api.interceptors.request.use(cfg => {
+//   console.log('[API]', cfg.method?.toUpperCase(), `${cfg.baseURL}${cfg.url}`, cfg.params || '');
+//   return cfg;
+// });
 
 export default api;

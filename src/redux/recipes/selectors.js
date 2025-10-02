@@ -13,3 +13,6 @@ export const selectIsFavorite = recipeId => state => {
   const list = state.recipes.favorites?.recipes ?? [];
   return list.some(r => normId(r.id) === id);
 };
+
+export const selectFavoritesLoading = state => state.recipes.loading;
+export const selectFavoritesError = state => state.recipes.error;
