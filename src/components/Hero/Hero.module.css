@@ -33,28 +33,39 @@
 
 .heroBtn {
   display: flex;
-  width: fit-content;
   cursor: pointer;
-  border: 1px solid var(--white);
+  border: 1px solid var(--dark-gray);
   border-radius: 30px;
   padding: 12px 24px;
-  background-color: var(--color-main);
-  color: var(--white);
-  font-weight: 700;
+  background-color: var(--white);
   margin: 0 auto;
   margin-bottom: 30px;
   text-transform: uppercase;
   transition-property: background-color, border-color, color;
   transition-duration: 250ms, 250ms, 250ms;
   transition-timing-function: ease-in-out, ease-in-out, ease-in-out;
-  text-decoration: none;
 }
 
 .heroBtn:hover,
-.heroBtn:active {
-  background-color: var(--white);
+.heroBtn:focus {
+  background-color: var(--main);
   border-color: var(--color-main);
-  color: var(--color-main);
+  color: var(--main);
+}
+
+.heroBtn:hover,
+.heroBtn:focus > .heroLink {
+  color: var(--white);
+}
+
+.heroLink {
+  display: block;
+  font-family: 'Mulish Medium';
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--main);
+  letter-spacing: -0.02em;
 }
 
 .wrapImg {
