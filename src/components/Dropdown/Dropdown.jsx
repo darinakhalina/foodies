@@ -1,6 +1,6 @@
 import styles from './Dropdown.module.css';
 import clsx from 'clsx';
-import { useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 import icons from '/images/icons.svg';
 
 export const Dropdown = ({
@@ -9,34 +9,47 @@ export const Dropdown = ({
   value = '',
   onChange,
   availableOptions,
+  isOpen: controlledOpen,
+  onOpenChange,
+  onBeforeOpen,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [selected, setSelected] = useState(null);
-
-  useEffect(() => {
-    const selectedOption = options.find(opt => opt.value === value);
-    setSelected(selectedOption || null);
-  }, [value, options]);
-
-  const handleSelect = option => {
-    setSelected(option);
-    setIsOpen(false);
-    onChange?.(option);
+  const isControlled = typeof controlledOpen === 'boolean';
+  const [internalOpen, setInternalOpen] = useState(false);
+  const open = isControlled ? controlledOpen : internalOpen;
+  const setOpen = (next) => {
+    if (isControlled) {
+      onOpenChange?.(next);
+    } else {
+      setInternalOpen(next);
+    }
   };
-
+  const selected = useMemo(
+    () => options.find((opt) => opt.value === value) || null,
+    [options, value]
+  );
+  const toggleOpen = () => {
+    if (!open) {
+      onBeforeOpen?.(); 
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  };
+  const handleSelect = (option) => {
+    onChange?.(option);
+    setOpen(false);
+  };
   return (
     <div className={styles.wrapper}>
       <button
         className={styles.toggle}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={toggleOpen}
         type="button"
-        aria-expanded={isOpen}
+        aria-expanded={open}
       >
         <div>{selected ? selected.searchLabel || selected.label : placeholder}</div>
-
-        {/* rotate the chevron when open */}
         <svg
-          className={clsx(styles.icon, isOpen && styles.rotate)}
+          className={clsx(styles.icon, open && styles.rotate)}
           width="18"
           height="18"
           aria-hidden="true"
@@ -44,10 +57,9 @@ export const Dropdown = ({
           <use href={`${icons}#icon-arrow-down`} />
         </svg>
       </button>
-
-      {isOpen && (
+      {open && (
         <ul className={styles.menu}>
-          {options.map(opt => {
+          {options.map((opt) => {
             const isAvailable =
               !availableOptions || !opt.value || availableOptions.includes(opt.value);
             return (
