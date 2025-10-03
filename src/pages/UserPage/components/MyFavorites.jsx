@@ -54,10 +54,6 @@ export default function MyFavorites() {
     return <Loader />;
   }
 
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   return (
     <UserPageTabs
       currentPage={currentPage}
