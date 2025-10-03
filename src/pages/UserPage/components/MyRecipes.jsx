@@ -1,4 +1,3 @@
-// src/pages/UserPage/tabs/MyRecipes.jsx
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -84,7 +83,7 @@ export default function MyRecipes() {
           />
         ))
       ) : (
-        !loading && <p style={{ padding: '1rem' }}>You haven’t added any recipes yet.</p>
+        !loading && <p>Add new recipes to see them here.</p>
       )}
     </UserPageTabs>
   );
