@@ -14,7 +14,7 @@ const HomePage = () => {
   const handleSelectCategory = (name) => {
     const slug = String(name || '').toLowerCase().replace(/\s+/g, '-');
     const next = new URLSearchParams(params);
-    if (slug && slug !== 'all') {
+    if (slug) {
       next.set('category', slug);
       next.delete('area');
       next.delete('ingredient');
@@ -37,7 +37,7 @@ const HomePage = () => {
     setParams(next);
   };
 
-  const showRecipes = category && category !== 'all';
+  const showRecipes = Boolean(category);
 
   return (
     <>
