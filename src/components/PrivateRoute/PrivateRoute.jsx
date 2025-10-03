@@ -1,18 +1,20 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 import { selectIsLoggedIn } from '../../redux/auth/selectors.js';
-// import { openModal } from '../../redux/auth/modalSlice.js';
+import { useNavigate } from 'react-router-dom';
+import { openModal } from '../../redux/ui/modalSlice.js';
 import { useEffect } from 'react';
 
 export default function PrivateRoute({ children }) {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // if (isLoggedIn === false) {
-    //   dispatch(openModal(true));
-    // }
-  }, [isLoggedIn, dispatch]);
+    if (isLoggedIn === false) {
+      dispatch(openModal('login'));
+      navigate('/', { replace: true });
+    }
+  }, [isLoggedIn, dispatch, navigate]);
 
-  return isLoggedIn ? children : <Navigate to="/" replace />;
+  return isLoggedIn ? children : null;
 }

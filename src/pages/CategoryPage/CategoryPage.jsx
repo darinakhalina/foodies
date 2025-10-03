@@ -26,6 +26,7 @@ function normalizeRecipe(r) {
       avatar: r.owner?.avatar ?? '/images/avatar-placeholder.png',
     },
     isFavorite: !!r.isFavorite,
+    isFavorite: !!r.isFavorite,
   };
 }
 
@@ -110,7 +111,9 @@ export default function CategoryPage({ onBack }) {
         url.searchParams.set('page', String(page));
         url.searchParams.set('limit', String(limit));
 
-        const res = await fetch(url.toString());
+        const res = await fetch(url.toString(), {
+          headers: isAuthed ? { Authorization: `Bearer ${token}` } : {},
+        });
         if (!res.ok) throw new Error(`Recipes request failed: ${res.status}`);
 
         const json = await res.json();
@@ -139,7 +142,7 @@ export default function CategoryPage({ onBack }) {
     return () => {
       cancelled = true;
     };
-  }, [title, area, ingredient, page, limit]);
+  }, [title, area, ingredient, page, limit, isAuthed, token]);
 
   // Smooth scroll on page change
   useEffect(() => {
@@ -173,23 +176,21 @@ export default function CategoryPage({ onBack }) {
   };
 
   const handleToggleFavorite = async (id) => {
-    setRecipes(prev => prev.map(r => (r.id === id ? { ...r, isFavorite: !r.isFavorite } : r)));
     try {
       const target = recipes.find(r => r.id === id);
-      const currentlyFav = !!target?.isFavorite;
-      if (currentlyFav) await deleteFavorite(id, token);
-      else await addFavorite(id, token);
-    } catch (e) {
-      setRecipes(prev => prev.map(r => (r.id === id ? { ...r, isFavorite: !r.isFavorite } : r)));
-      console.error(e);
-    }
-  };
+      if (!target) return;
 
-  const navigate = useNavigate();
-  const back = () => {
-    if (onBack) onBack();
-    else {
-      navigate(-1);
+      if (target.isFavorite) {
+        await deleteFavorite(id, token);
+      } else {
+        await addFavorite(id, token);
+      }
+
+      setRecipes(prev =>
+        prev.map(r => (r.id === id ? { ...r, isFavorite: !r.isFavorite } : r))
+      );
+    } catch (err) {
+      console.error('Помилка зміни улюбленого рецепта:', err);
     }
   };
 
