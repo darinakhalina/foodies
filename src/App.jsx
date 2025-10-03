@@ -14,7 +14,6 @@ import { fetchUser } from './redux/auth/operations';
 
 // Pages
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
-const CategoryPage = lazy(() => import('./pages/CategoryPage/CategoryPage'));
 const AddRecipePage = lazy(() => import('./pages/AddRecipePage/AddRecipePage'));
 const UserPage = lazy(() => import('./pages/UserPage/UserPage'));
 const UserPageLayout = lazy(() => import('./pages/UserPage/UserPageLayout'));
@@ -37,12 +36,12 @@ const App = () => {
         {/* Public home shell */}
         <Route path="/" element={<HomePageLayout />}>
           <Route index element={<HomePage />} />
+          <Route path="category/:category" element={<HomePage />} />
         </Route>
 
         {/* Main app shell */}
         <Route path="/" element={<Layout />}>
           {/* Public routes */}
-          <Route path="category/:category" element={<CategoryPage />} />
           <Route path="recipe/:id" element={<RecipePage />} />
 
           {/* Private routes with nested user tabs */}
