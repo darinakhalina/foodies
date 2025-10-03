@@ -1,6 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { register, login } from '../../redux/auth/operations';
-import { selectUserError } from '../../redux/auth/selectors';
+import { useDispatch } from 'react-redux';
+import { register } from '../../redux/auth/operations';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
@@ -10,7 +9,6 @@ import styles from './SignUpForm.module.css';
 
 const SignUpForm = ({ onSuccess }) => {
   const dispatch = useDispatch();
-  const error = useSelector(selectUserError);
 
   // eslint-disable-next-line no-useless-escape
   const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -26,7 +24,6 @@ const SignUpForm = ({ onSuccess }) => {
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
       await dispatch(register(values)).unwrap();
-      await dispatch(login({ email: values.email, password: values.password })).unwrap();
       toast.success('Registration successful!');
       if (onSuccess) onSuccess();
     } catch (err) {
@@ -68,8 +65,12 @@ const SignUpForm = ({ onSuccess }) => {
             errors={errors}
             touched={touched}
           />
-          {error && <p className={styles.error}>{error}</p>}
-          <Button type="submit" className={styles.submitButton} disabled={isSubmitting}>
+          <Button
+            type="submit"
+            className={styles.submitButton}
+            isLoading={isSubmitting}
+            disabled={isSubmitting}
+          >
             Create
           </Button>
         </Form>

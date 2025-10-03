@@ -116,7 +116,10 @@ export default function CategoryPage() {
         if (ingredient) url.searchParams.set('ingredient', ingredient);
         url.searchParams.set('page', String(page));
         url.searchParams.set('limit', String(limit));
-        const res = await fetch(url.toString());
+
+        const res = await fetch(url.toString(), {
+          headers: isAuthed ? { Authorization: `Bearer ${token}` } : {},
+        });
         if (!res.ok) throw new Error(`Recipes request failed: ${res.status}`);
         const json = await res.json();
         const payload = json.data || json;
@@ -144,7 +147,8 @@ export default function CategoryPage() {
     return () => {
       cancelled = true;
     };
-  }, [normalizedCategory, area, ingredient, page, limit]);
+  }, [title, normalizedCategory, area, ingredient, page, limit, isAuthed, token]);
+
   // smooth scroll on page change
   useEffect(() => {
     const anchor = document.getElementById('paginationAnchor');
@@ -152,16 +156,21 @@ export default function CategoryPage() {
   }, [page]);
   const hasResults = recipes.length > 0;
   const shown = recipes;
-  const handleToggleFavorite = async id => {
-    setRecipes(prev => prev.map(r => (r.id === id ? { ...r, isFavorite: !r.isFavorite } : r)));
+
+  const handleToggleFavorite = async (id) => {
     try {
       const target = recipes.find(r => r.id === id);
-      const currentlyFav = !!target?.isFavorite;
-      if (currentlyFav) {
+      if (!target) return;
+
+      if (target.isFavorite) {
         await deleteFavorite(id, token);
       } else {
         await addFavorite(id, token);
       }
+
+      setRecipes(prev =>
+        prev.map(r => (r.id === id ? { ...r, isFavorite: !r.isFavorite } : r))
+      );
     } catch (err) {
       console.error('Failed to toggle favorite:', err);
     }

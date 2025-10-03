@@ -13,6 +13,14 @@ export async function fetchRecipeFilters({ category, area }) {
     params: { category, area },
   });
   return data?.data || data; 
+export async function fetchRecipeById({ id }) {
+  const { data } = await api.get(`/recipes/${id}`);
+  return data.data;
+}
+
+export async function fetchCategoryFilters({ category }) {
+  const { data } = await api.get('/recipes/filters', { params: { category } });
+  return data.data; // { areas, ingredients }
 }
 
 export const addRecipeToFavorites = async (token, recipeId) => {

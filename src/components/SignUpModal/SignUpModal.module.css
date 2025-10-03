@@ -29,6 +29,27 @@
   color: #050505;
   cursor: pointer;
   padding: 0;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.switchButton::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--color-main);
+  transition: width 0.3s ease;
+}
+
+.switchButton:hover::after {
+  width: 100%;
+}
+
+.switchButton:hover {
+  opacity: 0.8;
 }
 
 @media (min-width: 768px) {
@@ -44,6 +65,6 @@
   }
 
   .switchText {
-    font-size: 16px;
+    font-size: 14px;
   }
 }

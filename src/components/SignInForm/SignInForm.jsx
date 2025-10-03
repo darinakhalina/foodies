@@ -1,6 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { login } from '../../redux/auth/operations';
-import { selectUserError } from '../../redux/auth/selectors';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
@@ -10,7 +9,6 @@ import styles from './SignInForm.module.css';
 
 const SignInForm = ({ onSuccess }) => {
   const dispatch = useDispatch();
-  const error = useSelector(selectUserError);
 
   // eslint-disable-next-line no-useless-escape
   const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -41,7 +39,7 @@ const SignInForm = ({ onSuccess }) => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({ errors, touched }) => (
+      {({ errors, touched, isSubmitting }) => (
         <Form className={styles.form}>
           <Input
             name="email"
@@ -60,9 +58,13 @@ const SignInForm = ({ onSuccess }) => {
             errors={errors}
             touched={touched}
           />
-          {error && <p className={styles.error}>{error}</p>}
           <div className={styles.buttonWrapper}>
-            <Button type="submit" className={styles.submitButton}>
+            <Button
+              type="submit"
+              className={styles.submitButton}
+              isLoading={isSubmitting}
+              isDisabled={isSubmitting}
+            >
               Sign in
             </Button>
           </div>

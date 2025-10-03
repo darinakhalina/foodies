@@ -1,5 +1,6 @@
 import { useId, useState } from 'react';
 import { Field, ErrorMessage } from 'formik';
+import icons from '/images/icons.svg';
 import styles from './Input.module.css';
 
 export default function Input({
@@ -35,25 +36,17 @@ export default function Input({
         />
 
         {isPasswordField && showPasswordToggle && (
-          <>
-            {showPassword ? (
-              <svg
-                className={styles.eyeIcon}
-                aria-hidden="true"
-                onClick={() => setShowPassword(false)}
-              >
-                <use href="/images/icons.svg#icon-eye" />
-              </svg>
-            ) : (
-              <svg
-                className={styles.eyeIcon}
-                aria-hidden="true"
-                onClick={() => setShowPassword(true)}
-              >
-                <use href="/images/icons.svg#icon-eye-off" />
-              </svg>
-            )}
-          </>
+          <button
+            type="button"
+            className={styles.eyeButton}
+            aria-pressed={showPassword}
+            aria-label={showPassword ? 'Hide password' : 'Show password'}
+            onClick={() => setShowPassword(v => !v)}
+          >
+            <svg className={styles.eyeIcon} aria-hidden="true">
+              <use href={`${icons}#${showPassword ? 'icon-eye-open' : 'icon-eye-close'}`} />
+            </svg>
+          </button>
         )}
       </div>
 
