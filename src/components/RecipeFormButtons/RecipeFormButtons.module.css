@@ -1,0 +1,12 @@
+.buttons-box {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+}
+
+@media (min-width: 481px) {
+    .buttons-box {
+        margin-top: 80px;
+    }
+}

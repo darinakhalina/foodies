@@ -10,6 +10,7 @@ export default function Input({
   required = false,
   showPasswordToggle = false,
   className = '',
+  children,
   errors,
   touched,
   ...props
@@ -33,7 +34,9 @@ export default function Input({
           className={`${styles.input} ${hasError ? styles.inputError : ''} ${className}`}
           data-password={isPasswordField ? 'true' : 'false'}
           {...props}
-        />
+        >
+          {children}
+        </Field>
 
         {isPasswordField && showPasswordToggle && (
           <button
