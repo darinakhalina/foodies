@@ -37,10 +37,15 @@
   border: 1px solid var(--dark-gray);
   border-radius: 30px;
   padding: 12px 24px;
-  background-color: var(--white);
   margin: 0 auto;
   margin-bottom: 30px;
   text-transform: uppercase;
+  font-family: 'Mulish Medium';
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: -0.02em;
+  background-color: var(--white);
+  color: var(--main);
   transition-property: background-color, border-color, color;
   transition-duration: 250ms, 250ms, 250ms;
   transition-timing-function: ease-in-out, ease-in-out, ease-in-out;
@@ -50,22 +55,7 @@
 .heroBtn:focus {
   background-color: var(--main);
   border-color: var(--color-main);
-  color: var(--main);
-}
-
-.heroBtn:hover,
-.heroBtn:focus > .heroLink {
   color: var(--white);
-}
-
-.heroLink {
-  display: block;
-  font-family: 'Mulish Medium';
-  font-weight: 700;
-  font-size: 14px;
-  text-decoration: none;
-  color: var(--main);
-  letter-spacing: -0.02em;
 }
 
 .wrapImg {
