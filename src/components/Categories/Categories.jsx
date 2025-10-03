@@ -30,7 +30,9 @@ const CategoryCard = ({ item, shape, onSelect }) => {
   const handleClick = () => {
     const slug = item.name.toLowerCase().replace(/\s+/g, '-');
     if (onSelect) onSelect(slug);
-    else navigate(`/category/${slug}`); 
+    else {
+      navigate({ pathname: '/', search: `?category=${slug}`});
+    }
   };
 
   const handleError = () => {
@@ -75,6 +77,7 @@ const Categories = ({ onSelect }) => {
   const [items, setItems] = useState([]);
   const [status, setStatus] = useState('loading');
   const [err, setErr] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -156,7 +159,8 @@ const Categories = ({ onSelect }) => {
             <button
               type="button"
               className={styles.allBtn}
-              onClick={() => (onSelect ? onSelect('all') : null)}
+              onClick={() => onSelect ? onSelect('all') : navigate({ pathname: '/', search: '?category=all'})
+              }
               aria-label="Show all categories"
             >
               All categories
