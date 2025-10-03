@@ -13,6 +13,21 @@ export async function fetchRecipeById({ id }) {
   return data.data;
 }
 
+export async function fetchMyRecipes(token, { page = 1, limit = 9 } = {}) {
+  const { data } = await api.get('/recipes/me', {
+    params: { page, limit },
+    headers: { Authorization: getAuthorizationHeader(token) },
+  });
+  return data?.data ?? data;
+}
+
+export async function deleteMyRecipe(token, recipeId) {
+  const { data } = await api.delete(`/recipes/${recipeId}`, {
+    headers: { Authorization: getAuthorizationHeader(token) },
+  });
+  return data; 
+}
+
 export async function fetchRecipeFilters({ category, area }) {
   const { data } = await api.get('/recipes/filters', {
     params: { category, area },
