@@ -26,12 +26,16 @@ function normalizeRecipe(r) {
       avatar: r.owner?.avatar ?? '/images/avatar-placeholder.png',
     },
     isFavorite: !!r.isFavorite,
-    isFavorite: !!r.isFavorite,
   };
 }
 
 export default function CategoryPage({ onBack }) {
   const [params, setParams] = useSearchParams();
+  const navigate = useNavigate();
+  const back = () => {
+    if (onBack) onBack();
+    else navigate(-1);
+  }
 
   const categorySlug = (params.get('category') || '').toLowerCase();
   const title = categorySlug.toUpperCase(); 
