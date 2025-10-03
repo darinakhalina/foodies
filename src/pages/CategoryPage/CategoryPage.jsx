@@ -1,19 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
 import Filters from '../../components/Filters/Filters';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import Pagination from '../../components/Pagination/Pagination';
 import Modal from '../../components/Modal/Modal';
-
 import { addFavorite, deleteFavorite } from '../../api/favorite';
 import { selectIsLoggedIn, selectToken } from '../../redux/auth/selectors';
 import { getCategoryDescription } from '../../data/categoryDescriptions';
 import css from './CategoryPage.module.css';
-
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
-
 function normalizeRecipe(r) {
   return {
     id: r.id,
@@ -28,26 +24,24 @@ function normalizeRecipe(r) {
     isFavorite: !!r.isFavorite,
   };
 }
-
 export default function CategoryPage({ onBack }) {
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
   const back = () => {
     if (onBack) onBack();
     else navigate(-1);
-  }
-
+  };
+  // URL params
   const categorySlug = (params.get('category') || '').toLowerCase();
-  const title = categorySlug.toUpperCase(); 
-  const description = getCategoryDescription(categorySlug);
-
-  const isAuthed = useSelector(selectIsLoggedIn);
-  const token = useSelector(selectToken);
-
+  const title = categorySlug.toUpperCase();
+  // If ALL → do not send category to backend
+  const normalizedCategory = title === 'ALL' ? '' : title;
   const area = params.get('area') || '';
   const ingredient = params.get('ingredient') || '';
   const page = Number(params.get('page') || 1);
-
+  // Auth
+  const isAuthed = useSelector(selectIsLoggedIn);
+  const token = useSelector(selectToken);
   // UI state
   const [recipes, setRecipes] = useState([]);
   const [areasOpt, setAreasOpt] = useState([]);
@@ -56,7 +50,6 @@ export default function CategoryPage({ onBack }) {
   const [authOpen, setAuthOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState('');
-
   // Responsive page size
   const [limit, setLimit] = useState(() =>
     typeof window !== 'undefined' && window.innerWidth < 768 ? 8 : 12
@@ -66,15 +59,16 @@ export default function CategoryPage({ onBack }) {
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
-  
-  // Fetch available filters (areas, ingredients) for this category
+  // Description 
+  const description = getCategoryDescription(categorySlug);
+  // Fetch available filters (areas, ingredients)
   useEffect(() => {
     let cancelled = false;
     (async () => {
       try {
         setErr('');
         const url = new URL('/api/recipes/filters', API_URL);
-        if (title) url.searchParams.set('category', title);
+        if (normalizedCategory) url.searchParams.set('category', normalizedCategory);
         const res = await fetch(url.toString());
         if (!res.ok) throw new Error(`Filters request failed: ${res.status}`);
         const json = await res.json();
@@ -90,16 +84,14 @@ export default function CategoryPage({ onBack }) {
     return () => {
       cancelled = true;
     };
-  }, [title]);
-
-  // Reset page on filter changes
+  }, [normalizedCategory]);
+  // Reset page on filter/category changes
   useEffect(() => {
     const next = new URLSearchParams(params);
     next.set('page', '1');
     setParams(next, { replace: true });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [area, ingredient, title]);
-
+  }, [area, ingredient, normalizedCategory]);
   // Load recipes
   useEffect(() => {
     let cancelled = false;
@@ -107,19 +99,16 @@ export default function CategoryPage({ onBack }) {
       try {
         setIsLoading(true);
         setErr('');
-
         const url = new URL('/api/recipes', API_URL);
-        if (title) url.searchParams.set('category', title);
+        if (normalizedCategory) url.searchParams.set('category', normalizedCategory);
         if (area) url.searchParams.set('area', area);
         if (ingredient) url.searchParams.set('ingredient', ingredient);
         url.searchParams.set('page', String(page));
         url.searchParams.set('limit', String(limit));
-
         const res = await fetch(url.toString(), {
           headers: isAuthed ? { Authorization: `Bearer ${token}` } : {},
         });
         if (!res.ok) throw new Error(`Recipes request failed: ${res.status}`);
-
         const json = await res.json();
         const payload = json.data || json;
         const apiRecipes = Array.isArray(payload.recipes)
@@ -128,7 +117,6 @@ export default function CategoryPage({ onBack }) {
           ? json.recipes
           : [];
         const normalized = apiRecipes.map(normalizeRecipe);
-
         if (!cancelled) {
           setRecipes(normalized);
           setTotalPages(
@@ -146,16 +134,13 @@ export default function CategoryPage({ onBack }) {
     return () => {
       cancelled = true;
     };
-  }, [title, area, ingredient, page, limit, isAuthed, token]);
-
+  }, [normalizedCategory, area, ingredient, page, limit, isAuthed, token]);
   // Smooth scroll on page change
   useEffect(() => {
     const anchor = document.getElementById('paginationAnchor');
     if (anchor) anchor.scrollIntoView({ behavior: 'smooth' });
   }, [page]);
-
   const hasResults = recipes.length > 0;
-
   // Handlers to keep URL in sync when Filters change
   const setArea = (val) => {
     const next = new URLSearchParams(params);
@@ -164,7 +149,6 @@ export default function CategoryPage({ onBack }) {
     next.set('page', '1');
     setParams(next);
   };
-
   const setIngredient = (val) => {
     const next = new URLSearchParams(params);
     if (val) next.set('ingredient', val);
@@ -172,24 +156,20 @@ export default function CategoryPage({ onBack }) {
     next.set('page', '1');
     setParams(next);
   };
-
   const setPageUrl = (p) => {
     const next = new URLSearchParams(params);
     next.set('page', String(p));
     setParams(next);
   };
-
   const handleToggleFavorite = async (id) => {
     try {
       const target = recipes.find(r => r.id === id);
       if (!target) return;
-
       if (target.isFavorite) {
         await deleteFavorite(id, token);
       } else {
         await addFavorite(id, token);
       }
-
       setRecipes(prev =>
         prev.map(r => (r.id === id ? { ...r, isFavorite: !r.isFavorite } : r))
       );
@@ -197,7 +177,6 @@ export default function CategoryPage({ onBack }) {
       console.error('Помилка зміни улюбленого рецепта:', err);
     }
   };
-
   return (
     <div className={`f-container ${css.wrapper}`} id="paginationAnchor">
       {/* Header */}
@@ -208,11 +187,9 @@ export default function CategoryPage({ onBack }) {
           </svg>
           Back
         </button>
-
-        <h1 className={css.title}>{title}</h1>
+        <h1 className={css.title}>{title || 'ALL'}</h1>
         <p className={css.description}>{description}</p>
       </div>
-
       <div className={css.content}>
         {/* Left: filters */}
         <div className={css.filtersCol}>
@@ -225,12 +202,10 @@ export default function CategoryPage({ onBack }) {
             onIngredient={setIngredient}
           />
         </div>
-
         {/* Right: grid + pagination */}
         <div>
           {err && <div className={css.error}>{err}</div>}
           {isLoading && <div className={css.loading}>Loading…</div>}
-
           <div className={css.grid}>
             {recipes.map(r => (
               <RecipeCard
@@ -238,18 +213,16 @@ export default function CategoryPage({ onBack }) {
                 recipe={r}
                 isAuthed={isAuthed}
                 onNeedAuth={() => setAuthOpen(true)}
-                onOpen={(id) => navigate(`/recipe/${id}`)}              
-                onAuthor={(authorId) => navigate(`/user/${authorId}/recipes`)} 
+                onOpen={(id) => navigate(`/recipe/${id}`)}
+                onAuthor={(authorId) => navigate(`/user/${authorId}/recipes`)}
                 onToggleFavorite={() => handleToggleFavorite(r.id)}
                 isFavorite={r.isFavorite}
               />
             ))}
-
             {!isLoading && !hasResults && !err && (
               <div className={css.empty}>No recipes found for these filters.</div>
             )}
           </div>
-
           {totalPages > 1 && (
             <div className={css.pagination}>
               <Pagination
@@ -262,7 +235,6 @@ export default function CategoryPage({ onBack }) {
           )}
         </div>
       </div>
-
       <Modal isOpen={authOpen} onClose={() => setAuthOpen(false)}>
         <div style={{ padding: 16 }}>
           <h3 style={{ marginTop: 0 }}>Sign in required</h3>
