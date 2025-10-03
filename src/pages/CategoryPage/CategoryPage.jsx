@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { openModal, selectIsModalOpen, selectModalType } from '../../redux/ui/modalSlice';
 import Filters from '../../components/Filters/Filters';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import Pagination from '../../components/Pagination/Pagination';
-import Modal from '../../components/Modal/Modal';
 import { addFavorite, deleteFavorite } from '../../api/favorite';
 import { selectIsLoggedIn, selectToken } from '../../redux/auth/selectors';
 import { getCategoryDescription } from '../../data/categoryDescriptions';
@@ -24,6 +24,7 @@ function normalizeRecipe(r) {
     isFavorite: !!r.isFavorite,
   };
 }
+
 export default function CategoryPage({ onBack }) {
   const [params, setParams] = useSearchParams();
   const navigate = useNavigate();
@@ -31,6 +32,13 @@ export default function CategoryPage({ onBack }) {
     if (onBack) onBack();
     else navigate(-1);
   };
+  const dispatch = useDispatch();
+  const isModalOpen = useSelector(selectIsModalOpen);
+  const modalType = useSelector(selectModalType);
+  const openSignUpModal = () => {
+  if (isModalOpen && modalType === 'register') return;
+  dispatch(openModal({ type: 'register' }));
+};
   // URL params
   const categorySlug = (params.get('category') || '').toLowerCase();
   const title = categorySlug.toUpperCase();
@@ -47,7 +55,6 @@ export default function CategoryPage({ onBack }) {
   const [areasOpt, setAreasOpt] = useState([]);
   const [ingredientsOpt, setIngredientsOpt] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
-  const [authOpen, setAuthOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState('');
   // Responsive page size
@@ -212,7 +219,7 @@ export default function CategoryPage({ onBack }) {
                 key={r.id}
                 recipe={r}
                 isAuthed={isAuthed}
-                onNeedAuth={() => setAuthOpen(true)}
+                onNeedAuth={openSignUpModal}
                 onOpen={(id) => navigate(`/recipe/${id}`)}
                 onAuthor={(authorId) => navigate(`/user/${authorId}/recipes`)}
                 onToggleFavorite={() => handleToggleFavorite(r.id)}
@@ -235,12 +242,6 @@ export default function CategoryPage({ onBack }) {
           )}
         </div>
       </div>
-      <Modal isOpen={authOpen} onClose={() => setAuthOpen(false)}>
-        <div style={{ padding: 16 }}>
-          <h3 style={{ marginTop: 0 }}>Sign in required</h3>
-          <p>You need to be authorized to view profiles, like recipes, or open details.</p>
-        </div>
-      </Modal>
     </div>
   );
 }
