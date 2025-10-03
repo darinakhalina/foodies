@@ -28,6 +28,19 @@ export async function deleteMyRecipe(token, recipeId) {
   return data; 
 }
 
+export async function fetchUserRecipes(userId, { page = 1, limit = 10 } = {}) {
+  const res = await api.get(`/users/${userId}/recipes`, {
+    params: { page, limit },
+  });
+  const data = res.data?.data || res.data;
+
+  return {
+    recipes: data.recipes || [],
+    totalPages: data.totalPages || 1,
+    total: data.total || (data.recipes ? data.recipes.length : 0),
+  };
+}
+
 export async function fetchRecipeFilters({ category, area }) {
   const { data } = await api.get('/recipes/filters', {
     params: { category, area },
