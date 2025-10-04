@@ -9,6 +9,7 @@ import RecipeFormButtons from '../RecipeFormButtons/RecipeFormButtons';
 import RecipeFormCooking from '../RecipeFormCooking/RecipeFormCooking';
 import RecipeFormArea from '../RecipeFormArea/RecipeFormArea';
 import { mapRecipeData } from '../../utils/recipe';
+import recipeFormSchema from '../../validation/recipeFormSchema';
 import css from './RecipeForm.module.css';
 
 const RecipeForm = () => {
@@ -30,7 +31,7 @@ const RecipeForm = () => {
     <Formik
       initialValues={{
         title: '',
-        description: '',
+        description: ''.trim(),
         category: '',
         time: 10,
         area: '',
@@ -43,10 +44,11 @@ const RecipeForm = () => {
         instructions: '',
         photo: null,
       }}
+      validationSchema={recipeFormSchema}
       onSubmit={handleSubmit}
     >
       {({ setFieldValue, values, errors, touched }) => (
-        <Form className={css.form}>
+        <Form className={css.form} noValidate>
           <UploadPhoto setFieldValue={setFieldValue} />
           <div className={css.info}>
             <RecipeFormSummary errors={errors} touched={touched} />
