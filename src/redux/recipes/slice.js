@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addToFavorites, removeFromFavorites, getFavoriteRecipes } from './operations';
+import { addToFavorites, removeFromFavorites, getFavoriteRecipes, addRecipe } from './operations';
 
 const recipesSlice = createSlice({
   name: 'recipes',
@@ -74,6 +74,17 @@ const recipesSlice = createSlice({
       .addCase(removeFromFavorites.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || 'Failed to remove favorite';
+      })
+      .addCase(addRecipe.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addRecipe.fulfilled, state => {
+        state.loading = false;
+      })
+      .addCase(addRecipe.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || 'Failed to add recipe';
       });
   },
 });

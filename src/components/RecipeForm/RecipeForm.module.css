@@ -6,11 +6,16 @@
 
 .info {
     flex: 1;
+    margin-top: 32px;
 }
 
 @media (min-width: 481px) {
     .form {
         margin-top: 40px;
+    }
+
+    .info {
+        margin-top: 80px;
     }
 }
 
@@ -21,6 +26,10 @@
         flex-direction: row;
         gap: 80px;
 
+    }
+
+    .info {
+        margin-top: 0px;
     }
 
 }
