@@ -1,21 +1,32 @@
 import { useField } from 'formik';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import css from './Select.module.css';
 import icons from '/images/icons.svg';
 const Select = ({ name, items, placeholder, className = '' }) => {
+
   const [field, , helpers] = useField(name);
   const [open, setOpen] = useState(false);
 
-  const handleSelect = value => {
-    helpers.setValue(value);
+  useEffect(() => {
+    const handleClickOutside = e => {
+      if (!e.target.closest(`.${css['input-wrapper']}`)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
+
+  const handleSelect = id => {
+    helpers.setValue(id);
     setOpen(false);
   };
 
   return (
-    <div className={css.inputWrapper}>
+    <div className={css['input-wrapper']}>
       <div className={clsx(css.input, className)} onClick={() => setOpen(prev => !prev)}>
-        {field.value ? items.find(i => i.value === field.value)?.name : placeholder}
+        {field.value ? items.find(item => item.id === field.value)?.name : placeholder}
         <span className={css.arrow}>
           <svg
             className={clsx(css.icon, open && css.rotate)}
@@ -29,12 +40,14 @@ const Select = ({ name, items, placeholder, className = '' }) => {
       </div>
 
       {open && (
-        <div className={css.dropdownContent}>
-          {items.map((item, index) => (
-            <div key={index} className={css.dropdownItem} onClick={() => handleSelect(item.value)}>
-              {item.name}
-            </div>
-          ))}
+        <div className={css['dropdown-content']} role="listbox">
+          <ul className={css['list-wrapper']}>
+            {items.map((item, index) => (
+              <li key={index} onClick={() => handleSelect(item.id)}>
+                {item.name}
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
