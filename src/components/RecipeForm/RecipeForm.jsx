@@ -1,4 +1,6 @@
 import { Formik, Form } from 'formik';
+import { useDispatch } from 'react-redux';
+import { addRecipe } from '../../redux/recipes/operations';
 import RecipeFormSummary from '../RecipeFormSummary/RecipeFormSummary';
 import UploadPhoto from '../UploadPhoto/UploadPhoto';
 import RecipeFormIngredients from '../RecipeFormIngredients/RecipeFormIngredients';
@@ -6,52 +8,31 @@ import RecipeFormPreparation from '../RecipeFormPreparation/RecipeFormPreparatio
 import RecipeFormButtons from '../RecipeFormButtons/RecipeFormButtons';
 import RecipeFormCooking from '../RecipeFormCooking/RecipeFormCooking';
 import RecipeFormArea from '../RecipeFormArea/RecipeFormArea';
+import { mapRecipeData } from '../../utils/recipe';
 import css from './RecipeForm.module.css';
 
 const RecipeForm = () => {
+  const dispatch = useDispatch();
   const handleSubmit = async values => {
-    console.log(values);
-    // const formData = new FormData();
-    // formData.append('name', values.name);
-    // formData.append('description', values.description);
-    // formData.append('category', values.category);
-    // formData.append('cookingTime', values.cookingTime);
-    // formData.append('area', values.area);
-    // formData.append('recipe', values.recipe);
-
-    // if (values.photo) {
-    //   formData.append('photo', values.photo);
-    // }
-
-    // values.ingredients.forEach((ingredient, index) => {
-    //   formData.append(`ingredients[${index}][name]`, ingredient.name);
-    //   formData.append(`ingredients[${index}][quantity]`, ingredient.quantity);
-    // });
-
-    // try {
-    //   const response = await fetch('/api/recipes', {
-    //     method: 'POST',
-    //     body: formData,
-    //   });
-
-    //   if (!response.ok) {
-    //     throw new Error('Failed to submit recipe');
-    //   }
-
-    //   const data = await response.json();
-    //   console.log('Recipe submitted successfully:', data);
-    // } catch (error) {
-    //   console.error('Error submitting recipe:', error);
-    // }
+    const formData = new FormData();
+    const recipe = mapRecipeData(values);
+    formData.append('recipe', recipe);
+    if (values.photo) {
+      formData.append('photo', values.photo);
+    }
+    dispatch(addRecipe(formData));
+    // TODO: test with backend
+    //console.log(recipe);
+    //console.log(`recipe ==> ${JSON.stringify(recipe)}`);
   };
 
   return (
     <Formik
       initialValues={{
-        name: '',
+        title: '',
         description: '',
         category: '',
-        cookingTime: 10,
+        time: 10,
         area: '',
         ingredients: [
           {
@@ -59,7 +40,7 @@ const RecipeForm = () => {
             quantity: '',
           },
         ],
-        recipe: '',
+        instructions: '',
         photo: null,
       }}
       onSubmit={handleSubmit}

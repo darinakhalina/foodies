@@ -17,7 +17,7 @@ export async function fetchRecipeFilters({ category, area }) {
   const { data } = await api.get('/recipes/filters', {
     params: { category, area },
   });
-  return data?.data || data; 
+  return data?.data || data;
 }
 
 export const addRecipeToFavorites = async (token, recipeId) => {
@@ -54,4 +54,12 @@ export const getFavoritesApi = async (token, options = {}) => {
     },
   });
   return response.data;
+};
+export const createRecipe = async (token, formData) => {
+  const { data } = await api.post('/recipes', formData, {
+    headers: {
+      Authorization: getAuthorizationHeader(token),
+    },
+  });
+  return data;
 };
