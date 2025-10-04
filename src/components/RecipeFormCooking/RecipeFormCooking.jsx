@@ -1,15 +1,20 @@
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { selectCategories } from '../../redux/categories/selectors';
+import { getCategories } from '../../redux/categories/operations';
 import ButtonIcon from '../ButtonIcon/ButtonIcon';
 import css from './RecipeFormCooking.module.css';
 import InputContainer from '../InputContainer/InputContainer';
 import Select from '../Select/Select';
 
-const categories = [
-  { value: 'Seafood', name: 'Seafood' },
-  { value: 'Seafood1', name: 'Seafood1' },
-  { value: 'Seafood2', name: 'Seafood2' },
-];
-
 const RecipeFormCooking = ({ setFieldValue, values }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getCategories());
+  }, [dispatch]);
+
+  const categories = useSelector(selectCategories);
+
   return (
     <div className={css.cooking}>
       <InputContainer lable="category" id="category">
@@ -27,14 +32,14 @@ const RecipeFormCooking = ({ setFieldValue, values }) => {
             iconName="icon-minus"
             variant="secondary"
             size="lg"
-            onClick={() => setFieldValue('cookingTime', Math.max(1, values.cookingTime - 5))}
+            onClick={() => setFieldValue('time', Math.max(1, values.time - 5))}
           />
-          <span>{values.cookingTime} min</span>
+          <span>{values.time} min</span>
           <ButtonIcon
             iconName="icon-plus"
             variant="secondary"
             size="lg"
-            onClick={() => setFieldValue('cookingTime', values.cookingTime + 5)}
+            onClick={() => setFieldValue('time', values.time + 5)}
           />
         </div>
       </InputContainer>
