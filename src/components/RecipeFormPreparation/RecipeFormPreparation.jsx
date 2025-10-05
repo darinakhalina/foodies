@@ -3,8 +3,8 @@ import Textarea from '../Textarea/Textarea';
 
 const RecipeFormPreparation = () => {
   return (
-    <InputContainer lable="recipe preparation" id="ingredients">
-      <Textarea name="recipe" placeholder="Enter recipe" maxLength={5000} />
+    <InputContainer lable="recipe preparation" id="instructions">
+      <Textarea name="instructions" placeholder="Enter recipe" maxLength={5000} />
     </InputContainer>
   );
 };

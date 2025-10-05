@@ -3,6 +3,7 @@ import {
   addRecipeToFavorites,
   removeRecipeFromFavorites,
   getFavoritesApi,
+  createRecipe,
 } from '../../api/recipes';
 
 export const addToFavorites = createAsyncThunk(
@@ -43,6 +44,21 @@ export const getFavoriteRecipes = createAsyncThunk(
         auth: { token },
       } = getState();
       return await getFavoritesApi(token);
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
+
+export const addRecipe = createAsyncThunk(
+  'recipes/addRecipe',
+  async (formData, { rejectWithValue, getState }) => {
+    try {
+      const {
+        auth: { token },
+      } = getState();
+      const result = await createRecipe(token, formData);
+      return result;
     } catch (error) {
       return rejectWithValue(error);
     }
