@@ -37,7 +37,7 @@ export const subscribeOnUser = createAsyncThunk(
           },
         }
       );
-      console.log(response);
+      return response.status === 200 ? true : false;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -54,7 +54,7 @@ export const unsubscribeOnUser = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       });
-      console.log(response);
+      return response.status === 204 ? false : true;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

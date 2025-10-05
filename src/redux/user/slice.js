@@ -17,11 +17,11 @@ const userSlice = createSlice({
       .addCase(getUser.rejected, (state, { payload }) => {
         state.error = payload;
       })
-      .addCase(subscribeOnUser.fulfilled, state => {
-        state.user.isSubscribed = true;
+      .addCase(subscribeOnUser.fulfilled, (state, action) => {
+        state.user.isSubscribed = action.payload;
       })
-      .addCase(unsubscribeOnUser.fulfilled, state => {
-        state.user.isSubscribed = false;
+      .addCase(unsubscribeOnUser.fulfilled, (state, action) => {
+        state.user.isSubscribed = action.payload;
       });
   },
 });
