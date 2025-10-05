@@ -106,15 +106,14 @@
   opacity: 0.7;
 }
 
+.input[type='password'],
+.input[data-password='true'] {
+  padding-right: 50px;
+}
+
 @media (min-width: 768px) {
   .input {
     font-size: 16px;
     padding: 16px 18px;
-  }
-
-  /* Для пароля додаємо відступ праворуч під іконку */
-  .input[type='password'],
-  .input[data-password='true'] {
-    padding-right: 50px;
   }
 }
