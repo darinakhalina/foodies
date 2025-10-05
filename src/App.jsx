@@ -12,6 +12,9 @@ import ModalRoot from './components/ModalRoot/ModalRoot.jsx';
 import { selectIsFetchingUser } from './redux/auth/selectors';
 import { fetchUser } from './redux/auth/operations';
 
+// 👇 Додаємо твій компонент Followers
+import Followers from './components/Followers/Followers.jsx';
+
 // Pages
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 const AddRecipePage = lazy(() => import('./pages/AddRecipePage/AddRecipePage'));
@@ -67,6 +70,9 @@ const App = () => {
             <Route path="followers" element={<UserPageLayout />} />
             <Route path="following" element={<UserPageLayout />} />
           </Route>
+
+          {/* 👇 Тимчасовий відкритий маршрут для тесту Followers */}
+          <Route path="/test-followers" element={<Followers />} />
 
           {/* 404 */}
           <Route path="*" element={<NotFoundPage />} />

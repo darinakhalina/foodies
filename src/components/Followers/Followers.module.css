@@ -1,0 +1,116 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 846px;
+    margin: 0 auto;
+}
+
+.followerBlock {
+    position: relative;
+    padding-bottom: 40px;
+    border-bottom: 1px solid #bebebe;
+}
+
+.rowWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.leftPart {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    position: relative;
+}
+
+.rightPart {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex: 1;
+}
+
+.recipeList {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.recipeThumb {
+    width: 100px;
+    height: 100px;
+    border-radius: 15px;
+    object-fit: cover;
+}
+
+.leftPart article {
+    border-bottom: none;
+}
+
+@media (max-width: 767px) {
+    .rightPart {
+        display: none;
+    }
+
+    .followerBlock {
+        padding-bottom: 20px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+    .recipeThumb:nth-child(n+4) {
+        display: none;
+    }
+
+    .rowWrapper {
+        gap: 60px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .recipeThumb:nth-child(n+5) {
+        display: none;
+    }
+
+    .rowWrapper {
+        gap: 75px;
+    }
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 40px;
+    margin-bottom: 43px;
+}
+
+.pageBtn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #bebebe;
+    background-color: #fff;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.pageBtn.active {
+    background-color: #000;
+    color: #fff;
+}
+
+.pageBtn:hover {
+    background-color: #e5e5e5;
+}
+
+.loading {
+    text-align: center;
+    color: #888;
+    font-size: 16px;
+    margin-top: 50px;
+}
