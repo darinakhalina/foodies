@@ -32,6 +32,7 @@ const RecipeFormCooking = ({ setFieldValue, values }) => {
             iconName="icon-minus"
             variant="secondary"
             size="lg"
+            className={css['time-button']}
             onClick={() => setFieldValue('time', Math.max(1, values.time - 5))}
           />
           <span>{values.time} min</span>
@@ -39,6 +40,7 @@ const RecipeFormCooking = ({ setFieldValue, values }) => {
             iconName="icon-plus"
             variant="secondary"
             size="lg"
+            className={css['time-button']}
             onClick={() => setFieldValue('time', values.time + 5)}
           />
         </div>
