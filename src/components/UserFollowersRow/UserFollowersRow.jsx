@@ -7,7 +7,10 @@ export default function UserFollowerRow({
   recipesCount,
   isFollowing,
   onOpen,
+  onOpenRecipe,
   onToggle,
+  showFollowButton = true,
+  recipes = [],
 }) {
   return (
     <article className={styles.row}>
@@ -18,15 +21,35 @@ export default function UserFollowerRow({
             <h4 className={styles.name}>{name}</h4>
             <p className={styles.recipes}>Own recipes: {recipesCount}</p>
           </div>
-          <button
+            {showFollowButton && (<button
             type="button"
             className={`${styles.followBtn} ${isFollowing ? styles.unfollow : styles.follow}`}
             onClick={() => onToggle(id)}
           >
             {isFollowing ? 'Unfollow' : 'Follow'}
-          </button>
+          </button>)}
         </div>
       </div>
+
+      {recipes.length > 0 && (
+        <div className={styles.recipesGallery}>
+          {recipes.slice(0, 4).map(recipe => (
+            <button
+              key={recipe.id}
+              type="button"
+              className={styles.recipeThumbWrapper}
+              onClick={() => onOpenRecipe(recipe.id)}
+              title={recipe.title || 'Open recipe'}
+            >
+              <img
+                src={recipe.thumb}
+                alt={recipe.title || 'Recipe image'}
+                className={styles.recipeThumb}
+              />
+            </button>
+          ))}
+        </div>
+      )}
 
       <button
         type="button"

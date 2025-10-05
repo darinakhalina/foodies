@@ -1,16 +1,27 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import UserFollowersRow from '../../../components/UserFollowersRow/UserFollowersRow';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import UserPageTabs from '../../../components/UserPageTabs/UserPageTabs';
 import Loader from '../../../components/Loader/Loader';
-import { selectUser, selectToken } from '../../../redux/auth/selectors';
+import { selectIsLoggedIn, selectToken } from '../../../redux/auth/selectors';
 import { fetchFollowers, unfollowUser, followUser, fetchFollowings } from '../../../api/followers';
+import { fetchUserRecipes } from '../../../api/recipes';
+
+const selectAuthUserId = state => state?.auth?.user?.id;
 
 export default function Followers() {
   const navigate = useNavigate();
+  const location = useLocation();
   const token = useSelector(selectToken);
-  const { id: userId } = useSelector(selectUser);
+  const { id: routeId } = useParams();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const authUserId = useSelector(selectAuthUserId);
+  
+  const isOwnProfile =
+  (routeId === 'me' && isLoggedIn) ||
+  (!!authUserId && String(authUserId) === String(routeId));
+  
   const [items, setItems] = useState([]);
   const [followings, setFollowings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -19,46 +30,66 @@ export default function Followers() {
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    const loadFollowings = async () => {
-      try {
-        const response = await fetchFollowings(token);
-        const followingIds = response.followings.map(u => u.id);
-        setFollowings(followingIds);
-      } catch (err) {
-        console.error('Error loading followings:', err);
-      }
-    };
-    loadFollowings();
-  }, [token]);
+    setCurrentPage(1);
+  }, [location.pathname]);
 
   useEffect(() => {
-    const loadFollowers = async (page = 1) => {
-      try {
-        setLoading(true);
-        const data = await fetchFollowers(userId, token, page, 5);
-        const withFollowState = data.followers.map(f => ({
-          ...f,
-          isFollowing: followings.includes(f.id),
-        }));
-        setItems(withFollowState);
-        setTotalPages(data.totalPages || 1);
-      } catch (error) {
-        console.error('Error loading followers:', error);
-        setError('Failed to load followers');
-      } finally {
-        setLoading(false);
+  const loadData = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      if (!isLoggedIn || !token) return;
+
+      const followingsResponse = await fetchFollowings(token, 1, 5);
+      const followingIds = followingsResponse.followings.map(u => u.id);
+      setFollowings(followingIds);
+
+      const targetUserId = routeId === 'me' ? authUserId : routeId;
+      if (!targetUserId) {
+        setItems([]);
+        setTotalPages(1);
+        return;
       }
-    };
-    if (followings.length >= 0) {
-      loadFollowers(currentPage);
+
+      const followersData = await fetchFollowers(targetUserId, token, currentPage, 5);
+
+      const followersWithRecipes = await Promise.all(
+        followersData.followers.map(async f => {
+          try {
+            const { recipes, total } = await fetchUserRecipes(token, f.id, { limit: 5 });
+            return {
+              ...f,
+              isFollowing: followingIds.includes(f.id),
+              recipes,
+              recipesCount: total,
+            };
+          } catch (err) {
+            console.error(`Error loading recipes for user ${f.id}:`, err);
+            return { ...f, isFollowing: followingIds.includes(f.id), recipes: [], recipesCount: 0 };
+          }
+        })
+      );
+
+      setItems(followersWithRecipes);
+      setTotalPages(followersData.totalPages || 1);
+    } catch (err) {
+      console.error(err);
+      setError('Failed to load followers');
+    } finally {
+      setLoading(false);
     }
-  }, [userId, token, currentPage, followings]);
+  };
+
+  loadData();
+}, [routeId, authUserId, token, currentPage, isLoggedIn]);
 
   const handlePageChange = page => {
     setCurrentPage(page);
   };
 
   const handleToggleFollow = async id => {
+    if (!isLoggedIn) return;
     try {
       const target = items.find(f => f.id === id);
       if (!target) return;
@@ -77,6 +108,13 @@ export default function Followers() {
       console.error('Error toggling follow:', error);
     }
   };
+
+  const emptyMessage = useMemo(() => {
+    if (isOwnProfile) {
+      return 'You have no followers yet.';
+    }
+    return 'This user has no followers yet.';
+  }, [isOwnProfile]);
 
   if (loading) {
     return <Loader />;
@@ -100,12 +138,17 @@ export default function Followers() {
             avatar={follower.avatar || '/images/fallback-avatar.png'}
             recipesCount={follower.recipesCount}
             isFollowing={follower.isFollowing}
-            onOpen={id => navigate(`/users/${id}`)}
-            onToggle={handleToggleFollow}
+            recipes={follower.recipes || []}
+            onOpen={id => navigate(`/user/${id}`)}
+            onOpenRecipe={(id) => navigate(`/recipe/${id}`)}
+            onToggle={isLoggedIn ? handleToggleFollow : undefined}
+            showFollowButton={
+              isLoggedIn && String(authUserId) !== String(follower.id)
+            }
           />
         ))
       ) : (
-        <div>There are no followers yet</div>
+        <div>{emptyMessage}</div>
       )}
     </UserPageTabs>
   );
