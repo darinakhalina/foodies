@@ -1,74 +1,72 @@
 .input-wrapper {
-    position: relative;
-    width: 100%;
-    display: flex;
-    align-items: center;
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .input {
-    cursor: pointer;
-    box-sizing: border-box;
-    height: 56px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #050505;
-    font-family: 'Mulish Regular', sans-serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 1.5;
-    letter-spacing: -0.32px;
-    padding: 14px;
-    border-radius: 30px;
-    border: 1px solid #bfbebe;
-    width: 100%;
-    transition: border-color 0.2s ease;
-
+  cursor: pointer;
+  box-sizing: border-box;
+  height: 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #050505;
+  font-family: 'Mulish Regular', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.32px;
+  padding: 14px;
+  border-radius: 30px;
+  border: 1px solid #bfbebe;
+  width: 100%;
+  transition: border-color 0.2s ease;
 }
 
 .arrow {
-    font-size: 12px;
-    margin-left: 8px;
+  font-size: 12px;
+  margin-left: 8px;
 }
 
 .rotate {
-    transform: rotate(180deg);
+  transform: rotate(180deg);
 }
 
 .dropdown-content {
-    border-radius: 15px;
-    padding: 10px 6px 16px 18px;
-    position: absolute;
-    top: calc(100% + 5px);
-    left: 0;
-    right: 0;
-    background: var(--white);
-    border: 1px solid var(--gray);
-    z-index: 10;
-
+  border-radius: 15px;
+  padding: 10px 6px 16px 18px;
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  background: var(--white);
+  border: 1px solid var(--gray);
+  z-index: 10;
 }
 
 .list-wrapper {
-    scrollbar-gutter: stable;
-    overflow: hidden;
-    max-height: 200px;
-    overflow-y: auto;
-    padding: 0px;
+  scrollbar-gutter: stable;
+  overflow: hidden;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 0px;
 }
 
 .list-wrapper li {
-    padding: 10px 6px;
-    cursor: pointer;
+  padding: 10px 6px;
+  cursor: pointer;
 }
 
 .list-wrapper li:hover {
-    background: var(--light-gray);
+  background: var(--light-gray);
 }
 
 @media (min-width: 768px) {
-    .input {
-        font-size: 16px;
-        padding: 16px 18px;
-    }
+  .input {
+    font-size: 16px;
+    padding: 16px 18px;
+  }
 }

@@ -1,5 +1,7 @@
 .card {
-  width: 343px;
+  min-width: 300px;
+  max-width: 343px;
+  width: 100%;
   height: 366px;
   display: flex;
   flex-direction: column;
@@ -59,7 +61,7 @@
 .description {
   width: 100%;
   height: auto;
-  min-height: 54px;
+  min-height: 42px;
   font-family: 'Mulish', sans-serif;
   font-weight: 500;
   font-size: 14px;
@@ -160,9 +162,15 @@
   overflow: visible;
 }
 
-.iconButton:hover {
-  background: transparent;
-  border-color: #bfbebe;
+.iconButton:hover,
+.iconButton:active {
+  background: #050505;
+  border-color: #050505;
+}
+
+.iconButton:hover .icon,
+.iconButton:active .icon {
+  filter: invert(1);
 }
 
 .icon {
@@ -170,14 +178,16 @@
   height: 18px;
   display: block;
   object-fit: contain;
+  transition: filter 0.2s ease;
 }
 
 .favoriteButton.isFavorite {
-  border-color: #050505;
+  background-color: #000;
+  border-color: #000;
 }
 
 .favoriteButton.isFavorite .icon {
-  filter: invert(12%) sepia(100%) saturate(7463%) hue-rotate(0deg) brightness(102%) contrast(107%);
+  filter: invert(100%);
 }
 
 .viewButton {

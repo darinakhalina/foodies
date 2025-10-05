@@ -9,6 +9,7 @@
   font-family: 'Mulish Bold', sans-serif;
   font-size: 28px;
   line-height: 1.14;
+  letter-spacing: -0.56px;
   color: var(--color-main);
   text-align: center;
   text-transform: uppercase;
@@ -19,6 +20,7 @@
   font-family: 'Mulish Regular', sans-serif;
   font-size: 12px;
   line-height: 1.5;
+  letter-spacing: -0.24px;
   color: var(--gray);
   padding-top: 16px;
   text-align: center;
@@ -33,23 +35,10 @@
   position: relative;
   transition: color 0.2s ease;
 }
-.switchButton::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 1px;
-  background-color: var(--color-main);
-  transition: width 0.3s ease;
-}
-
-.switchButton:hover::after {
-  width: 100%;
-}
 
 .switchButton:hover {
   opacity: 0.8;
+  text-decoration: underline;
 }
 
 @media (min-width: 768px) {
@@ -60,7 +49,9 @@
   }
 
   .switchText {
+    padding-top: 20px;
     font-size: 14px;
     line-height: 1.28;
+    letter-spacing: -0.28px;
   }
 }

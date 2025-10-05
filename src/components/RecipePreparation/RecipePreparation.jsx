@@ -9,6 +9,7 @@ import Button from '../Button/Button';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import { selectIsFavorite, selectFavoritesLoading } from '../../redux/recipes/selectors';
 import css from './RecipePreparation.module.css';
+import { openModal } from '../../redux/ui/modalSlice.js';
 
 const RecipePreparation = ({ recipe }) => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const RecipePreparation = ({ recipe }) => {
 
   const handleFavoriteClick = () => {
     if (!isLoggedIn) {
-      console.log('Add modal here for login'); // ToDo: Add modal for login
+      dispatch(openModal('login'));
       return;
     }
 

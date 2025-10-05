@@ -13,6 +13,37 @@ export async function fetchRecipeById({ id }) {
   return data.data;
 }
 
+export async function fetchMyRecipes(token, { page = 1, limit = 9 } = {}) {
+  const { data } = await api.get('/recipes/me', {
+    params: { page, limit },
+    headers: { Authorization: getAuthorizationHeader(token) },
+  });
+  return data?.data ?? data;
+}
+
+export async function deleteMyRecipe(token, recipeId) {
+  const { data } = await api.delete(`/recipes/${recipeId}`, {
+    headers: { Authorization: getAuthorizationHeader(token) },
+  });
+  return data;
+}
+
+export async function fetchUserRecipes(token, userId, { page = 1, limit = 10 } = {}) {
+  const res = await api.get(`/users/${userId}/recipes`, {
+    params: { page, limit },
+    headers: {
+      Authorization: getAuthorizationHeader(token),
+    },
+  });
+  const data = res.data?.data || res.data;
+
+  return {
+    recipes: data.recipes || [],
+    totalPages: data.totalPages || 1,
+    total: data.total || (data.recipes ? data.recipes.length : 0),
+  };
+}
+
 export async function fetchRecipeFilters({ category, area }) {
   const { data } = await api.get('/recipes/filters', {
     params: { category, area },
@@ -44,6 +75,7 @@ export const removeRecipeFromFavorites = async (token, recipeId) => {
 
 export const getFavoritesApi = async (token, options = {}) => {
   const params = {
+    limit: 50,
     ...options,
   };
 
@@ -55,6 +87,7 @@ export const getFavoritesApi = async (token, options = {}) => {
   });
   return response.data;
 };
+
 export const createRecipe = async (token, formData) => {
   const { data } = await api.post('/recipes', formData, {
     headers: {
