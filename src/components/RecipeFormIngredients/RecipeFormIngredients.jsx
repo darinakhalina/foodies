@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { FieldArray } from 'formik';
+import { useEffect, useState } from 'react';
+import { FieldArray, useField } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectIngredients } from '../../redux/ingredients/selectors';
 import { getIngredients } from '../../redux/ingredients/operations';
@@ -8,6 +8,7 @@ import InputContainer from '../InputContainer/InputContainer';
 import Select from '../Select/Select';
 import Textarea from '../Textarea/Textarea';
 import css from './RecipeFormIngredients.module.css';
+import clsx from 'clsx';
 import Ingredient from '../Ingredient/Ingredient.jsx';
 import IngredientsList from '../IngredientsList/IngredientsList.jsx';
 
@@ -17,11 +18,12 @@ const getIngredient = (ingredients, id) => {
 };
 
 const RecipeFormIngredients = ({ values }) => {
+  const [, meta] = useField('ingredients');
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
-
+  const [isError, setIsError] = useState(false);
   const ingredientItems = useSelector(selectIngredients);
 
   return (
@@ -35,7 +37,10 @@ const RecipeFormIngredients = ({ values }) => {
                   name={`ingredients.${0}.id`}
                   items={ingredientItems}
                   placeholder="Add the ingredient"
-                  className={css['add-ingredient']}
+                  className={clsx(
+                    css['add-ingredient'],
+                    isError && !values.ingredients[0].id && css['input-error']
+                  )}
                 />
               </div>
               <div className={css['add-field']}>
@@ -44,20 +49,28 @@ const RecipeFormIngredients = ({ values }) => {
                   placeholder="Enter quantity"
                   maxLength={50}
                   counter={false}
-                  className={css['add-quantity']}
+                  className={clsx(css['add-quantity'], isError && css['input-error'])}
                 />
               </div>
 
               <Button
                 variant="secondary"
                 className={css['add-button']}
-                onClick={() => insert(0, { id: '', quantity: '' })}
+                onClick={() => {
+                  if (values.ingredients[0]?.id && values.ingredients[0]?.quantity?.trim() !== '') {
+                    insert(0, { id: '', quantity: '' });
+                    setIsError(false);
+                  } else {
+                    setIsError(true);
+                  }
+                }}
               >
                 Add Ingredient
                 <svg className={css.icon}>
                   <use href="/images/icons.svg#icon-plus" />
                 </svg>
               </Button>
+              {meta.touched && meta.error && <div className={css.error}>{meta.error}</div>}
             </div>
             {values.ingredients.length > 0 ? (
               <IngredientsList>
