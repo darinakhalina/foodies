@@ -59,6 +59,7 @@ export const createRecipe = async (token, formData) => {
   const { data } = await api.post('/recipes', formData, {
     headers: {
       Authorization: getAuthorizationHeader(token),
+      'Content-Type': 'multipart/form-data',
     },
   });
   return data;

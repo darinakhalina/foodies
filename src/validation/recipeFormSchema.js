@@ -18,14 +18,7 @@ const recipeFormSchema = Yup.object().shape({
 
   area: Yup.string().required('Region is required'),
 
-  ingredients: Yup.array()
-    .of(
-      Yup.object().shape({
-        id: Yup.string().required('Ingredient is required'),
-        quantity: Yup.string().required('Quantity is required'),
-      })
-    )
-    .min(1, 'Add at least one ingredient'),
+  ingredients: Yup.array().min(2, 'Add at least one ingredient'),
 
   instructions: Yup.string()
     .min(10, 'Instructions must be at least 10 characters')
