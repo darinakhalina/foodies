@@ -4,6 +4,8 @@
     gap: 40px;
     max-width: 846px;
     margin: 0 auto;
+    padding-left: 16px;
+    padding-right: 16px;
 }
 
 .followerBlock {
@@ -50,36 +52,6 @@
     border-bottom: none;
 }
 
-@media (max-width: 767px) {
-    .rightPart {
-        display: none;
-    }
-
-    .followerBlock {
-        padding-bottom: 20px;
-    }
-}
-
-@media (min-width: 768px) and (max-width: 1279px) {
-    .recipeThumb:nth-child(n+4) {
-        display: none;
-    }
-
-    .rowWrapper {
-        gap: 60px;
-    }
-}
-
-@media (min-width: 1280px) {
-    .recipeThumb:nth-child(n+5) {
-        display: none;
-    }
-
-    .rowWrapper {
-        gap: 75px;
-    }
-}
-
 .pagination {
     display: flex;
     justify-content: center;
@@ -113,4 +85,40 @@
     color: #888;
     font-size: 16px;
     margin-top: 50px;
+}
+
+@media (max-width: 767px) {
+
+    .container {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+
+    .rightPart {
+        display: none;
+    }
+
+    .followerBlock {
+        padding-bottom: 20px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1279px) {
+    .recipeThumb:nth-child(n+4) {
+        display: none;
+    }
+
+    .rowWrapper {
+        gap: 60px;
+    }
+}
+
+@media (min-width: 1280px) {
+    .recipeThumb:nth-child(n+5) {
+        display: none;
+    }
+
+    .rowWrapper {
+        gap: 75px;
+    }
 }

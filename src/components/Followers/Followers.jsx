@@ -5,6 +5,8 @@ import styles from './Followers.module.css';
 export default function UserFollowers() {
   const [followers, setFollowers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   useEffect(() => {
     // тестові дані
@@ -35,6 +37,7 @@ export default function UserFollowers() {
             { thumb: 'https://picsum.photos/seed/g/100' },
             { thumb: 'https://picsum.photos/seed/h/100' },
             { thumb: 'https://picsum.photos/seed/i/100' },
+            { thumb: 'https://picsum.photos/seed/j/100' },
           ],
         },
         {
@@ -44,12 +47,55 @@ export default function UserFollowers() {
           recipesCount: 100,
           isFollowing: false,
           recipes: [
-            { thumb: 'https://picsum.photos/seed/j/100' },
             { thumb: 'https://picsum.photos/seed/k/100' },
             { thumb: 'https://picsum.photos/seed/l/100' },
             { thumb: 'https://picsum.photos/seed/m/100' },
+            { thumb: 'https://picsum.photos/seed/n/100' },
+            { thumb: 'https://picsum.photos/seed/o/100' },
           ],
         },
+        {
+          id: 4,
+          name: 'Victor',
+          avatar: 'https://i.pravatar.cc/100?img=8',
+          recipesCount: 30,
+          isFollowing: false,
+          recipes: [
+            { thumb: 'https://picsum.photos/seed/a/100' },
+            { thumb: 'https://picsum.photos/seed/b/100' },
+            { thumb: 'https://picsum.photos/seed/c/100' },
+            { thumb: 'https://picsum.photos/seed/d/100' },
+            { thumb: 'https://picsum.photos/seed/e/100' },
+          ],
+        },
+        {
+          id: 5,
+          name: 'Ivetta',
+          avatar: 'https://i.pravatar.cc/100?img=5',
+          recipesCount: 40,
+          isFollowing: true,
+          recipes: [
+            { thumb: 'https://picsum.photos/seed/f/100' },
+            { thumb: 'https://picsum.photos/seed/g/100' },
+            { thumb: 'https://picsum.photos/seed/h/100' },
+            { thumb: 'https://picsum.photos/seed/i/100' },
+            { thumb: 'https://picsum.photos/seed/j/100' },
+          ],
+        },
+        // {
+        //   id: 6,
+        //   name: 'Mykhailo',
+        //   avatar: 'https://i.pravatar.cc/100?img=6',
+        //   recipesCount: 100,
+        //   isFollowing: false,
+        //   recipes: [
+        //     { thumb: 'https://picsum.photos/seed/k/100' },
+        //     { thumb: 'https://picsum.photos/seed/l/100' },
+        //     { thumb: 'https://picsum.photos/seed/m/100' },
+        //     { thumb: 'https://picsum.photos/seed/n/100' },
+        //     { thumb: 'https://picsum.photos/seed/o/100' },
+        //   ],
+        // },
       ]);
       setLoading(false);
     }, 1000);
@@ -67,11 +113,20 @@ export default function UserFollowers() {
     console.log(`Open profile of user with id: ${userId}`);
   };
 
+  const totalPages = Math.ceil(followers.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const visibleFollowers = followers.slice(startIndex, startIndex + itemsPerPage);
+
+  const handlePageChange = page => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   if (loading) return <p className={styles.loading}>Loading followers...</p>;
 
   return (
     <section className={styles.container}>
-      {followers.map(user => (
+      {visibleFollowers.map(user => (
         <div key={user.id} className={styles.followerBlock}>
           <div className={styles.rowWrapper}>
             <div className={styles.leftPart}>
@@ -102,10 +157,19 @@ export default function UserFollowers() {
         </div>
       ))}
 
-      <div className={styles.pagination}>
-        <button className={`${styles.pageBtn} ${styles.active}`}>1</button>
-        <button className={styles.pageBtn}>2</button>
-      </div>
+      {totalPages > 1 && (
+        <div className={styles.pagination}>
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <button
+              key={i}
+              className={`${styles.pageBtn} ${currentPage === i + 1 ? styles.active : ''}`}
+              onClick={() => handlePageChange(i + 1)}
+            >
+              {i + 1}
+            </button>
+          ))}
+        </div>
+      )}
     </section>
   );
 }
