@@ -14,7 +14,7 @@ const RecipeInfo = () => {
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // todo: check fetch
+  // todo: check fetch test
   useEffect(() => {
     const fetchRecipe = async () => {
       try {
