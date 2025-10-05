@@ -9,6 +9,7 @@
 .section {
   padding-top: 40px;
   padding-bottom: 64px;
+  margin: 0 auto;
 }
 
 .title {
@@ -205,7 +206,7 @@
   }
 
   .item.wide {
-    flex: 0 0 590px;
+    flex: 0 0 565px;
     height: 369px;
   }
 
