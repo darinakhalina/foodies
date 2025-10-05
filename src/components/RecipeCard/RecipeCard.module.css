@@ -162,9 +162,15 @@
   overflow: visible;
 }
 
-.iconButton:hover {
-  background: transparent;
-  border-color: #000;
+.iconButton:hover,
+.iconButton:active {
+  background: #050505;
+  border-color: #050505;
+}
+
+.iconButton:hover .icon,
+.iconButton:active .icon {
+  filter: invert(1);
 }
 
 .icon {
@@ -172,10 +178,7 @@
   height: 18px;
   display: block;
   object-fit: contain;
-}
-
-.favoriteButton:hover {
-  border-color: #000;
+  transition: filter 0.2s ease;
 }
 
 .favoriteButton.isFavorite {

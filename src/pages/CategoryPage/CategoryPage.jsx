@@ -212,7 +212,7 @@ export default function CategoryPage({ onBack }) {
                 isAuthed={isAuthed}
                 onNeedAuth={() => dispatch(openModal('login'))}
                 onOpen={id => navigate(`/recipe/${id}`)}
-                onAuthor={authorId => navigate(`/user/${authorId}/recipes`)}
+                onAuthor={authorId => navigate(`/user/${authorId}`)}
                 onToggleFavorite={() => handleToggleFavorite(r.id)}
                 isFavorite={r.isFavorite}
               />
