@@ -8,6 +8,8 @@
 .title {
   font-family: 'Mulish Bold', sans-serif;
   font-size: 28px;
+  line-height: 1.14;
+  letter-spacing: -0.56px;
   color: #050505;
   text-align: center;
   text-transform: uppercase;
@@ -17,6 +19,8 @@
   width: 100%;
   font-family: 'Mulish Regular', sans-serif;
   font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: -0.24px;
   color: #bfbebe;
   padding-top: 16px;
   text-align: center;
@@ -54,6 +58,9 @@
   }
 
   .switchText {
+    padding-top: 20px;
     font-size: 14px;
+    line-height: 1.28;
+    letter-spacing: -0.28px;
   }
 }
