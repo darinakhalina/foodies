@@ -50,9 +50,10 @@ export default function UserInfo({ isOwnProfile }) {
             </div>
             <label htmlFor="fileInput" className={styles.uploadButton}>
               <div className={styles.boxIcon}>
-                <img src={`${Plus}`} alt="Icon" width={16} />
+                <img src={Plus} alt="Icon" width={16} />
               </div>
             </label>
+
             <input
               className={styles.input}
               type="file"
