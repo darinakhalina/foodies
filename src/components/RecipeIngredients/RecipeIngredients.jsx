@@ -1,5 +1,7 @@
 import Subtitle from '../Subtitle/Subtitle';
 import css from './RecipeIngredients.module.css';
+import Ingredient from '../Ingredient/Ingredient.jsx';
+import IngredientsList from '../IngredientsList/IngredientsList.jsx';
 
 const RecipeIngredients = ({ ingredients = [] }) => {
   if (!ingredients.length || ingredients.length === 0) {
@@ -9,24 +11,16 @@ const RecipeIngredients = ({ ingredients = [] }) => {
   return (
     <div className={css.ingredients}>
       <Subtitle className={css.title}>Ingredients:</Subtitle>
-      <ul className={css['ingredients-list']}>
-        {ingredients.map(ingredient => (
-          <li
-            key={`ingredient-${ingredient.id}-${ingredient.name}`}
-            className={css['ingredients-item']}
-          >
-            <img
-              src={ingredient.img || '/images/fallback-ingredient.png'}
-              alt={ingredient.name}
-              className={css['ingredients-img']}
-            />
-            <div>
-              <p className={css['ingredients-name']}>{ingredient.name}</p>
-              <p className={css['ingredients-measure']}>{ingredient.recipeIngredient.measure}</p>
-            </div>
-          </li>
+      <IngredientsList>
+        {ingredients.map((ingredient, index) => (
+          <Ingredient
+            image={ingredient.img}
+            name={ingredient.name}
+            measure={ingredient.measure}
+            key={`ingredient-${index}-${ingredient.name}`}
+          />
         ))}
-      </ul>
+      </IngredientsList>
     </div>
   );
 };
