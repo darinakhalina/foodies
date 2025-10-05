@@ -54,7 +54,7 @@
 .heroBtn:hover,
 .heroBtn:focus {
   background-color: var(--main);
-  border-color: var(--color-main);
+  border-color: var(--white);
   color: var(--white);
 }
 
