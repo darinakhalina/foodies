@@ -38,9 +38,10 @@ const SignInForm = ({ onSuccess }) => {
       initialValues={{ email: '', password: '' }}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
+      validateOnMount
     >
-      {({ errors, touched, isSubmitting }) => (
-        <Form className={styles.form}>
+      {({ errors, touched, isSubmitting, isValid }) => (
+        <Form className={styles.form} noValidate>
           <Input
             name="email"
             type="email"
@@ -63,7 +64,7 @@ const SignInForm = ({ onSuccess }) => {
               type="submit"
               className={styles.submitButton}
               isLoading={isSubmitting}
-              isDisabled={isSubmitting}
+              isDisabled={!isValid || isSubmitting}
             >
               Sign in
             </Button>
