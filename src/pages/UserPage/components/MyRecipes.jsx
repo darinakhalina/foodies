@@ -58,7 +58,7 @@ export default function MyRecipes() {
             }
             return;
           }
-          payload = await fetchUserRecipes(targetUserId, { page, limit: PAGE_SIZE });
+          payload = await fetchUserRecipes(token, targetUserId, { page, limit: PAGE_SIZE });
         }
         const list = Array.isArray(payload?.recipes) ? payload.recipes : [];
         const normalized = list.map(normalize);

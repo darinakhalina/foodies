@@ -28,9 +28,12 @@ export async function deleteMyRecipe(token, recipeId) {
   return data;
 }
 
-export async function fetchUserRecipes(userId, { page = 1, limit = 10 } = {}) {
+export async function fetchUserRecipes(token, userId, { page = 1, limit = 10 } = {}) {
   const res = await api.get(`/users/${userId}/recipes`, {
     params: { page, limit },
+    headers: {
+      Authorization: getAuthorizationHeader(token),
+    },
   });
   const data = res.data?.data || res.data;
 
@@ -72,6 +75,7 @@ export const removeRecipeFromFavorites = async (token, recipeId) => {
 
 export const getFavoritesApi = async (token, options = {}) => {
   const params = {
+    limit: 50,
     ...options,
   };
 
@@ -83,6 +87,7 @@ export const getFavoritesApi = async (token, options = {}) => {
   });
   return response.data;
 };
+
 export const createRecipe = async (token, formData) => {
   const { data } = await api.post('/recipes', formData, {
     headers: {
