@@ -95,7 +95,7 @@
     flex-direction: column;
     gap: 20px;
     width: 100%;
-    max-width: none;        
+    max-width: none;
   }
 
   .filtersCol > * {
