@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import UserPageTabs from '../../../components/UserPageTabs/UserPageTabs';
 import Loader from '../../../components/Loader/Loader';
-import { selectUser, selectToken } from "../../../redux/auth/selectors"
-import { fetchFollowers, unfollowUser, followUser, fetchFollowings } from "../../../api/followers"
+import { selectUser, selectToken } from '../../../redux/auth/selectors';
+import { fetchFollowers, unfollowUser, followUser, fetchFollowings } from '../../../api/followers';
 
 export default function Followers() {
   const navigate = useNavigate();
   const token = useSelector(selectToken);
-  const {id: userId} = useSelector(selectUser);
+  const { id: userId } = useSelector(selectUser);
   const [items, setItems] = useState([]);
   const [followings, setFollowings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -25,7 +25,7 @@ export default function Followers() {
         const followingIds = response.followings.map(u => u.id);
         setFollowings(followingIds);
       } catch (err) {
-        console.error("Error loading followings:", err);
+        console.error('Error loading followings:', err);
       }
     };
     loadFollowings();
@@ -52,35 +52,31 @@ export default function Followers() {
     if (followings.length >= 0) {
       loadFollowers(currentPage);
     }
-      
-  }, [userId,  token, currentPage, followings]);
+  }, [userId, token, currentPage, followings]);
 
   const handlePageChange = page => {
     setCurrentPage(page);
   };
 
-  const handleToggleFollow = async (id) => {
-  try {
-    const target = items.find(f => f.id === id);
-    if (!target) return;
-    if (target.isFollowing) {
-      await unfollowUser(id, token);
-      setFollowings(prev => prev.filter(fid => fid !== id));
-    } else {
-      await followUser(id, token);
-      setFollowings(prev => [...prev, id]);
+  const handleToggleFollow = async id => {
+    try {
+      const target = items.find(f => f.id === id);
+      if (!target) return;
+      if (target.isFollowing) {
+        await unfollowUser(id, token);
+        setFollowings(prev => prev.filter(fid => fid !== id));
+      } else {
+        await followUser(id, token);
+        setFollowings(prev => [...prev, id]);
+      }
+
+      setItems(prevItems =>
+        prevItems.map(f => (f.id === id ? { ...f, isFollowing: !f.isFollowing } : f))
+      );
+    } catch (error) {
+      console.error('Error toggling follow:', error);
     }
-
-    setItems(prevItems =>
-      prevItems.map(f =>
-        f.id === id ? { ...f, isFollowing: !f.isFollowing } : f
-      )
-    );
-  } catch (error) {
-    console.error("Error toggling follow:", error);
-  }
-};
-
+  };
 
   if (loading) {
     return <Loader />;
@@ -104,10 +100,10 @@ export default function Followers() {
             avatar={follower.avatar || '/images/fallback-avatar.png'}
             recipesCount={follower.recipesCount}
             isFollowing={follower.isFollowing}
-            onOpen={(id) => navigate(`/users/${id}`)}
+            onOpen={id => navigate(`/users/${id}`)}
             onToggle={handleToggleFollow}
-          />)
-        )
+          />
+        ))
       ) : (
         <div>There are no followers yet</div>
       )}

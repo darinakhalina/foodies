@@ -16,7 +16,7 @@ export const Dropdown = ({
   const isControlled = typeof controlledOpen === 'boolean';
   const [internalOpen, setInternalOpen] = useState(false);
   const open = isControlled ? controlledOpen : internalOpen;
-  const setOpen = (next) => {
+  const setOpen = next => {
     if (isControlled) {
       onOpenChange?.(next);
     } else {
@@ -24,29 +24,24 @@ export const Dropdown = ({
     }
   };
   const selected = useMemo(
-    () => options.find((opt) => opt.value === value) || null,
+    () => options.find(opt => opt.value === value) || null,
     [options, value]
   );
   const toggleOpen = () => {
     if (!open) {
-      onBeforeOpen?.(); 
+      onBeforeOpen?.();
       setOpen(true);
     } else {
       setOpen(false);
     }
   };
-  const handleSelect = (option) => {
+  const handleSelect = option => {
     onChange?.(option);
     setOpen(false);
   };
   return (
     <div className={styles.wrapper}>
-      <button
-        className={styles.toggle}
-        onClick={toggleOpen}
-        type="button"
-        aria-expanded={open}
-      >
+      <button className={styles.toggle} onClick={toggleOpen} type="button" aria-expanded={open}>
         <div>{selected ? selected.searchLabel || selected.label : placeholder}</div>
         <svg
           className={clsx(styles.icon, open && styles.rotate)}
@@ -59,7 +54,7 @@ export const Dropdown = ({
       </button>
       {open && (
         <ul className={styles.menu}>
-          {options.map((opt) => {
+          {options.map(opt => {
             const isAvailable =
               !availableOptions || !opt.value || availableOptions.includes(opt.value);
             return (

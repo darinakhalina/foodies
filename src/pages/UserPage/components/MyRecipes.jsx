@@ -5,11 +5,7 @@ import UserPageTabs from '../../../components/UserPageTabs/UserPageTabs';
 import UserRecipeRow from '../../../components/UserRecipeRow/UserRecipeRow';
 import { selectIsLoggedIn, selectToken } from '../../../redux/auth/selectors';
 const selectAuthUserId = state => state?.auth?.user?.id;
-import {
-  fetchMyRecipes,   
-  fetchUserRecipes,      
-  deleteMyRecipe,       
-} from '../../../api/recipes';
+import { fetchMyRecipes, fetchUserRecipes, deleteMyRecipe } from '../../../api/recipes';
 const PAGE_SIZE = 10;
 export default function MyRecipes() {
   const navigate = useNavigate();
@@ -18,14 +14,13 @@ export default function MyRecipes() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const token = useSelector(selectToken);
   const authUserId = useSelector(selectAuthUserId);
- 
+
   const isOwnProfile =
-    (routeId === 'me' && isLoggedIn) ||
-    (!!authUserId && String(authUserId) === String(routeId));
+    (routeId === 'me' && isLoggedIn) || (!!authUserId && String(authUserId) === String(routeId));
 
   const [page, setPage] = useState(1);
 
-  const [items, setItems] = useState([]); 
+  const [items, setItems] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
 
   const [loading, setLoading] = useState(false);
@@ -34,13 +29,8 @@ export default function MyRecipes() {
     id: r.id,
     title: r.title,
     description:
-      r.description ??
-      (typeof r.instructions === 'string' ? r.instructions.slice(0, 200) : ''),
-    thumb:
-      r.thumb ||
-      r.preview ||
-      r.img ||
-      '/images/placeholder.png',
+      r.description ?? (typeof r.instructions === 'string' ? r.instructions.slice(0, 200) : ''),
+    thumb: r.thumb || r.preview || r.img || '/images/placeholder.png',
   });
   // Fetch recipes (own vs other)
   useEffect(() => {

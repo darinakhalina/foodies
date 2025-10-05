@@ -1,5 +1,4 @@
 import api from './axios';
-import axios from './axios.js';
 import { getAuthorizationHeader } from './helpers.js';
 
 // export const fetchCategories = async () => {
