@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 import { Formik, Form } from 'formik';
 import { useDispatch } from 'react-redux';
 import { addRecipe } from '../../redux/recipes/operations';
@@ -17,9 +18,13 @@ const RecipeForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSubmit = async values => {
-    const formData = mapRecipeToFormData(values);
-    const recipe = await dispatch(addRecipe(formData));
-    navigate(`/recipe/${recipe.payload['id']}`);
+    try {
+      const formData = mapRecipeToFormData(values);
+      const recipe = await dispatch(addRecipe(formData)).unwrap();
+      navigate(`/recipe/${recipe.id}`);
+    } catch (error) {
+      toast.error(`Error: ${error?.message || 'Failed to add recipe'}`);
+    }
   };
 
   return (

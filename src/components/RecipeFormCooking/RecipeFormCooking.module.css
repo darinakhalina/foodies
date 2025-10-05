@@ -1,23 +1,27 @@
 .time {
   display: flex;
   align-items: center;
-  gap: 12px;
+  width: 164px;
+  justify-content: space-between;
+}
+
+.time-button {
+  flex-shrink: 0;
 }
 
 .category {
   width: 200px;
 }
 
-@media (min-width: 481px) {
+@media (min-width: 375px) {
   .cooking {
     display: flex;
     gap: 20px;
   }
 
   .time {
-    gap: 16px;
+    width: 194px;
   }
 }
 
-@media (min-width: 769px) {
-}
+@media (min-width: 769px) {}

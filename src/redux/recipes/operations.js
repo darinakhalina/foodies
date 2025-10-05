@@ -60,7 +60,8 @@ export const addRecipe = createAsyncThunk(
       const result = await createRecipe(token, formData);
       return result;
     } catch (error) {
-      return rejectWithValue(error);
+      // return rejectWithValue(error);
+      return rejectWithValue(error.response?.data?.message || error.message || 'Unknown error');
     }
   }
 );
