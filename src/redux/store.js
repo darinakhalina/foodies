@@ -5,6 +5,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import filtersReducer from './filters/slice';
 import modalReducer from './ui/modalSlice';
 import { recipesReducer } from './recipes/slice';
+import { userReducer } from './user/slice';
 import { areasReducer } from './areas/slice';
 import { categoriesReducer } from './categories/slice';
 import { ingredientsReducer } from './ingredients/slice';
@@ -24,6 +25,7 @@ export const store = configureStore({
     areas: areasReducer,
     categories: categoriesReducer,
     ingredients: ingredientsReducer,
+    user: userReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
