@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Toaster } from 'react-hot-toast';
+import { Outlet, ScrollRestoration } from 'react-router-dom';
 import css from './Layout.module.css';
-import { Outlet } from 'react-router-dom';
 import Loader from '../Loader/Loader';
 import Footer from '../Footer/Footer';
 import Header from '../Header/Header.jsx';
@@ -14,6 +14,7 @@ const Layout = () => {
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>
+        <ScrollRestoration />
       </main>
       <Toaster position="top-right" toastOptions={{ duration: 3000 }} />
       <Footer />
