@@ -1,3 +1,9 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .another {
   display: flex;
   flex-direction: column;
@@ -61,12 +67,29 @@
   text-decoration: underline;
 }
 
+.input-error span {
+  color: var(--red);
+}
+
+.input-error .icon {
+  color: var(--red);
+}
+
 .hidden {
   display: none;
 }
 
 .borderless {
   border: none;
+}
+
+.error {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 143%;
+  letter-spacing: -0.02em;
+  color: var(--red);
+  margin: 4px;
 }
 
 @media (min-width: 481px) {
@@ -77,5 +100,4 @@
   }
 }
 
-@media (min-width: 769px) {
-}
+@media (min-width: 769px) {}

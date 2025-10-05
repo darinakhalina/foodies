@@ -25,7 +25,7 @@ const recipeFormSchema = Yup.object().shape({
     .required('Instructions are required'),
 
   photo: Yup.mixed()
-    .nullable()
+    .required('A photo is required')
     .test('fileSize', 'File size is too large (max 5MB)', value => {
       return !value || (value && value.size <= 5 * 1024 * 1024);
     })
