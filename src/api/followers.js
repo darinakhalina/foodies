@@ -16,12 +16,13 @@ export const fetchFollowers = async (id, token, page = 1, limit = 5) => {
   }
 };
 
-export const fetchFollowings = async token => {
+export const fetchFollowings = async (token, page = 1, limit = 5) => {
   try {
     const response = await api.get(`users/me/followings`, {
       headers: {
         Authorization: getAuthorizationHeader(token),
       },
+      params: { page, limit },
     });
     return response.data;
   } catch (error) {
