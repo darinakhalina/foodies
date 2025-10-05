@@ -35,6 +35,8 @@ export default function UserInfo({ isOwnProfile }) {
     }
   };
 
+  //test subscribe
+
   const handleChangeAvatar = e => {
     const selectedFile = e.target.files[0];
     dispatch(uploadAvatar({ file: selectedFile, token }));
