@@ -12,6 +12,7 @@ import ModalRoot from './components/ModalRoot/ModalRoot.jsx';
 import { selectIsFetchingUser, selectIsLoggedIn } from './redux/auth/selectors';
 import { fetchUser } from './redux/auth/operations';
 import { getFavoriteRecipes } from './redux/recipes/operations.js';
+import ScrollToTop from './components/Scroll/ScrollToTop.jsx';
 
 // Pages
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
@@ -40,6 +41,7 @@ const App = () => {
 
   return (
     <>
+      <ScrollToTop behavior='instant'/>
       <Routes>
         {/* Public home shell */}
         <Route path="/" element={<HomePageLayout />}>
