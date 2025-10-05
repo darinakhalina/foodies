@@ -75,6 +75,28 @@
   cursor: pointer;
 }
 
+.actionBtn:hover,
+.actionBtn:active {
+  background: #050505;
+  border-color: #050505;
+}
+
+.actionBtn:hover .icon,
+.actionBtn:active .icon {
+  filter: invert(1);
+}
+
+.actionBtn.isActive,
+.favoriteButton.isFavorite {
+  background: #050505;
+  border-color: #050505;
+}
+
+.actionBtn.isActive .icon,
+.favoriteButton.isFavorite .icon {
+  filter: invert(1);
+}
+
 .isActive {
   background: #050505;
   border-color: #050505;
