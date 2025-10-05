@@ -1,107 +1,36 @@
 import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import UserFollowerRow from '../UserFollowersRow/UserFollowersRow';
+import { fetchFollowers } from '../../api/followers';
 import styles from './Followers.module.css';
 
 export default function UserFollowers() {
+  const { id: userId } = useParams();
   const [followers, setFollowers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const itemsPerPage = 5;
 
   useEffect(() => {
-    // тестові дані
-    const timer = setTimeout(() => {
-      setFollowers([
-        {
-          id: 1,
-          name: 'Victor',
-          avatar: 'https://i.pravatar.cc/100?img=8',
-          recipesCount: 30,
-          isFollowing: false,
-          recipes: [
-            { thumb: 'https://picsum.photos/seed/a/100' },
-            { thumb: 'https://picsum.photos/seed/b/100' },
-            { thumb: 'https://picsum.photos/seed/c/100' },
-            { thumb: 'https://picsum.photos/seed/d/100' },
-            { thumb: 'https://picsum.photos/seed/e/100' },
-          ],
-        },
-        {
-          id: 2,
-          name: 'Ivetta',
-          avatar: 'https://i.pravatar.cc/100?img=5',
-          recipesCount: 40,
-          isFollowing: true,
-          recipes: [
-            { thumb: 'https://picsum.photos/seed/f/100' },
-            { thumb: 'https://picsum.photos/seed/g/100' },
-            { thumb: 'https://picsum.photos/seed/h/100' },
-            { thumb: 'https://picsum.photos/seed/i/100' },
-            { thumb: 'https://picsum.photos/seed/j/100' },
-          ],
-        },
-        {
-          id: 3,
-          name: 'Mykhailo',
-          avatar: 'https://i.pravatar.cc/100?img=6',
-          recipesCount: 100,
-          isFollowing: false,
-          recipes: [
-            { thumb: 'https://picsum.photos/seed/k/100' },
-            { thumb: 'https://picsum.photos/seed/l/100' },
-            { thumb: 'https://picsum.photos/seed/m/100' },
-            { thumb: 'https://picsum.photos/seed/n/100' },
-            { thumb: 'https://picsum.photos/seed/o/100' },
-          ],
-        },
-        {
-          id: 4,
-          name: 'Victor',
-          avatar: 'https://i.pravatar.cc/100?img=8',
-          recipesCount: 30,
-          isFollowing: false,
-          recipes: [
-            { thumb: 'https://picsum.photos/seed/a/100' },
-            { thumb: 'https://picsum.photos/seed/b/100' },
-            { thumb: 'https://picsum.photos/seed/c/100' },
-            { thumb: 'https://picsum.photos/seed/d/100' },
-            { thumb: 'https://picsum.photos/seed/e/100' },
-          ],
-        },
-        {
-          id: 5,
-          name: 'Ivetta',
-          avatar: 'https://i.pravatar.cc/100?img=5',
-          recipesCount: 40,
-          isFollowing: true,
-          recipes: [
-            { thumb: 'https://picsum.photos/seed/f/100' },
-            { thumb: 'https://picsum.photos/seed/g/100' },
-            { thumb: 'https://picsum.photos/seed/h/100' },
-            { thumb: 'https://picsum.photos/seed/i/100' },
-            { thumb: 'https://picsum.photos/seed/j/100' },
-          ],
-        },
-        // {
-        //   id: 6,
-        //   name: 'Mykhailo',
-        //   avatar: 'https://i.pravatar.cc/100?img=6',
-        //   recipesCount: 100,
-        //   isFollowing: false,
-        //   recipes: [
-        //     { thumb: 'https://picsum.photos/seed/k/100' },
-        //     { thumb: 'https://picsum.photos/seed/l/100' },
-        //     { thumb: 'https://picsum.photos/seed/m/100' },
-        //     { thumb: 'https://picsum.photos/seed/n/100' },
-        //     { thumb: 'https://picsum.photos/seed/o/100' },
-        //   ],
-        // },
-      ]);
-      setLoading(false);
-    }, 1000);
+    const loadFollowers = async () => {
+      try {
+        setLoading(true);
 
-    return () => clearTimeout(timer);
-  }, []);
+        const token = localStorage.getItem('token');
+        const data = await fetchFollowers(userId, token, currentPage, itemsPerPage);
+
+        setFollowers(data.followers || []);
+        setTotalPages(data.totalPages || 1);
+      } catch (error) {
+        console.error('Error fetching followers:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (userId) loadFollowers();
+  }, [userId, currentPage]);
 
   const handleToggleFollow = userId => {
     setFollowers(prev =>
@@ -113,10 +42,6 @@ export default function UserFollowers() {
     console.log(`Open profile of user with id: ${userId}`);
   };
 
-  const totalPages = Math.ceil(followers.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const visibleFollowers = followers.slice(startIndex, startIndex + itemsPerPage);
-
   const handlePageChange = page => {
     setCurrentPage(page);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -126,7 +51,7 @@ export default function UserFollowers() {
 
   return (
     <section className={styles.container}>
-      {visibleFollowers.map(user => (
+      {followers.map(user => (
         <div key={user.id} className={styles.followerBlock}>
           <div className={styles.rowWrapper}>
             <div className={styles.leftPart}>
@@ -143,7 +68,7 @@ export default function UserFollowers() {
 
             <div className={styles.rightPart}>
               <div className={styles.recipeList}>
-                {user.recipes.map((recipe, index) => (
+                {user.recipes?.map((recipe, index) => (
                   <img
                     key={index}
                     src={recipe.thumb}
