@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Filters from '../../components/Filters/Filters';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import Pagination from '../../components/Pagination/Pagination';
-import Modal from '../../components/Modal/Modal';
 import { addFavorite, deleteFavorite } from '../../api/favorite';
 import { selectIsLoggedIn, selectToken } from '../../redux/auth/selectors';
 import { getCategoryDescription } from '../../data/categoryDescriptions';
 import css from './CategoryPage.module.css';
+import { openModal } from '../../redux/ui/modalSlice.js';
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 function normalizeRecipe(r) {
   return {
@@ -47,19 +47,19 @@ export default function CategoryPage({ onBack }) {
   const [areasOpt, setAreasOpt] = useState([]);
   const [ingredientsOpt, setIngredientsOpt] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
-  const [authOpen, setAuthOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState('');
   // Responsive page size
   const [limit, setLimit] = useState(() =>
     typeof window !== 'undefined' && window.innerWidth < 768 ? 8 : 12
   );
+  const dispatch = useDispatch();
   useEffect(() => {
     const onResize = () => setLimit(window.innerWidth < 768 ? 8 : 12);
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
-  // Description 
+  // Description
   const description = getCategoryDescription(categorySlug);
   // Fetch available filters (areas, ingredients)
   useEffect(() => {
@@ -114,8 +114,8 @@ export default function CategoryPage({ onBack }) {
         const apiRecipes = Array.isArray(payload.recipes)
           ? payload.recipes
           : Array.isArray(json.recipes)
-          ? json.recipes
-          : [];
+            ? json.recipes
+            : [];
         const normalized = apiRecipes.map(normalizeRecipe);
         if (!cancelled) {
           setRecipes(normalized);
@@ -142,26 +142,26 @@ export default function CategoryPage({ onBack }) {
   }, [page]);
   const hasResults = recipes.length > 0;
   // Handlers to keep URL in sync when Filters change
-  const setArea = (val) => {
+  const setArea = val => {
     const next = new URLSearchParams(params);
     if (val) next.set('area', val);
     else next.delete('area');
     next.set('page', '1');
     setParams(next);
   };
-  const setIngredient = (val) => {
+  const setIngredient = val => {
     const next = new URLSearchParams(params);
     if (val) next.set('ingredient', val);
     else next.delete('ingredient');
     next.set('page', '1');
     setParams(next);
   };
-  const setPageUrl = (p) => {
+  const setPageUrl = p => {
     const next = new URLSearchParams(params);
     next.set('page', String(p));
     setParams(next);
   };
-  const handleToggleFavorite = async (id) => {
+  const handleToggleFavorite = async id => {
     try {
       const target = recipes.find(r => r.id === id);
       if (!target) return;
@@ -170,9 +170,7 @@ export default function CategoryPage({ onBack }) {
       } else {
         await addFavorite(id, token);
       }
-      setRecipes(prev =>
-        prev.map(r => (r.id === id ? { ...r, isFavorite: !r.isFavorite } : r))
-      );
+      setRecipes(prev => prev.map(r => (r.id === id ? { ...r, isFavorite: !r.isFavorite } : r)));
     } catch (err) {
       console.error('Помилка зміни улюбленого рецепта:', err);
     }
@@ -212,9 +210,9 @@ export default function CategoryPage({ onBack }) {
                 key={r.id}
                 recipe={r}
                 isAuthed={isAuthed}
-                onNeedAuth={() => setAuthOpen(true)}
-                onOpen={(id) => navigate(`/recipe/${id}`)}
-                onAuthor={(authorId) => navigate(`/user/${authorId}/recipes`)}
+                onNeedAuth={() => dispatch(openModal('login'))}
+                onOpen={id => navigate(`/recipe/${id}`)}
+                onAuthor={authorId => navigate(`/user/${authorId}/recipes`)}
                 onToggleFavorite={() => handleToggleFavorite(r.id)}
                 isFavorite={r.isFavorite}
               />
@@ -235,12 +233,6 @@ export default function CategoryPage({ onBack }) {
           )}
         </div>
       </div>
-      <Modal isOpen={authOpen} onClose={() => setAuthOpen(false)}>
-        <div style={{ padding: 16 }}>
-          <h3 style={{ marginTop: 0 }}>Sign in required</h3>
-          <p>You need to be authorized to view profiles, like recipes, or open details.</p>
-        </div>
-      </Modal>
     </div>
   );
 }

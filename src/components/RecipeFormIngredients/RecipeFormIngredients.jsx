@@ -36,6 +36,8 @@ const RecipeFormIngredients = ({ values }) => {
                   placeholder="Add the ingredient"
                   className={css['add-ingredient']}
                 />
+              </div>
+              <div className={css['add-field']}>
                 <Textarea
                   name={`ingredients.${0}.quantity`}
                   placeholder="Enter quantity"

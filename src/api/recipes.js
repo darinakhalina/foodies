@@ -25,7 +25,7 @@ export async function deleteMyRecipe(token, recipeId) {
   const { data } = await api.delete(`/recipes/${recipeId}`, {
     headers: { Authorization: getAuthorizationHeader(token) },
   });
-  return data; 
+  return data;
 }
 
 export async function fetchUserRecipes(userId, { page = 1, limit = 10 } = {}) {

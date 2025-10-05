@@ -3,16 +3,18 @@ import { useSearchParams } from 'react-router-dom';
 import Hero from '../../components/Hero/Hero';
 import Header from '../../components/Header/Header.jsx';
 import Categories from '../../components/Categories/Categories.jsx';
-import CategoryPage from '../CategoryPage/CategoryPage'; 
+import CategoryPage from '../CategoryPage/CategoryPage';
 import Testimonials from '../../components/Testimonials/Testimonials.jsx';
 import css from './HomePage.module.css';
 
 const HomePage = () => {
   const [params, setParams] = useSearchParams();
-  const category = params.get('category'); 
+  const category = params.get('category');
 
-  const handleSelectCategory = (name) => {
-    const slug = String(name || '').toLowerCase().replace(/\s+/g, '-');
+  const handleSelectCategory = name => {
+    const slug = String(name || '')
+      .toLowerCase()
+      .replace(/\s+/g, '-');
     const next = new URLSearchParams(params);
     if (slug) {
       next.set('category', slug);

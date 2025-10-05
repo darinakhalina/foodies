@@ -1,56 +1,57 @@
 .add-ingredient {
-    min-width: 343px;
+  min-width: 300px;
 }
 
 .add-quantity {
-    min-width: 343px;
-    margin-top: 20px;
+  min-width: 300px;
+  margin-top: 20px;
 }
 
 .add-button {
-    margin-top: 32px;
-    border: 1px solid var(--color-main);
+  margin-top: 32px;
+  border: 1px solid var(--color-main);
 }
 
 .icon {
-    fill: none;
-    width: 22px;
-    height: 22px;
-    margin-left: 8px;
-    stroke: var(--color-main);
-    vertical-align: middle;
+  fill: none;
+  width: 22px;
+  height: 22px;
+  margin-left: 8px;
+  stroke: var(--color-main);
+  vertical-align: middle;
 }
 
 .all-igredients {
-    display: flex;
+  display: flex;
 }
 
 .ingredient-card {
-    display: flex;
-    flex-direction: row;
-    gap: 5px;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
 }
 
 .ingredient-card img {
-    border-radius: 15px;
+  border-radius: 15px;
 }
 
 .rotate {
-    transform: rotate(45deg);
-    border: none;
-    padding: 0px;
+  transform: rotate(45deg);
+  border: none;
+  padding: 0px;
 }
 
 button:disabled .icon {
-    stroke: var(--white);
+  stroke: var(--white);
 }
 
 @media (min-width: 481px) {
-    .add-field {
-        display: flex;
-        flex-direction: row;
-        gap: 20px;
-    }
+  .add-field {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
 }
 
-@media (min-width: 769px) {}
+@media (min-width: 769px) {
+}

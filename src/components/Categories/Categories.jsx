@@ -31,7 +31,7 @@ const CategoryCard = ({ item, shape, onSelect }) => {
     const slug = item.name.toLowerCase().replace(/\s+/g, '-');
     if (onSelect) onSelect(slug);
     else {
-      navigate({ pathname: '/', search: `?category=${slug}`});
+      navigate({ pathname: '/', search: `?category=${slug}` });
     }
   };
 
@@ -150,7 +150,7 @@ const Categories = ({ onSelect }) => {
           combine taste, style and the warm atmosphere of the kitchen.
         </Subtitle>
 
-                <ul className={styles.grid}>
+        <ul className={styles.grid}>
           {visibleItems.map(it => (
             <CategoryCard key={it.id} item={it} shape={it.shape} onSelect={onSelect} />
           ))}
@@ -159,7 +159,8 @@ const Categories = ({ onSelect }) => {
             <button
               type="button"
               className={styles.allBtn}
-              onClick={() => onSelect ? onSelect('all') : navigate({ pathname: '/', search: '?category=all'})
+              onClick={() =>
+                onSelect ? onSelect('all') : navigate({ pathname: '/', search: '?category=all' })
               }
               aria-label="Show all categories"
             >

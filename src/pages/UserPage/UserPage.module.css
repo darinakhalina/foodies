@@ -52,6 +52,7 @@ h1 {
 .layout {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 32px;
 }
 
@@ -71,13 +72,14 @@ h1 {
 }
 
 /* Desktop */
-@media (min-width: 1280px) {
+@media (min-width: 1440px) {
   .page {
     padding: 0px 80px;
   }
   .layout {
     flex-direction: row;
     gap: 40px;
+    align-items: flex-start;
   }
   .subtitle {
     max-width: 443px;
@@ -87,10 +89,6 @@ h1 {
   h1 {
     padding-bottom: 20px;
   }
-}
-
-.sidebar {
-  width: 100%;
 }
 
 .main {

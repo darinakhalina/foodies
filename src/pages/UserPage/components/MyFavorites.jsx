@@ -41,13 +41,13 @@ export default function MyFavorites() {
     setCurrentPage(page);
   };
 
-  const handleDeleteFavorite = async (id) => {
-  try {
-    await deleteFavorite(id, token);
-    setItems(prev => prev.filter(recipe => recipe.id !== id));
-  } catch (err) {
-    console.error('Failed to delete from favorites:', err);
-  }
+  const handleDeleteFavorite = async id => {
+    try {
+      await deleteFavorite(id, token);
+      setItems(prev => prev.filter(recipe => recipe.id !== id));
+    } catch (err) {
+      console.error('Failed to delete from favorites:', err);
+    }
   };
 
   if (loading) {
@@ -71,7 +71,7 @@ export default function MyFavorites() {
             title={recipe.title}
             description={recipe.description}
             thumb={recipe.thumb}
-            onOpen={(id) => navigate(`/recipe/${id}`)}
+            onOpen={id => navigate(`/recipe/${id}`)}
             onDelete={handleDeleteFavorite}
           />
         ))

@@ -1,6 +1,5 @@
 export const CATEGORY_DESCRIPTIONS = {
-  All: 
-  'Every recipe, all in one place.',
+  All: 'Every recipe, all in one place.',
   Seafood:
     'Fresh, bright dishes from the ocean—quick sautés, hearty stews, and simple grills that let the catch shine.',
   Lamb: 'Tender cuts and slow-cooked classics with herbs, spices, and deep, savory notes.',

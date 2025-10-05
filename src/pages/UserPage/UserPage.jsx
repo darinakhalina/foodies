@@ -97,9 +97,7 @@ export default function UserPage() {
       </header>
 
       <div className={styles.layout}>
-        <aside className={styles.sidebar}>
-          <UserInfo user={MOCK_USER} isOwnProfile={isOwnProfile} />
-        </aside>
+        <UserInfo user={MOCK_USER} isOwnProfile={isOwnProfile} />
 
         <main className={styles.main}>
           <TabBar tabs={tabs} activeTab={activeTab} onTabClick={handleTabClick} />

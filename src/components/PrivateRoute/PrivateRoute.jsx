@@ -11,8 +11,8 @@ export default function PrivateRoute({ children }) {
 
   useEffect(() => {
     if (isLoggedIn === false) {
-      dispatch(openModal('login'));
       navigate('/', { replace: true });
+      dispatch(openModal('login'));
     }
   }, [isLoggedIn, dispatch, navigate]);
 
