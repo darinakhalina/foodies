@@ -1,19 +1,20 @@
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoggedIn } from '../../redux/auth/selectors';
 import Subtitle from '../Subtitle/Subtitle';
 import css from './RecipeMainInfo.module.css';
+import { openModal } from '../../redux/ui/modalSlice.js';
 
 const RecipeMainInfo = ({ recipe }) => {
   const navigate = useNavigate();
   const isUserLoggedIn = useSelector(selectIsLoggedIn);
+  const dispatch = useDispatch();
 
   const handleOwnerClick = () => {
     if (isUserLoggedIn) {
       navigate(`/user/${recipe.owner.id}`);
     } else {
-      // ToDo: Open login modal or test private route
-      console.log('Add login modal here');
+      dispatch(openModal('login'));
     }
   };
 
