@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login, logout, register, fetchUser } from './operations';
 import { uploadAvatar } from '../user/operations';
+import { login, logout, register, fetchUser } from './operations';
 
 const initialState = {
   user: null,

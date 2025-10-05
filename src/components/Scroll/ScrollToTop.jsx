@@ -2,15 +2,18 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 export default function ScrollToTop({ behavior = 'instant' }) {
-  const { pathname, search } = useLocation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    if (behavior === 'instant') {
-      window.scrollTo(0, 0);
-    } else {
-      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
-    }
-  }, [pathname, search, behavior]);
+    if (pathname.startsWith('/user')) return;
+    if (pathname.startsWith('/category')) return;
+
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: behavior === 'smooth' ? 'smooth' : 'auto',
+    });
+  }, [pathname, behavior]);
 
   return null;
 }
