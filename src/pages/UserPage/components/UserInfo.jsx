@@ -48,22 +48,18 @@ export default function UserInfo({ isOwnProfile }) {
             <div className={styles.avatarBox}>
               <img src={`${user?.avatar}`} alt="Avatar" className={styles.avatar} />
             </div>
-            {isOwnProfile ? (
-              <>
-                <label htmlFor="fileInput" className={styles.uploadButton}>
-                  <div className={styles.boxIcon}>
-                    <img src={Plus} alt="Icon" width={16} />
-                  </div>
-                </label>
+            <label htmlFor="fileInput" className={styles.uploadButton}>
+              <div className={styles.boxIcon}>
+                <img src={Plus} alt="Icon" width={16} />
+              </div>
+            </label>
 
-                <input
-                  className={styles.input}
-                  type="file"
-                  id="fileInput"
-                  onChange={handleChangeAvatar}
-                />
-              </>
-            ) : null}
+            <input
+              className={styles.input}
+              type="file"
+              id="fileInput"
+              onChange={handleChangeAvatar}
+            />
           </div>
           <p className={styles.name}>{user?.name}</p>
         </div>
