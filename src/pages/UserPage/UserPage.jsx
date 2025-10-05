@@ -13,13 +13,13 @@ const selectUserId = state => state.auth?.user?.id;
 const selectIsLoggedIn = state => state.auth?.isLoggedIn;
 
 // ------- Temporary mocked data for the panel -------
-const MOCK_USER = {
-  id: 'u1',
-  name: 'Victoria',
-  email: 'victoria@example.com',
-  avatar: '/images/test-cat.png',
-  stats: { recipes: 12, favorites: 8, followers: 221, following: 97 },
-};
+// const MOCK_USER = {
+//   id: 'u1',
+//   name: 'Victoria',
+//   email: 'victoria@example.com',
+//   avatar: '/images/test-cat.png',
+//   stats: { recipes: 12, favorites: 8, followers: 221, following: 97 },
+// };
 // -----------------------------------------------------
 
 const TABS_OWN = ['MY RECIPES', 'MY FAVORITES', 'FOLLOWERS', 'FOLLOWING'];
@@ -97,7 +97,7 @@ export default function UserPage() {
       </header>
 
       <div className={styles.layout}>
-        <UserInfo user={MOCK_USER} isOwnProfile={isOwnProfile} />
+        <UserInfo isOwnProfile={isOwnProfile} />
 
         <main className={styles.main}>
           <TabBar tabs={tabs} activeTab={activeTab} onTabClick={handleTabClick} />

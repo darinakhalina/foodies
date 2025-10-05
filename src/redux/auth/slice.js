@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { login, logout, register, fetchUser } from './operations';
+import { uploadAvatar } from '../user/operations';
 
 const initialState = {
   user: null,
@@ -43,6 +44,9 @@ const authSlice = createSlice({
       })
       .addCase(fetchUser.rejected, state => {
         state.isFetchingUser = false;
+      })
+      .addCase(uploadAvatar.fulfilled, (state, action) => {
+        state.user.avatar = action.payload;
       });
   },
 });
