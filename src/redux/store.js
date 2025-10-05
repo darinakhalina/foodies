@@ -8,6 +8,7 @@ import { recipesReducer } from './recipes/slice';
 import { areasReducer } from './areas/slice';
 import { categoriesReducer } from './categories/slice';
 import { ingredientsReducer } from './ingredients/slice';
+
 const persistAuthConfig = {
   key: 'auth',
   storage,
