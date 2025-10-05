@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import styles from './RecipeCard.module.css';
-// import Modal from '../Modal/Modal';
-// import SignInModal from '../SignInModal/SignInModal';
 import icons from '/images/icons.svg';
 
 /**
@@ -36,15 +34,12 @@ export default function RecipeCard({
   } = recipe || {};
 
   const [localFav, setLocalFav] = useState(false);
-  // eslint-disable-next-line no-unused-vars
-  const [isSignInModalOpen, setIsSignInModalOpen] = useState(false);
 
   const isFavorite = favoriteFromParent ?? localFav;
 
   const requireAuth = fn => {
     if (isAuthed) return fn();
     if (onNeedAuth) onNeedAuth();
-    setIsSignInModalOpen(true);
   };
 
   const handleFavoriteToggle = () => {
@@ -136,13 +131,6 @@ export default function RecipeCard({
           </div>
         </div>
       </div>
-
-      {/* Auth modal */}
-      {/*{isSignInModalOpen && (*/}
-      {/*  <Modal isOpen={isSignInModalOpen} onClose={() => setIsSignInModalOpen(false)}>*/}
-      {/*    <SignInModal />*/}
-      {/*  </Modal>*/}
-      {/*)}*/}
     </>
   );
 }
