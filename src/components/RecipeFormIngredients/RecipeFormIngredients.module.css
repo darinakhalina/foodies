@@ -31,6 +31,23 @@ button:disabled .icon {
   stroke: var(--white);
 }
 
+.error {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 143%;
+  letter-spacing: -0.02em;
+  color: var(--red);
+  margin-top: 4px;
+}
+
+.input-error::placeholder {
+  color: var(--red);
+}
+
+.add-ingredient.input-error {
+  color: var(--red);
+}
+
 @media (min-width: 481px) {
   .add-field {
     display: flex;

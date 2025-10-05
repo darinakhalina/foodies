@@ -28,6 +28,23 @@
   }
 }
 
+.input-error {
+  color: var(--red);
+}
+
+.input-error::placeholder {
+  color: var(--red);
+}
+
+.error {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 143%;
+  letter-spacing: -0.02em;
+  color: var(--red);
+  margin-top: 4px;
+}
+
 @media (min-width: 769px) {
   .summary {
     margin-top: 0px;

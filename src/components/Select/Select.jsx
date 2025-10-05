@@ -4,7 +4,7 @@ import clsx from 'clsx';
 import css from './Select.module.css';
 import icons from '/images/icons.svg';
 const Select = ({ name, items, placeholder, className = '' }) => {
-  const [field, , helpers] = useField(name);
+  const [field, meta, helpers] = useField(name);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -24,7 +24,10 @@ const Select = ({ name, items, placeholder, className = '' }) => {
 
   return (
     <div className={css['input-wrapper']}>
-      <div className={clsx(css.input, className)} onClick={() => setOpen(prev => !prev)}>
+      <div
+        className={clsx(css.input, className, meta.touched && meta.error && css['input-error'])}
+        onClick={() => setOpen(prev => !prev)}
+      >
         {field.value ? items.find(item => item.id === field.value)?.name : placeholder}
         <span className={css.arrow}>
           <svg
@@ -37,7 +40,7 @@ const Select = ({ name, items, placeholder, className = '' }) => {
           </svg>
         </span>
       </div>
-
+      {meta.touched && meta.error && <div className={css.error}>{meta.error}</div>}
       {open && (
         <div className={css['dropdown-content']} role="listbox">
           <ul className={css['list-wrapper']}>
