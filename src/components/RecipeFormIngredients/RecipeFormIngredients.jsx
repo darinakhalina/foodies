@@ -4,11 +4,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { selectIngredients } from '../../redux/ingredients/selectors';
 import { getIngredients } from '../../redux/ingredients/operations';
 import Button from '../Button/Button';
-import ButtonIcon from '../ButtonIcon/ButtonIcon';
 import InputContainer from '../InputContainer/InputContainer';
 import Select from '../Select/Select';
 import Textarea from '../Textarea/Textarea';
 import css from './RecipeFormIngredients.module.css';
+import Ingredient from '../Ingredient/Ingredient.jsx';
+import IngredientsList from '../IngredientsList/IngredientsList.jsx';
 
 const getIngredient = (ingredients, id) => {
   const found = ingredients.find(item => item.id === id);
@@ -59,34 +60,19 @@ const RecipeFormIngredients = ({ values }) => {
               </Button>
             </div>
             {values.ingredients.length > 0 ? (
-              <ul className={css['all-igredients']}>
+              <IngredientsList>
                 {values.ingredients.map((ingredient, index) =>
                   index > 0 ? (
-                    <li className={css['ingredient-card']} key={index}>
-                      <img
-                        src={getIngredient(ingredientItems, ingredient.id).img}
-                        alt={getIngredient(ingredientItems, ingredient.id).name}
-                        width="50"
-                        height="50"
-                        loading="eager"
-                      ></img>
-                      <div>
-                        <p name={`ingredients.${index}.id`}>
-                          {getIngredient(ingredientItems, ingredient.id).name}
-                        </p>
-                        <span name={`ingredients.${index}.quantity`}>{ingredient.quantity}</span>
-                      </div>
-                      <ButtonIcon
-                        iconName="icon-plus"
-                        variant="secondary"
-                        size="sm"
-                        className={css.rotate}
-                        onClick={() => remove(index)}
-                      />
-                    </li>
+                    <Ingredient
+                      image={getIngredient(ingredientItems, ingredient.id).img}
+                      name={getIngredient(ingredientItems, ingredient.id).name}
+                      measure={ingredient.quantity}
+                      onClick={() => remove(index)}
+                      key={index}
+                    />
                   ) : null
                 )}
-              </ul>
+              </IngredientsList>
             ) : null}
           </>
         )}

@@ -21,20 +21,6 @@
   vertical-align: middle;
 }
 
-.all-igredients {
-  display: flex;
-}
-
-.ingredient-card {
-  display: flex;
-  flex-direction: row;
-  gap: 5px;
-}
-
-.ingredient-card img {
-  border-radius: 15px;
-}
-
 .rotate {
   transform: rotate(45deg);
   border: none;
@@ -51,7 +37,4 @@ button:disabled .icon {
     flex-direction: row;
     gap: 20px;
   }
-}
-
-@media (min-width: 769px) {
 }
