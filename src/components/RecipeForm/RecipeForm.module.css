@@ -1,35 +1,32 @@
 .form {
-    margin-top: 32px;
-    display: flex;
-    flex-direction: column;
+  margin-top: 32px;
+  display: flex;
+  flex-direction: column;
 }
 
 .info {
-    flex: 1;
-    margin-top: 32px;
+  flex: 1;
+  margin-top: 32px;
 }
 
 @media (min-width: 481px) {
-    .form {
-        margin-top: 40px;
-    }
+  .form {
+    margin-top: 40px;
+  }
 
-    .info {
-        margin-top: 80px;
-    }
+  .info {
+    margin-top: 80px;
+  }
 }
 
 @media (min-width: 769px) {
+  .form {
+    display: flex;
+    flex-direction: row;
+    gap: 80px;
+  }
 
-    .form {
-        display: flex;
-        flex-direction: row;
-        gap: 80px;
-
-    }
-
-    .info {
-        margin-top: 0px;
-    }
-
+  .info {
+    margin-top: 0px;
+  }
 }

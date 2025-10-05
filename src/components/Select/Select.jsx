@@ -4,7 +4,6 @@ import clsx from 'clsx';
 import css from './Select.module.css';
 import icons from '/images/icons.svg';
 const Select = ({ name, items, placeholder, className = '' }) => {
-
   const [field, , helpers] = useField(name);
   const [open, setOpen] = useState(false);
 

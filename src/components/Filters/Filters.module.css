@@ -8,8 +8,9 @@
 }
 
 .filters > * {
-  width: 343px;
-  max-width: 100%;
+  width: 100%;
+  min-width: 300px;
+  max-width: 343px;
 }
 
 /* Планшет */
