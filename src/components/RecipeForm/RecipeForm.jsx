@@ -22,9 +22,6 @@ const RecipeForm = () => {
       formData.append('photo', values.photo);
     }
     dispatch(addRecipe(formData));
-    // TODO: test with backend
-    //console.log(recipe);
-    //console.log(`recipe ==> ${JSON.stringify(recipe)}`);
   };
 
   return (

@@ -9,8 +9,9 @@ import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Loader from './components/Loader/Loader';
 import ModalRoot from './components/ModalRoot/ModalRoot.jsx';
 
-import { selectIsFetchingUser } from './redux/auth/selectors';
+import { selectIsFetchingUser, selectIsLoggedIn } from './redux/auth/selectors';
 import { fetchUser } from './redux/auth/operations';
+import { getFavoriteRecipes } from './redux/recipes/operations.js';
 
 // Pages
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
@@ -23,10 +24,17 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
 const App = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(selectIsFetchingUser);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
     dispatch(fetchUser());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(getFavoriteRecipes());
+    }
+  }, [dispatch, isLoggedIn]);
 
   if (isLoading) return <Loader />;
 
