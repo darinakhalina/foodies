@@ -27,6 +27,9 @@
 
 .description {
   margin-bottom: 24px;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .owner-info {
