@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from '../../../redux/user/operations';
 import UserPageTabs from '../../../components/UserPageTabs/UserPageTabs';
 import UserRecipeRow from '../../../components/UserRecipeRow/UserRecipeRow';
 import { selectIsLoggedIn, selectToken } from '../../../redux/auth/selectors';
@@ -13,6 +14,7 @@ export default function MyRecipes() {
   const { id: routeId } = useParams();
   const location = useLocation();
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const authUserId = useSelector(selectAuthUserId);
 
@@ -98,6 +100,8 @@ export default function MyRecipes() {
       setDeletingId(id);
       await deleteMyRecipe(token, id);
       setItems(prev => prev.filter(r => r.id !== id));
+      const targetUserId = routeId === 'me' ? authUserId : routeId;
+      dispatch(getUser({ id: targetUserId, token }));
       if (items.length === 1 && page > 1) {
         setPage(p => p - 1);
       }

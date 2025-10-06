@@ -1,18 +1,20 @@
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import UserFollowersRow from '../../../components/UserFollowersRow/UserFollowersRow';
 import { useEffect, useState, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import UserPageTabs from '../../../components/UserPageTabs/UserPageTabs';
 import Loader from '../../../components/Loader/Loader';
 import { selectIsLoggedIn, selectToken } from '../../../redux/auth/selectors';
 import { fetchFollowers, unfollowUser, followUser, fetchFollowings } from '../../../api/followers';
 import { fetchUserRecipes } from '../../../api/recipes';
+import { getUser } from '../../../redux/user/operations';
 
 const selectAuthUserId = state => state?.auth?.user?.id;
 
 export default function Followers() {
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useDispatch();
   const token = useSelector(selectToken);
   const { id: routeId } = useParams();
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -108,6 +110,9 @@ export default function Followers() {
       setItems(prevItems =>
         prevItems.map(f => (f.id === id ? { ...f, isFollowing: !f.isFollowing } : f))
       );
+      if (authUserId) {
+        dispatch(getUser({ id: authUserId, token }));
+      }
     } catch (error) {
       console.error('Error toggling follow:', error);
     }

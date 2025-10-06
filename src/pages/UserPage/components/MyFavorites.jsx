@@ -1,14 +1,18 @@
 import { useNavigate } from 'react-router-dom';
 import UserRecipeRow from '../../../components/UserRecipeRow/UserRecipeRow';
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { getUser } from '../../../redux/user/operations';
 import { deleteFavorite, fetchFavoriteRecipes } from '../../../api/favorite';
 import UserPageTabs from '../../../components/UserPageTabs/UserPageTabs';
 import Loader from '../../../components/Loader/Loader';
+const selectAuthUserId = state => state?.auth?.user?.id;
 
 export default function MyFavorites() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const token = useSelector(state => state.auth.token);
+  const authUserId = useSelector(selectAuthUserId);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -47,6 +51,9 @@ export default function MyFavorites() {
       setDeletingId(id);
       await deleteFavorite(id, token);
       setItems(prev => prev.filter(recipe => recipe.id !== id));
+      if (authUserId) {
+        dispatch(getUser({ id: authUserId, token }));
+      }
     } catch (err) {
       console.error('Failed to delete from favorites:', err);
     } finally {
