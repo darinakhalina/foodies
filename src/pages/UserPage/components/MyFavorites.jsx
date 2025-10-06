@@ -14,6 +14,7 @@ export default function MyFavorites() {
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [deletingId, setDeletingId] = useState(null);
 
   useEffect(() => {
     const loadFavorites = async (page = 1) => {
@@ -43,10 +44,13 @@ export default function MyFavorites() {
 
   const handleDeleteFavorite = async id => {
     try {
+      setDeletingId(id);
       await deleteFavorite(id, token);
       setItems(prev => prev.filter(recipe => recipe.id !== id));
     } catch (err) {
       console.error('Failed to delete from favorites:', err);
+    } finally {
+      setDeletingId(null);
     }
   };
 
@@ -73,6 +77,7 @@ export default function MyFavorites() {
             thumb={recipe.thumb}
             onOpen={id => navigate(`/recipe/${id}`)}
             onDelete={handleDeleteFavorite}
+            isDeleting={deletingId === recipe.id}
           />
         ))
       ) : (
