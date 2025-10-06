@@ -130,6 +130,7 @@
   object-fit: contain;
 }
 
+
 @media (min-width: 768px) {
   .title {
     font-weight: 800;

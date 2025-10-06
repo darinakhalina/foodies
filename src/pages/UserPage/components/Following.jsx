@@ -118,7 +118,7 @@ export default function Following() {
           />
         ))
       ) : (
-        <div>You are not following anyone yet.</div>
+            <div style={{ color: "#1A1A1A" }}>Your account currently has no subscriptions to other users. Learn more about our users and select those whose content interests you.</div>
       )}
     </UserPageTabs>
   );

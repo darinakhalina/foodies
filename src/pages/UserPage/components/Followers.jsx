@@ -120,9 +120,9 @@ export default function Followers() {
 
   const emptyMessage = useMemo(() => {
     if (isOwnProfile) {
-      return 'You have no followers yet.';
+      return 'There are currently no followers on your account. Please engage our visitors with interesting content and draw their attention to your profile.';
     }
-    return 'This user has no followers yet.';
+    return 'There are currently no followers on this account.';
   }, [isOwnProfile]);
 
   if (loading) {
@@ -155,7 +155,7 @@ export default function Followers() {
           />
         ))
       ) : (
-        <div>{emptyMessage}</div>
+            <div style={{ color: "#1A1A1A" }}>{emptyMessage}</div>
       )}
     </UserPageTabs>
   );

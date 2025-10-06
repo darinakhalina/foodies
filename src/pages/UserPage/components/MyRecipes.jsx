@@ -113,7 +113,7 @@ export default function MyRecipes() {
   };
   const emptyMessage = useMemo(() => {
     if (isOwnProfile) {
-      return 'Add new recipes to see them here.';
+      return 'Nothing has been added to your recipes list yet. Please browse our recipes and add your favorites for easy access in the future.';
     }
     return "This user hasn't added any recipes yet.";
   }, [isOwnProfile]);
@@ -146,7 +146,7 @@ export default function MyRecipes() {
           ))}
         </div>
       ) : (
-        !loading && <p>{emptyMessage}</p>
+        !loading && <p style={{color: "#1A1A1A"}}>{emptyMessage}</p>
       )}
     </UserPageTabs>
   );

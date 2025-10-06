@@ -88,7 +88,7 @@ export default function MyFavorites() {
           />
         ))
       ) : (
-        <div>There are no favorite recipes yet</div>
+            <div style={{ color: "#1A1A1A" }}>Nothing has been added to your favorite recipes list yet. Please browse our recipes and add your favorites for easy access in the future.</div>
       )}
     </UserPageTabs>
   );
