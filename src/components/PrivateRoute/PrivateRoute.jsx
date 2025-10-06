@@ -1,20 +1,39 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { selectIsLoggedIn } from '../../redux/auth/selectors.js';
+import { selectIsLoggedIn, selectIsFetchingUser } from '../../redux/auth/selectors.js';
+import { selectModalType } from '../../redux/ui/modalSlice.js';
 import { useNavigate } from 'react-router-dom';
 import { openModal } from '../../redux/ui/modalSlice.js';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function PrivateRoute({ children }) {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
   const navigate = useNavigate();
 
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isFetchingUser = useSelector(selectIsFetchingUser);
+  const currentModal = useSelector(selectModalType);
+
+  const [checked, setChecked] = useState(false);
+
   useEffect(() => {
-    if (isLoggedIn === false) {
-      navigate('/', { replace: true });
-      dispatch(openModal('login'));
+    if (!isFetchingUser) {
+      setChecked(true);
     }
-  }, [isLoggedIn, dispatch, navigate]);
+  }, [isFetchingUser]);
+
+  useEffect(() => {
+    if (!checked) return;
+
+    if (!isLoggedIn) {
+      navigate('/', { replace: true });
+
+      if (currentModal !== 'login') {
+        dispatch(openModal('login'));
+      }
+    }
+  }, [isLoggedIn, checked, currentModal, dispatch, navigate]);
+
+  if (!checked) return null;
 
   return isLoggedIn ? children : null;
 }
