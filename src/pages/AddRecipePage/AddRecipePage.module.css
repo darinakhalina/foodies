@@ -1,2 +1,5 @@
-.addStyles {
+@media only screen and (min-width: 768px) {
+  .subTitle {
+    max-width: 445px;
+  }
 }
