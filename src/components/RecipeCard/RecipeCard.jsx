@@ -2,19 +2,6 @@ import { useState } from 'react';
 import styles from './RecipeCard.module.css';
 import icons from '/images/icons.svg';
 
-/**
- * Props
- * - recipe: {
- *     id, title, description, image,
- *     author: { id, name, avatar }
- *   }
- * - isAuthed: boolean
- * - onNeedAuth: () => void
- * - onOpen: (id) => void            // optional: open recipe details
- * - onAuthor: (authorId) => void     // optional: open author profile
- * - onToggleFavorite: (id) => Promise|void  // optional: toggle favorite
- * - isFavorite: boolean              // optional: favorite state from parent
- */
 export default function RecipeCard({
   recipe,
   isAuthed = false,
@@ -35,6 +22,9 @@ export default function RecipeCard({
 
   const [localFav, setLocalFav] = useState(false);
 
+  const [favLoading, setFavLoading] = useState(false);
+  const [viewPressed, setViewPressed] = useState(false);
+
   const isFavorite = favoriteFromParent ?? localFav;
 
   const requireAuth = fn => {
@@ -44,8 +34,13 @@ export default function RecipeCard({
 
   const handleFavoriteToggle = () => {
     requireAuth(async () => {
-      if (onToggleFavorite) await onToggleFavorite(id);
-      else setLocalFav(v => !v);
+      setFavLoading(true);
+      try {
+        if (onToggleFavorite) await onToggleFavorite(id);
+        else setLocalFav(v => !v);
+      } finally {
+        setFavLoading(false); 
+      }
     });
   };
 
@@ -56,10 +51,12 @@ export default function RecipeCard({
   };
 
   const handleNavigateToRecipe = () => {
-    if (onOpen) return onOpen(id);
-    requireAuth(() => {
-      //
-    });
+  setViewPressed(true);
+  setTimeout(() => setViewPressed(false), 180);
+  if (onOpen) return onOpen(id);
+  requireAuth(() => {
+    //
+  });
   };
 
   return (
@@ -107,7 +104,7 @@ export default function RecipeCard({
             <div className={styles.actions}>
               <button
                 onClick={handleFavoriteToggle}
-                className={`${styles.iconButton} ${styles.favoriteButton} ${isFavorite ? styles.isFavorite : ''}`}
+                className={`${styles.iconButton} ${styles.favoriteButton} ${isFavorite ? styles.isFavorite : ''} ${favLoading ? styles.isLoading : ''}`}
                 aria-pressed={isFavorite}
                 title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
                 type="button"
@@ -119,7 +116,7 @@ export default function RecipeCard({
 
               <button
                 onClick={handleNavigateToRecipe}
-                className={`${styles.iconButton} ${styles.viewButton}`}
+                className={`${styles.iconButton} ${styles.viewButton} ${viewPressed ? styles.isPressed : ''}`}
                 title="View recipe"
                 type="button"
               >

@@ -148,6 +148,14 @@
   flex-shrink: 0;
 }
 
+.icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  object-fit: contain;
+  transition: filter 0.2s ease;
+}
+
 .iconButton {
   width: 42px;
   height: 42px;
@@ -173,12 +181,13 @@
   filter: invert(1);
 }
 
-.icon {
-  width: 18px;
-  height: 18px;
-  display: block;
-  object-fit: contain;
-  transition: filter 0.2s ease;
+.isLoading {
+  transform: scale(0.86); 
+  pointer-events: none;
+}
+
+.isPressed {
+  transform: scale(0.86);
 }
 
 .favoriteButton.isFavorite {
