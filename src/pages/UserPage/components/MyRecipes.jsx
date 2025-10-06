@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import UserPageTabs from '../../../components/UserPageTabs/UserPageTabs';
 import UserRecipeRow from '../../../components/UserRecipeRow/UserRecipeRow';
 import { selectIsLoggedIn, selectToken } from '../../../redux/auth/selectors';
+import Loader from '../../../components/Loader/Loader';
 const selectAuthUserId = state => state?.auth?.user?.id;
 import { fetchMyRecipes, fetchUserRecipes, deleteMyRecipe } from '../../../api/recipes';
 const PAGE_SIZE = 10;
@@ -25,6 +26,7 @@ export default function MyRecipes() {
 
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState('');
+  const [deletingId, setDeletingId] = useState(null);
   const normalize = r => ({
     id: r.id,
     title: r.title,
@@ -93,6 +95,7 @@ export default function MyRecipes() {
     const sure = window.confirm('Delete this recipe permanently?');
     if (!sure) return;
     try {
+      setDeletingId(id);
       await deleteMyRecipe(token, id);
       setItems(prev => prev.filter(r => r.id !== id));
       if (items.length === 1 && page > 1) {
@@ -100,6 +103,8 @@ export default function MyRecipes() {
       }
     } catch (e) {
       alert(e?.response?.data?.message || e?.message || 'Failed to delete recipe');
+    } finally {
+      setDeletingId(null);
     }
   };
   const emptyMessage = useMemo(() => {
@@ -108,6 +113,11 @@ export default function MyRecipes() {
     }
     return "This user hasn't added any recipes yet.";
   }, [isOwnProfile]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <UserPageTabs
       currentPage={page}
@@ -127,6 +137,7 @@ export default function MyRecipes() {
               thumb={r.thumb}
               onOpen={handleOpen}
               onDelete={isOwnProfile ? handleDelete : undefined}
+              isDeleting={deletingId === r.id}
             />
           ))}
         </div>

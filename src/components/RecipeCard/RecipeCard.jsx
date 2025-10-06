@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './RecipeCard.module.css';
 import icons from '/images/icons.svg';
+import Loader from '../Loader/Loader';
 
 export default function RecipeCard({
   recipe,
@@ -108,10 +109,15 @@ export default function RecipeCard({
                 aria-pressed={isFavorite}
                 title={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
                 type="button"
+                disabled={favLoading}
               >
-                <svg className={styles.icon} width="16" height="16">
-                  <use href={`${icons}#icon-heart`} />
-                </svg>
+                {favLoading ? (
+                  <Loader small />
+                ) : (
+                  <svg className={styles.icon} width="16" height="16">
+                    <use href={`${icons}#icon-heart`} />
+                  </svg>
+                )}
               </button>
 
               <button
