@@ -1,6 +1,7 @@
 import Subtitle from '../../components/Subtitle/Subtitle.jsx';
 import PathInfo from '../../components/PathInfo/PathInfo.jsx';
 import RecipeForm from '../../components/RecipeForm/RecipeForm.jsx';
+import css from './AddRecipePage.module.css';
 
 const AddRecipePage = () => {
   return (
@@ -13,7 +14,7 @@ const AddRecipePage = () => {
         ]}
       />
 
-      <p>
+      <p className={css.subTitle}>
         Reveal your culinary art, share your favorite recipe and create gastronomic masterpieces
         with us.
       </p>
