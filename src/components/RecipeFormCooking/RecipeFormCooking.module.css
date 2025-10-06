@@ -10,15 +10,17 @@
 }
 
 .category {
-  width: 200px;
+  width: 100%;
+}
+
+.cooking {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 20px;
 }
 
 @media (min-width: 375px) {
-  .cooking {
-    display: flex;
-    gap: 20px;
-  }
-
   .time {
     width: 194px;
   }
