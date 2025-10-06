@@ -23,8 +23,8 @@
 
 /* Chevron */
 .icon {
-  width: 18px;
-  height: 18px;
+  width: 12px;
+  height: 6.5px;
   flex: 0 0 18px;
   transition: transform 160ms ease;
 }
