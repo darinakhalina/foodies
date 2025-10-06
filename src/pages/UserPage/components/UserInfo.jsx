@@ -20,8 +20,10 @@ export default function UserInfo({ isOwnProfile }) {
   const { id } = useParams();
 
   useEffect(() => {
-    dispatch(getUser({ id, token }));
-  }, [dispatch, token, id]);
+    if (!isOwnProfile && id) {
+      dispatch(getUser({ id, token }));
+    }
+  }, [dispatch, token, id, isOwnProfile]);
 
   const handleLogoutClickBtn = () => {
     dispatch(openModal('logout'));
@@ -46,7 +48,7 @@ export default function UserInfo({ isOwnProfile }) {
         <div className={styles.header}>
           <div className={styles.avatarContainer}>
             <div className={styles.avatarBox}>
-              <img src={`${user?.avatar}`} alt="Avatar" className={styles.avatar} />
+              <img src={user?.avatar || '/images/fallback-avatar.png'} alt="Avatar" className={styles.avatar} />
             </div>
             {isOwnProfile && (
               <>
