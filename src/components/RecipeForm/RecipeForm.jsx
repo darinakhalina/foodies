@@ -50,7 +50,9 @@ const RecipeForm = () => {
       {({ setFieldValue, values, errors, touched }) => {
         return (
           <Form className={css.form} noValidate>
-            <UploadPhoto setFieldValue={setFieldValue} />
+            <div className={css.holder}>
+              <UploadPhoto setFieldValue={setFieldValue} />
+            </div>
             <div className={css.info}>
               <RecipeFormSummary errors={errors} touched={touched} />
               <RecipeFormCooking
