@@ -20,10 +20,8 @@ export default function UserInfo({ isOwnProfile }) {
   const { id } = useParams();
 
   useEffect(() => {
-    if (!isOwnProfile && id) {
-      dispatch(getUser({ id, token }));
-    }
-  }, [dispatch, token, id, isOwnProfile]);
+    dispatch(getUser({ id, token }));
+      }, [dispatch, token, id]);
 
   const handleLogoutClickBtn = () => {
     dispatch(openModal('logout'));
@@ -81,22 +79,22 @@ export default function UserInfo({ isOwnProfile }) {
               Added Recipes:<span className={styles.textValueProfile}>{user?.recipesAmount}</span>
             </p>
           </li>
-          <li>
+          {isOwnProfile && (<li>
             <p className={styles.textProfile}>
               Favorites:
               <span className={styles.textValueProfile}>{user?.favoriteRecipesAmount}</span>
             </p>
-          </li>
+          </li>)}
           <li>
             <p className={styles.textProfile}>
               Followers:<span className={styles.textValueProfile}>{user?.followersAmount}</span>
             </p>
           </li>
-          <li>
+          {isOwnProfile && (<li>
             <p className={styles.textProfile}>
               Following:<span className={styles.textValueProfile}>{user?.followingsAmount}</span>
             </p>
-          </li>
+          </li>)}
         </ul>
       </div>
       {isOwnProfile ? (
