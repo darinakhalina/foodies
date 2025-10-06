@@ -40,7 +40,7 @@ export default function RecipeCard({
         if (onToggleFavorite) await onToggleFavorite(id);
         else setLocalFav(v => !v);
       } finally {
-        setFavLoading(false); 
+        setFavLoading(false);
       }
     });
   };
@@ -52,12 +52,12 @@ export default function RecipeCard({
   };
 
   const handleNavigateToRecipe = () => {
-  setViewPressed(true);
-  setTimeout(() => setViewPressed(false), 180);
-  if (onOpen) return onOpen(id);
-  requireAuth(() => {
-    //
-  });
+    setViewPressed(true);
+    setTimeout(() => setViewPressed(false), 180);
+    if (onOpen) return onOpen(id);
+    requireAuth(() => {
+      //
+    });
   };
 
   return (

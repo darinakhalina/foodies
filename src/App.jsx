@@ -54,7 +54,7 @@ const App = () => {
 
   return (
     <>
-      <ScrollToTop behavior='instant'/>
+      <ScrollToTop behavior="instant" />
       <Routes>
         {/* Public home shell */}
         <Route path="/" element={<HomePageLayout />}>

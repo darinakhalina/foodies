@@ -6,7 +6,7 @@ import UserPageTabs from '../../../components/UserPageTabs/UserPageTabs';
 import Loader from '../../../components/Loader/Loader';
 import { selectIsLoggedIn, selectToken } from '../../../redux/auth/selectors';
 import { unfollowUser, fetchFollowings, followUser } from '../../../api/followers';
-import { fetchUserRecipes } from '../../../api/recipes'
+import { fetchUserRecipes } from '../../../api/recipes';
 
 const selectAuthUserId = state => state?.auth?.user?.id;
 
