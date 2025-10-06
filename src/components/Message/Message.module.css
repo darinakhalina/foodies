@@ -1,26 +1,31 @@
 .message {
   width: 100%;
   text-align: center;
+  margin: 0; 
+}
+
+.text {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
   font-size: 16px;
   font-weight: 400;
   line-height: 1.4;
   letter-spacing: -0.02em;
 
-  margin-top: 80px !important;
-  color: #bfbebe !important;
-
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  /* mobile */
+  margin-top: 80px;
+  color: #BFBEBE !important;  
   -webkit-line-clamp: 3;
   line-clamp: 3;
 }
 
 /* tablet */
 @media (min-width: 768px) {
-  .message {
+  .text {
     margin-top: 100px;
-    color: #000;
+    color: var(--black) !important;
     padding: 0 47px;
     -webkit-line-clamp: 2;
     line-clamp: 2;
@@ -29,7 +34,7 @@
 
 /* laptop/desktop */
 @media (min-width: 1440px) {
-  .message {
+  .text {
     margin-top: 140px;
     padding: 0 118px;
   }

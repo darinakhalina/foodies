@@ -9,6 +9,8 @@ import { unfollowUser, fetchFollowings, followUser } from '../../../api/follower
 import { fetchUserRecipes } from '../../../api/recipes';
 import { getUser } from '../../../redux/user/operations';
 
+import Message from '../../../components/Message/Message';
+
 const selectAuthUserId = state => state?.auth?.user?.id;
 
 export default function Following() {
@@ -118,7 +120,7 @@ export default function Following() {
           />
         ))
       ) : (
-            <div style={{ color: "#1A1A1A" }}>Your account currently has no subscriptions to other users. Learn more about our users and select those whose content interests you.</div>
+            !loading && !items.length && <Message>Your account currently has no subscriptions to other users. Learn more about our users and select those whose content interests you.</Message>
       )}
     </UserPageTabs>
   );

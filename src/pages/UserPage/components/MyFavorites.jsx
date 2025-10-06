@@ -6,6 +6,7 @@ import { getUser } from '../../../redux/user/operations';
 import { deleteFavorite, fetchFavoriteRecipes } from '../../../api/favorite';
 import UserPageTabs from '../../../components/UserPageTabs/UserPageTabs';
 import Loader from '../../../components/Loader/Loader';
+import Message from '../../../components/Message/Message';
 const selectAuthUserId = state => state?.auth?.user?.id;
 
 export default function MyFavorites() {
@@ -88,7 +89,7 @@ export default function MyFavorites() {
           />
         ))
       ) : (
-            <div style={{ color: "#1A1A1A" }}>Nothing has been added to your favorite recipes list yet. Please browse our recipes and add your favorites for easy access in the future.</div>
+            !loading && !items.length && <Message>Nothing has been added to your favorite recipes list yet. Please browse our recipes and add your favorites for easy access in the future.</Message>
       )}
     </UserPageTabs>
   );
