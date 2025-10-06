@@ -28,7 +28,7 @@ export default function UserRecipeRow({
                 <use href="/images/icons.svg#icon-arrow-up-right" />
               </svg>
             </button>
-            <button
+            {onDelete && (<button
               type="button"
               className={styles.actionBtn}
               onClick={() => onDelete?.(id)}
@@ -41,7 +41,7 @@ export default function UserRecipeRow({
                   <use href="/images/icons.svg#icon-trash" />
                 </svg>
               )}
-            </button>
+            </button>)}
           </div>
         </div>
         <p className={styles.desc}>{description}</p>
