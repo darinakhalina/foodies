@@ -8,6 +8,7 @@ import { selectIsLoggedIn, selectToken } from '../../../redux/auth/selectors';
 import { fetchFollowers, unfollowUser, followUser, fetchFollowings } from '../../../api/followers';
 import { fetchUserRecipes } from '../../../api/recipes';
 import { getUser } from '../../../redux/user/operations';
+import Message from '../../../components/Message/Message';
 
 const selectAuthUserId = state => state?.auth?.user?.id;
 
@@ -155,7 +156,7 @@ export default function Followers() {
           />
         ))
       ) : (
-            <div style={{ color: "#1A1A1A" }}>{emptyMessage}</div>
+            !loading && !items.length && <Message>{emptyMessage}</Message>
       )}
     </UserPageTabs>
   );

@@ -5,6 +5,7 @@ import { getUser } from '../../../redux/user/operations';
 import UserPageTabs from '../../../components/UserPageTabs/UserPageTabs';
 import UserRecipeRow from '../../../components/UserRecipeRow/UserRecipeRow';
 import { selectIsLoggedIn, selectToken } from '../../../redux/auth/selectors';
+import Message from '../../../components/Message/Message';
 import Loader from '../../../components/Loader/Loader';
 const selectAuthUserId = state => state?.auth?.user?.id;
 import { fetchMyRecipes, fetchUserRecipes, deleteMyRecipe } from '../../../api/recipes';
@@ -146,7 +147,7 @@ export default function MyRecipes() {
           ))}
         </div>
       ) : (
-        !loading && <p style={{color: "#1A1A1A"}}>{emptyMessage}</p>
+        !loading && !items.length && <Message>{emptyMessage}</Message>
       )}
     </UserPageTabs>
   );
