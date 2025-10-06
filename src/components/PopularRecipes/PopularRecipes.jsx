@@ -67,7 +67,7 @@ export default function PopularRecipes() {
     load();
   }, [load]);
 
-  const requireAuth = () => dispatch(openModal({ type: 'login' }));
+  const requireAuth = () => dispatch(openModal('login'));
 
   const handleToggleFavorite = async id => {
     if (!isLoggedIn) {
