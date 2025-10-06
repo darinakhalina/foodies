@@ -1,5 +1,5 @@
 .add-ingredient {
-  min-width: 300px;
+  width: 100%;
 }
 
 .add-quantity {
@@ -48,10 +48,27 @@ button:disabled .icon {
   color: var(--red);
 }
 
-@media (min-width: 481px) {
-  .add-field {
+.add-field {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.add-panel {
+  width: 100%;
+}
+
+@media only screen and (min-width: 768px) {
+  .add-holder {
     display: flex;
     flex-direction: row;
-    gap: 20px;
+    align-items: center;
+    width: 100%;
+  }
+
+  .add-ingredient {
+    min-width: 330px;
+    max-width: 330px;
+    margin-right: 20px;
   }
 }

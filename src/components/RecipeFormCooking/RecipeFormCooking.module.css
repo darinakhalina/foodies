@@ -20,11 +20,20 @@
   gap: 20px;
 }
 
-@media (min-width: 375px) {
+@media only screen and (min-width: 768px) {
+  .cooking {
+    flex-direction: row;
+  }
+
+  .category {
+    min-width: 330px;
+    max-width: 330px;
+  }
+
   .time {
-    width: 194px;
+    width: 200px;
   }
 }
 
-@media (min-width: 769px) {
+@media only screen and (min-width: 1440px) {
 }
