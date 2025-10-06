@@ -56,6 +56,14 @@ export default function PopularRecipes() {
   }, [isLoggedIn, token]);
 
   useEffect(() => {
+    if (!loading) {
+      requestAnimationFrame(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      });
+    }
+  }, [loading]);
+
+  useEffect(() => {
     load();
   }, [load]);
 
