@@ -27,15 +27,28 @@ const App = () => {
   const isLoading = useSelector(selectIsFetchingUser);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  useEffect(() => {
-    dispatch(fetchUser());
-  }, [dispatch]);
+  let token = null;
+  try {
+    const persistedAuth = localStorage.getItem('persist:auth');
+    if (persistedAuth) {
+      const parsed = JSON.parse(persistedAuth);
+      token = JSON.parse(parsed.token || 'null');
+    }
+  } catch (error) {
+    console.warn('Token parse error:', error);
+  }
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (token) {
+      dispatch(fetchUser());
+    }
+  }, [dispatch, token]);
+
+  useEffect(() => {
+    if (isLoggedIn && token) {
       dispatch(getFavoriteRecipes());
     }
-  }, [dispatch, isLoggedIn]);
+  }, [dispatch, isLoggedIn, token]);
 
   if (isLoading) return <Loader />;
 

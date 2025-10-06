@@ -49,6 +49,45 @@ export default function CategoryPage({ onBack }) {
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [err, setErr] = useState('');
+  const [userTriggeredPageChange, setUserTriggeredPageChange] = useState(false);
+
+  useEffect(() => {
+    const key = `scrollY:category:${normalizedCategory || 'all'}`;
+
+    const savedScroll = sessionStorage.getItem(key);
+    if (savedScroll) {
+      const scrollY = parseInt(savedScroll, 10);
+      const interval = setInterval(() => {
+        if (document.body.scrollHeight > scrollY + 100) {
+          window.scrollTo({ top: scrollY, behavior: 'instant' });
+          clearInterval(interval);
+        }
+      }, 100);
+
+      setTimeout(() => clearInterval(interval), 3000);
+    }
+
+    const handleSave = () => {
+      sessionStorage.setItem(key, String(window.scrollY));
+    };
+
+    window.addEventListener('beforeunload', handleSave);
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') handleSave();
+    });
+
+    return () => {
+      window.removeEventListener('beforeunload', handleSave);
+    };
+  }, [normalizedCategory]);
+
+  useEffect(() => {
+    if (!userTriggeredPageChange) return;
+    const anchor = document.getElementById('paginationAnchor');
+    if (anchor) anchor.scrollIntoView({ behavior: 'smooth' });
+    setUserTriggeredPageChange(false);
+  }, [page]);
+
   // Responsive page size
   const [limit, setLimit] = useState(() =>
     typeof window !== 'undefined' && window.innerWidth < 768 ? 8 : 12
@@ -87,6 +126,7 @@ export default function CategoryPage({ onBack }) {
   }, [normalizedCategory]);
   // Reset page on filter/category changes
   useEffect(() => {
+    if (!area && !ingredient && normalizedCategory === title.toUpperCase()) return;
     const next = new URLSearchParams(params);
     next.set('page', '1');
     setParams(next, { replace: true });
@@ -136,10 +176,6 @@ export default function CategoryPage({ onBack }) {
     };
   }, [normalizedCategory, area, ingredient, page, limit, isAuthed, token]);
   // Smooth scroll on page change
-  useEffect(() => {
-    const anchor = document.getElementById('paginationAnchor');
-    if (anchor) anchor.scrollIntoView({ behavior: 'smooth' });
-  }, [page]);
   const hasResults = recipes.length > 0;
   // Handlers to keep URL in sync when Filters change
   const setArea = val => {
@@ -160,6 +196,7 @@ export default function CategoryPage({ onBack }) {
     const next = new URLSearchParams(params);
     next.set('page', String(p));
     setParams(next);
+    setUserTriggeredPageChange(true);
   };
   const handleToggleFavorite = async id => {
     try {
