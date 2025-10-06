@@ -19,11 +19,10 @@ export default function Followers() {
   const { id: routeId } = useParams();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const authUserId = useSelector(selectAuthUserId);
-  
+
   const isOwnProfile =
-  (routeId === 'me' && isLoggedIn) ||
-  (!!authUserId && String(authUserId) === String(routeId));
-  
+    (routeId === 'me' && isLoggedIn) || (!!authUserId && String(authUserId) === String(routeId));
+
   const [items, setItems] = useState([]);
   const [followings, setFollowings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,55 +35,60 @@ export default function Followers() {
   }, [location.pathname]);
 
   useEffect(() => {
-  const loadData = async () => {
-    try {
-      setLoading(true);
-      setError(null);
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
 
-      if (!isLoggedIn || !token) return;
+        if (!isLoggedIn || !token) return;
 
-      const followingsResponse = await fetchFollowings(token, 1, 5);
-      const followingIds = followingsResponse.followings.map(u => u.id);
-      setFollowings(followingIds);
+        const followingsResponse = await fetchFollowings(token, 1, 5);
+        const followingIds = followingsResponse.followings.map(u => u.id);
+        setFollowings(followingIds);
 
-      const targetUserId = routeId === 'me' ? authUserId : routeId;
-      if (!targetUserId) {
-        setItems([]);
-        setTotalPages(1);
-        return;
+        const targetUserId = routeId === 'me' ? authUserId : routeId;
+        if (!targetUserId) {
+          setItems([]);
+          setTotalPages(1);
+          return;
+        }
+
+        const followersData = await fetchFollowers(targetUserId, token, currentPage, 5);
+
+        const followersWithRecipes = await Promise.all(
+          followersData.followers.map(async f => {
+            try {
+              const { recipes, total } = await fetchUserRecipes(token, f.id, { limit: 5 });
+              return {
+                ...f,
+                isFollowing: followingIds.includes(f.id),
+                recipes,
+                recipesCount: total,
+              };
+            } catch (err) {
+              console.error(`Error loading recipes for user ${f.id}:`, err);
+              return {
+                ...f,
+                isFollowing: followingIds.includes(f.id),
+                recipes: [],
+                recipesCount: 0,
+              };
+            }
+          })
+        );
+
+        setItems(followersWithRecipes);
+        setTotalPages(followersData.totalPages || 1);
+      } catch (err) {
+        console.error(err);
+        setError('Failed to load followers');
+      } finally {
+        setLoading(false);
       }
+    };
 
-      const followersData = await fetchFollowers(targetUserId, token, currentPage, 5);
-
-      const followersWithRecipes = await Promise.all(
-        followersData.followers.map(async f => {
-          try {
-            const { recipes, total } = await fetchUserRecipes(token, f.id, { limit: 5 });
-            return {
-              ...f,
-              isFollowing: followingIds.includes(f.id),
-              recipes,
-              recipesCount: total,
-            };
-          } catch (err) {
-            console.error(`Error loading recipes for user ${f.id}:`, err);
-            return { ...f, isFollowing: followingIds.includes(f.id), recipes: [], recipesCount: 0 };
-          }
-        })
-      );
-
-      setItems(followersWithRecipes);
-      setTotalPages(followersData.totalPages || 1);
-    } catch (err) {
-      console.error(err);
-      setError('Failed to load followers');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  loadData();
-}, [routeId, authUserId, token, currentPage, isLoggedIn]);
+    loadData();
+  }, [routeId, authUserId, token, currentPage, isLoggedIn]);
 
   const handlePageChange = page => {
     setCurrentPage(page);
@@ -145,11 +149,9 @@ export default function Followers() {
             isFollowing={follower.isFollowing}
             recipes={follower.recipes || []}
             onOpen={id => navigate(`/user/${id}`)}
-            onOpenRecipe={(id) => navigate(`/recipe/${id}`)}
+            onOpenRecipe={id => navigate(`/recipe/${id}`)}
             onToggle={isLoggedIn ? handleToggleFollow : undefined}
-            showFollowButton={
-              isLoggedIn && String(authUserId) !== String(follower.id)
-            }
+            showFollowButton={isLoggedIn && String(authUserId) !== String(follower.id)}
           />
         ))
       ) : (

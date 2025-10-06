@@ -2,7 +2,7 @@
   margin-top: 32px;
   display: flex;
   flex-direction: column;
-  min-width: 320px;
+  width: 100%;
 }
 
 .info {
@@ -10,9 +10,13 @@
   margin-top: 32px;
 }
 
-@media (min-width: 481px) {
+.holder {
+  flex: 1;
+}
+
+@media only screen and (min-width: 768px) {
   .form {
-    margin-top: 40px;
+    gap: 80px;
   }
 
   .info {
@@ -20,14 +24,17 @@
   }
 }
 
-@media (min-width: 769px) {
+@media only screen and (min-width: 1440px) {
   .form {
-    display: flex;
     flex-direction: row;
-    gap: 80px;
+    margin-top: 40px;
+  }
+
+  .holder {
+    max-width: 550px;
   }
 
   .info {
-    margin-top: 0px;
+    margin-top: 80px;
   }
 }

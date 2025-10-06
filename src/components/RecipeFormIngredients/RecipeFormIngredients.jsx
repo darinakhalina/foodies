@@ -32,25 +32,27 @@ const RecipeFormIngredients = ({ values }) => {
         {({ insert, remove }) => (
           <>
             <div className={css['add-panel']}>
-              <div className={css['add-field']}>
-                <Select
-                  name={`ingredients.${0}.id`}
-                  items={ingredientItems}
-                  placeholder="Add the ingredient"
-                  className={clsx(
-                    css['add-ingredient'],
-                    isError && !values.ingredients[0].id && css['input-error']
-                  )}
-                />
-              </div>
-              <div className={css['add-field']}>
-                <Textarea
-                  name={`ingredients.${0}.quantity`}
-                  placeholder="Enter quantity"
-                  maxLength={50}
-                  counter={false}
-                  className={clsx(css['add-quantity'], isError && css['input-error'])}
-                />
+              <div className={css['add-holder']}>
+                <div className={css['add-field']}>
+                  <Select
+                    name={`ingredients.${0}.id`}
+                    items={ingredientItems}
+                    placeholder="Add the ingredient"
+                    className={clsx(
+                      css['add-ingredient'],
+                      isError && !values.ingredients[0].id && css['input-error']
+                    )}
+                  />
+                </div>
+                <div className={css['add-field']}>
+                  <Textarea
+                    name={`ingredients.${0}.quantity`}
+                    placeholder="Enter quantity"
+                    maxLength={50}
+                    counter={false}
+                    className={clsx(css['add-quantity'], isError && css['input-error'])}
+                  />
+                </div>
               </div>
 
               <Button

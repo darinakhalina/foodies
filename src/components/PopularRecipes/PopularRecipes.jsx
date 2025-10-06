@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -39,9 +38,9 @@ export default function PopularRecipes() {
 
   const inFlight = useRef(new Set());
 
-  const lock = (id) => inFlight.current.add(id);
-  const unlock = (id) => inFlight.current.delete(id);
-  const isLocked = (id) => inFlight.current.has(id);
+  const lock = id => inFlight.current.add(id);
+  const unlock = id => inFlight.current.delete(id);
+  const isLocked = id => inFlight.current.has(id);
 
   const load = useCallback(async () => {
     try {
@@ -62,12 +61,12 @@ export default function PopularRecipes() {
 
   const requireAuth = () => dispatch(openModal({ type: 'login' }));
 
-  const handleToggleFavorite = async (id) => {
+  const handleToggleFavorite = async id => {
     if (!isLoggedIn) {
       requireAuth();
       return;
     }
-    if (isLocked(id)) return; 
+    if (isLocked(id)) return;
     lock(id);
 
     const current = recipes.find(r => r.id === id);
@@ -77,9 +76,7 @@ export default function PopularRecipes() {
     }
     const wasFav = !!current.isFavorite;
 
-    setRecipes(prev =>
-      prev.map(r => (r.id === id ? { ...r, isFavorite: !wasFav } : r))
-    );
+    setRecipes(prev => prev.map(r => (r.id === id ? { ...r, isFavorite: !wasFav } : r)));
 
     try {
       if (wasFav) {
@@ -92,10 +89,10 @@ export default function PopularRecipes() {
       setRecipes(prev =>
         prev.map(r => {
           if (r.id !== id) return r;
-          if (!wasFav && (msg.includes('already') && msg.includes('favorite'))) {
+          if (!wasFav && msg.includes('already') && msg.includes('favorite')) {
             return { ...r, isFavorite: true };
           }
-          if (wasFav && (msg.includes('not') && msg.includes('found'))) {
+          if (wasFav && msg.includes('not') && msg.includes('found')) {
             return { ...r, isFavorite: false };
           }
           return { ...r, isFavorite: wasFav };
@@ -121,8 +118,8 @@ export default function PopularRecipes() {
                 recipe={r}
                 isAuthed={isLoggedIn}
                 onNeedAuth={requireAuth}
-                onOpen={(rid) => navigate(`/recipe/${rid}`)}
-                onAuthor={(authorId) => navigate(`/user/${authorId}`)}
+                onOpen={rid => navigate(`/recipe/${rid}`)}
+                onAuthor={authorId => navigate(`/user/${authorId}`)}
                 onToggleFavorite={() => handleToggleFavorite(r.id)}
                 isFavorite={r.isFavorite}
               />

@@ -21,13 +21,15 @@ export default function UserFollowerRow({
             <h4 className={styles.name}>{name}</h4>
             <p className={styles.recipes}>Own recipes: {recipesCount}</p>
           </div>
-            {showFollowButton && (<button
-            type="button"
-            className={`${styles.followBtn} ${isFollowing ? styles.unfollow : styles.follow}`}
-            onClick={() => onToggle(id)}
-          >
-            {isFollowing ? 'Unfollow' : 'Follow'}
-          </button>)}
+          {showFollowButton && (
+            <button
+              type="button"
+              className={`${styles.followBtn} ${isFollowing ? styles.unfollow : styles.follow}`}
+              onClick={() => onToggle(id)}
+            >
+              {isFollowing ? 'Unfollow' : 'Follow'}
+            </button>
+          )}
         </div>
       </div>
 
