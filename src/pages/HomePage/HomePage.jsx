@@ -1,4 +1,5 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
+import { useRef, useEffect, useMemo } from 'react';
 
 import Hero from '../../components/Hero/Hero';
 import Header from '../../components/Header/Header.jsx';
@@ -7,9 +8,44 @@ import CategoryPage from '../CategoryPage/CategoryPage';
 import Testimonials from '../../components/Testimonials/Testimonials.jsx';
 import css from './HomePage.module.css';
 
+function scrollWindowToEl(el, { offset = 0, behavior = 'smooth' } = {}) {
+  if (!el) return;
+  const top = el.getBoundingClientRect().top + window.pageYOffset - offset;
+  window.scrollTo({ top, left: 0, behavior });
+}
+
 const HomePage = () => {
   const [params, setParams] = useSearchParams();
+  const navigate = useNavigate();
+  const location = useLocation();
   const category = params.get('category');
+  const sectionRef = useRef(null);
+
+  const searchKey = useMemo(() => params.toString(), [params]);
+
+  useEffect(() => {
+    if (!searchKey) return;
+
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        scrollWindowToEl(sectionRef.current, {
+          offset: 0,
+          behavior: 'smooth',
+        });
+      });
+    });
+  }, [searchKey]);
+
+  useEffect(() => {
+    if (location.state?.focus === 'home-categories') {
+      requestAnimationFrame(() => {
+        scrollWindowToEl(sectionRef.current, {
+          offset: 0,
+          behavior: 'smooth',
+        });
+      });
+    }
+  }, [location.state]);
 
   const handleSelectCategory = name => {
     const slug = String(name || '')
@@ -31,12 +67,10 @@ const HomePage = () => {
   };
 
   const handleBack = () => {
-    const next = new URLSearchParams(params);
-    next.delete('category');
-    next.delete('area');
-    next.delete('ingredient');
-    next.delete('page');
-    setParams(next);
+    navigate(
+      { pathname: '/', search: '' },
+      { state: { scrollToTop: false, focus: 'home-categories' } }
+    );
   };
 
   const showRecipes = Boolean(category);
@@ -48,7 +82,7 @@ const HomePage = () => {
         <Hero />
       </div>
 
-      <section className="f-container no-margin">
+      <section ref={sectionRef} className="f-container no-margin">
         {!showRecipes ? (
           <Categories onSelect={handleSelectCategory} />
         ) : (

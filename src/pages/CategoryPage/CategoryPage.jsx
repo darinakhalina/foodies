@@ -52,6 +52,13 @@ export default function CategoryPage({ onBack }) {
   const [userTriggeredPageChange, setUserTriggeredPageChange] = useState(false);
 
   useEffect(() => {
+    if (!isLoading) {
+      const el = document.getElementById('paginationAnchor');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
     const key = `scrollY:category:${normalizedCategory || 'all'}`;
 
     const savedScroll = sessionStorage.getItem(key);
